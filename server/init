@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# define current directory
+export DIR=$(dirname $(readlink -f $0))
+
+# load environment
+source $DIR/../.env || exit;
+
+# update
+sudo apt-get update -y
+
+# install php
+sudo apt-get install -y php-fpm php-mysql
+sudo cp -f $DIR/php.ini /etc/php/*/fpm/conf.d/.
+
+# install mysql
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $DB_USERNAME"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DB_PASSWORD"
+sudo apt-get install -qq mysql-server
+
+# install nginx
+sudo apt-get install -qq nginx-light
+sudo cp -f $DIR/*.pem /etc/ssl/certs/.
+sudo cp -f $DIR/*.key /etc/ssl/private/.
+sudo chmod 777 /etc/ssl/private
+
+# setup nginx
+sudo rm -rf /var/www/html
+sudo unlink /etc/nginx/sites-enabled/*
+sudo cp -f $DIR/nginx.conf /etc/nginx/sites-enabled/.
+
+# setup database
+mysql -u$DB_USERNAME -p$DB_PASSWORD -e "DROP DATABASE IF EXISTS \`$DB_DATABASE\`"
+mysql -u$DB_USERNAME -p$DB_PASSWORD -e "CREATE DATABASE \`$DB_DATABASE\` CHARACTER SET utf8"
+
+# restart services
+sudo systemctl restart nginx
+sudo systemctl restart mysql
