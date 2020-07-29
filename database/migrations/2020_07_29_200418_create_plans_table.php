@@ -15,7 +15,7 @@ class CreatePlansTable extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->enum('type', ['daily', 'weekly', 'monthly', 'yearly', 'indefinite'])->default('indefinite');
             $table->integer('duration')->default(0);
