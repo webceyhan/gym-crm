@@ -13,6 +13,12 @@ sudo apt-get update -y
 sudo apt-get install -y php-fpm php-mysql
 sudo cp -f $DIR/php.ini /etc/php/*/fpm/conf.d/.
 
+# install composer
+curl -sS 'https://getcomposer.org/installer' | php
+sudo mv composer.phar /usr/bin/composer
+echo -e 'export COMPOSER_HOME=~/.config/composer\n' >> $HOME/.profile
+echo -e 'export PATH=$COMPOSER_HOME/vendor/bin:$PATH\n' >> $HOME/.profile
+
 # install mysql
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $DB_USERNAME"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DB_PASSWORD"
