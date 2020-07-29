@@ -24,9 +24,8 @@ class CreateMembersTabe extends Migration
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('status', ['in', 'out', 'suspended'])->default('out');
+            $table->enum('status', ['in', 'out', 'away'])->default('out');
             $table->timestamps();
-
         });
     }
 
