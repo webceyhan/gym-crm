@@ -14,9 +14,14 @@ class ActivitySeeder extends Seeder
     public function run()
     {
         Subscription::all()->each(function ($subscription) {
-            $subscription->activities()->saveMany(
-                factory(Activity::class, rand(0, 10))->make()
-            );
+
+            $amount = rand(0, 10);
+
+            $activities = factory(Activity::class, $amount)->make([
+                'created_at' => $subscription->created_at,
+            ]);
+
+            $subscription->activities()->saveMany($activities);
         });
     }
 }

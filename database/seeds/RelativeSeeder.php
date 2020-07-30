@@ -13,31 +13,27 @@ class RelativeSeeder extends Seeder
      */
     public function run()
     {
-        $count = Member::count();
-        $members = Member::inRandomOrder()->take(10)->get();
+        Member::inRandomOrder()->take(10)->get()->each(function ($owner) {
 
-        $members->each(function ($member) use ($count) {
+            $amount = rand(1,2);
 
-            // generated related member id
-            $memberId = rand(1, $count);
-
-            // re-generate id until it's different than owner
-            while ($memberId === $member->id) {
-                $memberId = rand(1, $count);
-            }
-
-            $relative = factory(Relative::class, 1)->create([
-                'owner_id' => $member->id,
-                'member_id' => $memberId,
-            ])->first();
-
-            // create cross-reference record
-            Relative::create([
-                'owner_id' => $relative->member_id,
-                'member_id' => $relative->owner_id,
-                'type' => $relative->type,
+            $relatives = factory(Relative::class, $amount)->create([
+                'owner_id' => $owner->id,
+                // generate random member id between as one less then owner id
+                'member_id' => fn() => $owner->id > 1 ? rand(1, $owner->id) : 2,
+                'created_at' => $owner->created_at,
             ]);
 
+            // create cross-reference record
+            $relatives->each(function ($relative) {
+                Relative::create([
+                    'owner_id' => $relative->member_id,
+                    'member_id' => $relative->owner_id,
+                    'type' => $relative->type,
+                    'created_at' => $relative->created_at,
+                ]);
+            });
         });
     }
+
 }

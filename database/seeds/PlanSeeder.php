@@ -1,5 +1,6 @@
 <?php
 
+use App\Plan;
 use Illuminate\Database\Seeder;
 
 class PlanSeeder extends Seeder
@@ -11,6 +12,10 @@ class PlanSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Plan::class, 10)->create();
+        $amount = 10;
+
+        factory(Plan::class, $amount)->create([
+            'created_at' => fn() => now()->subYears(rand(0,5))
+        ]);
     }
 }

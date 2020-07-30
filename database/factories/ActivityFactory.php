@@ -5,9 +5,14 @@
 use App\Activity;
 use Faker\Generator as Faker;
 
-$factory->define(Activity::class, function (Faker $faker) {
+$factory->define(Activity::class, function (Faker $faker, $args = []) {
+
+    // get parent date or now
+    $now = $args['created_at'] ?? now();
+
     return [
         'type' => $faker->numberBetween(1, 2),
-        'completed_at' => $faker->optional()->passthrough(now()),
+        'created_at' => $now,
+        'completed_at' => $faker->optional()->dateTimeBetween($now),
     ];
 });

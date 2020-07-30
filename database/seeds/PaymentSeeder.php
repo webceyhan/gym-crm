@@ -14,9 +14,14 @@ class PaymentSeeder extends Seeder
     public function run()
     {
         Subscription::all()->each(function ($subscription) {
-            $subscription->payments()->saveMany(
-                factory(Payment::class, rand(0, 2))->make()
-            );
+
+            $amount = rand(0, 2);
+
+            $payments = factory(Payment::class, $amount)->make([
+                'created_at' => $subscription->created_at,
+            ]);
+
+            $subscription->payments()->saveMany($payments);
         });
     }
 }

@@ -5,7 +5,11 @@
 use App\Member;
 use Faker\Generator as Faker;
 
-$factory->define(Member::class, function (Faker $faker) {
+$factory->define(Member::class, function (Faker $faker, $args = []) {
+
+    // get parent date or now
+    $now = $args['created_at'] ?? now();
+
     return [
         'name' => "$faker->firstName $faker->lastName",
         'nin' => $faker->isbn13,
@@ -17,6 +21,6 @@ $factory->define(Member::class, function (Faker $faker) {
         'photo' => $faker->optional()->passthrough("{$faker->uuid}.jpg"),
         'notes' => $faker->optional(0.2)->realText,
         'status' => $faker->numberBetween(1, 3),
-        'created_at' => $faker->dateTimeBetween('-5 years')
+        'created_at' => $now,
     ];
 });
