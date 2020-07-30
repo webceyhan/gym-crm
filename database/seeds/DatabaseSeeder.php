@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             RelativeSeeder::class,
             SubscriptionSeeder::class,
             // ActivitySeeder::class,
-            // PaymentSeeder::class,
+            PaymentSeeder::class,
         ]);
     }
 }

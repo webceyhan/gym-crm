@@ -1,5 +1,7 @@
 <?php
 
+use App\Payment;
+use App\Subscription;
 use Illuminate\Database\Seeder;
 
 class PaymentSeeder extends Seeder
@@ -11,6 +13,10 @@ class PaymentSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Subscription::all()->each(function ($subscription) {
+            $subscription->payments()->saveMany(
+                factory(Payment::class, rand(0, 2))->make()
+            );
+        });
     }
 }
