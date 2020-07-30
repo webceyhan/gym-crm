@@ -14,7 +14,7 @@ $factory->define(Member::class, function (Faker $faker) {
         'phone' => $faker->optional()->e164PhoneNumber,
         'email' => $faker->optional()->email,
         'address' => $faker->optional()->address,
-        'photo' => $faker->optional()->image(null, 100, 100, 'people'),
+        'photo' => $faker->optional()->passthrough("{$faker->uuid}.jpg"),
         'notes' => $faker->optional(0.2)->realText,
         'status' => $faker->numberBetween(1, 3),
         'created_at' => $faker->dateTimeBetween('-5 years')
