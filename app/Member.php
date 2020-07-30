@@ -27,8 +27,8 @@ class Member extends Model
 
     public function relatives()
     {
-        return $this->belongsToMany('App\Member')
+        return $this->belongsToMany('App\Member', 'relatives', 'owner_id')
             ->using('App\Relative')
-            ->withPivot(['type']);
+            ->withPivot(['id', 'type']);
     }
 }
