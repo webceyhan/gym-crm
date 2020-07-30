@@ -18,14 +18,9 @@ class Subscription extends Model
         return $this->belongsTo('App\Member');
     }
 
-    public function checkins()
+    public function activities()
     {
-        return $this->hasMany('App\Checkin');
-    }
-
-    public function holidays()
-    {
-        return $this->hasMany('App\Holiday');
+        return $this->hasMany('App\Activity');
     }
 
     public function payments()

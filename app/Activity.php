@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Checkin extends Model
+class Activity extends Model
 {
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 

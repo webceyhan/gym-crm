@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Holiday;
+use App\Activity;
 use Illuminate\Http\Request;
 
-class HolidayController extends Controller
+class ActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class HolidayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Holiday  $holiday
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Holiday $holiday)
+    public function show(Activity $activity)
     {
         //
     }
@@ -43,10 +43,10 @@ class HolidayController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Holiday  $holiday
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Holiday $holiday)
+    public function update(Request $request, Activity $activity)
     {
         //
     }
@@ -54,10 +54,10 @@ class HolidayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Holiday  $holiday
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Holiday $holiday)
+    public function destroy(Activity $activity)
     {
         //
     }

@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Checkin;
+use App\Activity;
 use Faker\Generator as Faker;
 
-$factory->define(Checkin::class, function (Faker $faker) {
+$factory->define(Activity::class, function (Faker $faker) {
     return [
         //
     ];
