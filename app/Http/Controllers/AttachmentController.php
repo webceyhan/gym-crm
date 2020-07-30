@@ -15,9 +15,9 @@ class AttachmentController extends Controller
      * @param  Member $member
      * @return \Illuminate\Http\Response
      */
-    public function index(Member $member)
+    public function index(?Member $member = null)
     {
-        $attachments = $member->attachments;
+        $attachments = $member->attachments ?? Attachment::all();
 
         return AttachmentResource::collection($attachments);
     }

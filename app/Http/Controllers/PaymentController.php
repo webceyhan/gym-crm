@@ -15,9 +15,9 @@ class PaymentController extends Controller
      * @param  Subscription $subscription
      * @return \Illuminate\Http\Response
      */
-    public function index(Subscription $subscription)
+    public function index(?Subscription $subscription = null)
     {
-        $payments = $subscription->payments;
+        $payments = $subscription->payments ?? Payment::all();
 
         return PaymentResource::collection($payments);
     }

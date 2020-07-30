@@ -15,9 +15,9 @@ class SubscriptionController extends Controller
      * @param  Member $member
      * @return \Illuminate\Http\Response
      */
-    public function index(Member $member)
+    public function index(?Member $member = null)
     {
-        $subscriptions = $member->subscriptions;
+        $subscriptions = $member->subscriptions ?? Subscription::all();
 
         return SubscriptionResource::collection($subscriptions);
     }

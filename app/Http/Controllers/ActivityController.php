@@ -15,9 +15,9 @@ class ActivityController extends Controller
      * @param  Subscription $subscription
      * @return \Illuminate\Http\Response
      */
-    public function index(Subscription $subscription)
+    public function index(?Subscription $subscription = null)
     {
-        $activities = $subscription->activities;
+        $activities = $subscription->activities ?? Activity::all();
 
         return ActivityResource::collection($activities);
     }
