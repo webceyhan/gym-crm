@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Attachment::class, function (Faker $faker) {
     return [
-        //
+        'file' => $faker->uuid . '.jpg',
     ];
 });

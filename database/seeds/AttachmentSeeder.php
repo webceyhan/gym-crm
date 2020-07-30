@@ -1,5 +1,7 @@
 <?php
 
+use App\Attachment;
+use App\Member;
 use Illuminate\Database\Seeder;
 
 class AttachmentSeeder extends Seeder
@@ -11,6 +13,11 @@ class AttachmentSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $members = Member::inRandomOrder()->take(10)->get();
+
+        $members->each(function ($member) {
+            $attachments = factory(Attachment::class, rand(1, 5))->make();
+            $member->attachments()->saveMany($attachments);
+        });
     }
 }
