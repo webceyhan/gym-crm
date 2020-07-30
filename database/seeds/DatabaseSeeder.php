@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             MemberSeeder::class,
             AttachmentSeeder::class,
             RelativeSeeder::class,
-            // SubscriptionSeeder::class,
+            SubscriptionSeeder::class,
             // ActivitySeeder::class,
             // PaymentSeeder::class,
         ]);
