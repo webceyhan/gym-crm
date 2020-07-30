@@ -15,8 +15,8 @@ class CreateRelativesTable extends Migration
     {
         Schema::create('relatives', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->constrained();
-            $table->foreignId('related_id')->constrained('members');
+            $table->foreignId('owner_id')->constrained('members');
+            $table->foreignId('member_id')->constrained('members');
             $table->enum('type', ['sibling', 'family', 'friend'])->default('sibling');
             $table->timestamps();
         });
