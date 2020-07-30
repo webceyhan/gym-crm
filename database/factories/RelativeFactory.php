@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Relative::class, function (Faker $faker) {
     return [
-        //
+        'type' => $faker->numberBetween(1, 3),
     ];
 });
