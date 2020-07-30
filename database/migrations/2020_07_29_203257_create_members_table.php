@@ -1,5 +1,6 @@
 <?php
 
+use App\MemberStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +25,7 @@ class CreateMembersTable extends Migration
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('status', ['in', 'out', 'away'])->default('out');
+            $table->enum('status', MemberStatus::values())->default(MemberStatus::OUT);
             $table->timestamps();
         });
     }

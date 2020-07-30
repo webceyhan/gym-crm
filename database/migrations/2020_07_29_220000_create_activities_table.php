@@ -1,5 +1,6 @@
 <?php
 
+use App\ActivityType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('subscription_id')->constrained();
-            $table->enum('type', ['checkin', 'holiday'])->default('checkin');
+            $table->enum('type', ActivityType::values())->default(ActivityType::CHECKIN);
             $table->timestamps();
             $table->timestamp('completed_at')->nullable();
         });

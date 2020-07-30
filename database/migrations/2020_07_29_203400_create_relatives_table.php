@@ -1,5 +1,6 @@
 <?php
 
+use App\RelativeType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ class CreateRelativesTable extends Migration
             $table->id();
             $table->foreignId('owner_id')->constrained('members');
             $table->foreignId('member_id')->constrained('members');
-            $table->enum('type', ['sibling', 'family', 'friend'])->default('sibling');
+            $table->enum('type', RelativeType::values())->default(RelativeType::SIBLING);
             $table->timestamps();
         });
     }

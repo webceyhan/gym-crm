@@ -1,5 +1,7 @@
 <?php
 
+use App\PaymentMethod;
+use App\PaymentType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +19,8 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->foreignId('subscription_id')->constrained();
             $table->decimal('amount', 8, 2)->default(0);
-            $table->enum('method', ['cash', 'card', 'online'])->default('cash');
-            $table->enum('type', ['charge', 'refund', 'discount'])->default('charge');
+            $table->enum('method', PaymentMethod::values())->default(PaymentMethod::CASH);
+            $table->enum('type', PaymentType::values())->default(PaymentType::CHARGE);
             $table->timestamps();
         });
     }
