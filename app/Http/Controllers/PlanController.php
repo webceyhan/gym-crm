@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PlanResource;
 use App\Plan;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        $plans = Plan::all();
+
+        return PlanResource::collection($plans);
     }
 
     /**
@@ -25,7 +28,7 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->update($request, new Plan);
     }
 
     /**
@@ -36,7 +39,7 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        //
+        return new PlanResource($plan);
     }
 
     /**
@@ -48,7 +51,11 @@ class PlanController extends Controller
      */
     public function update(Request $request, Plan $plan)
     {
-        //
+        $data = $request->all();
+
+        $plan->save($data);
+
+        return new PlanResource($plan);
     }
 
     /**
@@ -59,6 +66,8 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan)
     {
-        //
+        $plan->delete();
+
+        return response()->json(null, 204);
     }
 }

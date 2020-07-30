@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RelativeResource;
+use App\Member;
 use App\Relative;
 use Illuminate\Http\Request;
 
@@ -10,22 +12,26 @@ class RelativeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Member $member
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Member $member)
     {
-        //
+        $relatives = $member->relatives;
+
+        return RelativeResource::collection($relatives);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  Member $member
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Member $member)
     {
-        //
+        return $this->update($request, $member->relatives()->newPivot());
     }
 
     /**
@@ -36,7 +42,7 @@ class RelativeController extends Controller
      */
     public function show(Relative $relative)
     {
-        //
+        return new RelativeResource($relative);
     }
 
     /**
@@ -48,7 +54,11 @@ class RelativeController extends Controller
      */
     public function update(Request $request, Relative $relative)
     {
-        //
+        $data = $request->all();
+
+        $relative->save($data);
+
+        return new RelativeResource($relative);
     }
 
     /**
@@ -59,6 +69,8 @@ class RelativeController extends Controller
      */
     public function destroy(Relative $relative)
     {
-        //
+        $relative->delete();
+
+        return response()->json(null, 204);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
+use App\Http\Resources\ActivityResource;
+use App\Subscription;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -10,22 +12,26 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  Subscription $subscription
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Subscription $subscription)
     {
-        //
+        $activities = $subscription->activities;
+
+        return ActivityResource::collection($activities);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  Subscription $subscription
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Subscription $subscription)
     {
-        //
+        return $this->update($request, $subscription->activities()->make());
     }
 
     /**
@@ -36,7 +42,7 @@ class ActivityController extends Controller
      */
     public function show(Activity $activity)
     {
-        //
+        return new ActivityResource($activity);
     }
 
     /**
@@ -48,7 +54,11 @@ class ActivityController extends Controller
      */
     public function update(Request $request, Activity $activity)
     {
-        //
+        $data = $request->all();
+
+        $activity->save($data);
+
+        return new ActivityResource($activity);
     }
 
     /**
@@ -59,6 +69,8 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        //
+        $activity->delete();
+
+        return response()->json(null, 204);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Attachment;
+use App\Http\Resources\AttachmentResource;
+use App\Member;
 use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
@@ -10,22 +12,26 @@ class AttachmentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  Member $member
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Member $member)
     {
-        //
+        $attachments = $member->attachments;
+
+        return AttachmentResource::collection($attachments);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  Member $member
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Member $member)
     {
-        //
+        return $this->update($request, $member->attachments()->make());
     }
 
     /**
@@ -36,7 +42,7 @@ class AttachmentController extends Controller
      */
     public function show(Attachment $attachment)
     {
-        //
+        return new AttachmentResource($attachment);
     }
 
     /**
@@ -48,7 +54,11 @@ class AttachmentController extends Controller
      */
     public function update(Request $request, Attachment $attachment)
     {
-        //
+        $data = $request->all();
+
+        $attachment->save($data);
+
+        return new AttachmentResource($attachment);
     }
 
     /**
@@ -59,6 +69,8 @@ class AttachmentController extends Controller
      */
     public function destroy(Attachment $attachment)
     {
-        //
+        $attachment->delete();
+
+        return response()->json(null, 204);
     }
 }
