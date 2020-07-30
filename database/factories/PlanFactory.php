@@ -7,6 +7,11 @@ use Faker\Generator as Faker;
 
 $factory->define(Plan::class, function (Faker $faker) {
     return [
-        //
+        'name' => $faker->catchPhrase(),
+        'description' => $faker->realText(),
+        'type' => $faker->numberBetween(1, 5),
+        'duration' => $faker->numberBetween(0, 24),
+        'price' => $faker->randomNumber(2),
+        'installment' => $faker->boolean(),
     ];
 });

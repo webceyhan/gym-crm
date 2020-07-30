@@ -11,6 +11,6 @@ class PlanSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\Plan::class, 10)->create();
     }
 }
