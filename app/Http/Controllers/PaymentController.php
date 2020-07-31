@@ -6,6 +6,7 @@ use App\Http\Resources\PaymentResource;
 use App\Payment;
 use App\Subscription;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PaymentController extends Controller
 {
@@ -17,7 +18,23 @@ class PaymentController extends Controller
      */
     public function index(?Subscription $subscription = null)
     {
-        $payments = $subscription->payments ?? Payment::all();
+        $query = QueryBuilder::for($subscription->payments ?? Payment::class);
+
+        $payments = $query
+            ->allowedSorts([
+                'id',
+                'amount',
+                'method',
+                'type',
+                'created_at',
+            ])
+            ->allowedFilters([
+                'amount',
+                'method',
+                'type',
+                'created_at',
+            ])
+            ->get();
 
         return PaymentResource::collection($payments);
     }

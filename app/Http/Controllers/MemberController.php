@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MemberResource;
 use App\Member;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class MemberController extends Controller
 {
@@ -15,7 +16,26 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = Member::all();
+        $query = QueryBuilder::for(Member::class);
+
+        $members = $query
+            ->allowedSorts([
+                'id',
+                'name',
+                'birth_date',
+                'status',
+                'created_at',
+            ])
+            ->allowedFilters([
+                'name',
+                'birth_date',
+                'phone',
+                'email',
+                'address',
+                'status',
+                'created_at',
+            ])
+            ->get();
 
         return MemberResource::collection($members);
     }

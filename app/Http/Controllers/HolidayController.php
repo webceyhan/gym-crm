@@ -6,6 +6,8 @@ use App\Holiday;
 use App\Http\Resources\HolidayResource;
 use App\Member;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class HolidayController extends Controller
 {
@@ -17,7 +19,22 @@ class HolidayController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $holidays = $member->holidays ?? Holiday::all();
+        $query = QueryBuilder::for($member->holidays ?? Holiday::class);
+
+        $holidays = $query
+            ->allowedSorts([
+                'id',
+                'end_date',
+                'start_date',
+                'created_at',
+            ])
+            ->allowedFilters([
+                'start_date',
+                'end_date',
+                'created_at',
+                AllowedFilter::scope('status', 'ofStatus'),
+            ])
+            ->get();
 
         return HolidayResource::collection($holidays);
     }

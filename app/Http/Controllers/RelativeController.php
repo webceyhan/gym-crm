@@ -6,6 +6,7 @@ use App\Http\Resources\RelativeResource;
 use App\Member;
 use App\Relative;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class RelativeController extends Controller
 {
@@ -17,7 +18,19 @@ class RelativeController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $relatives = $member->relatives ?? Relative::all();
+        $query = QueryBuilder::for($member->relatives ?? Relative::class);
+
+        $relatives = $query
+            ->allowedSorts([
+                'id',
+                'type',
+                'created_at',
+            ])
+            ->allowedFilters([
+                'type',
+                'created_at',
+            ])
+            ->get();
 
         return RelativeResource::collection($relatives);
     }

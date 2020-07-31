@@ -6,6 +6,7 @@ use App\Attachment;
 use App\Http\Resources\AttachmentResource;
 use App\Member;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class AttachmentController extends Controller
 {
@@ -17,7 +18,19 @@ class AttachmentController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $attachments = $member->attachments ?? Attachment::all();
+        $query = QueryBuilder::for($member->attachments ?? Attachment::class);
+
+        $attachments = $query
+            ->allowedSorts([
+                'id',
+                'file',
+                'created_at',
+            ])
+            ->allowedFilters([
+                'file',
+                'created_at',
+            ])
+            ->get();
 
         return AttachmentResource::collection($attachments);
     }

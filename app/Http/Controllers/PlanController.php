@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PlanResource;
 use App\Plan;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PlanController extends Controller
 {
@@ -15,7 +16,27 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans = Plan::all();
+        $query = QueryBuilder::for(Plan::class);
+
+        $plans = $query
+            ->allowedSorts([
+                'id',
+                'name',
+                'type',
+                'duration',
+                'price',
+                'installment',
+                'created_at',
+            ])
+            ->allowedFilters([
+                'name',
+                'type',
+                'duration',
+                'price',
+                'installment',
+                'created_at',
+            ])
+            ->get();
 
         return PlanResource::collection($plans);
     }

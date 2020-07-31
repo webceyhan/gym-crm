@@ -6,6 +6,8 @@ use App\Activity;
 use App\Http\Resources\ActivityResource;
 use App\Subscription;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ActivityController extends Controller
 {
@@ -17,7 +19,22 @@ class ActivityController extends Controller
      */
     public function index(?Subscription $subscription = null)
     {
-        $activities = $subscription->activities ?? Activity::all();
+        $query = QueryBuilder::for($subscription->activities ?? Activity::class);
+
+        $activities = $query
+            ->allowedSorts([
+                'id',
+                'type',
+                'created_at',
+                'finished_at',
+            ])
+            ->allowedFilters([
+                'type',
+                'created_at',
+                'finished_at',
+                AllowedFilter::scope('status', 'ofStatus'),
+            ])
+            ->get();
 
         return ActivityResource::collection($activities);
     }

@@ -6,6 +6,8 @@ use App\Http\Resources\SubscriptionResource;
 use App\Member;
 use App\Subscription;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class SubscriptionController extends Controller
 {
@@ -17,7 +19,25 @@ class SubscriptionController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $subscriptions = $member->subscriptions ?? Subscription::all();
+        $query = QueryBuilder::for($member->subscriptions ?? Subscription::class);
+
+        $subscriptions = $query
+            ->allowedSorts([
+                'id',
+                'start_date',
+                'end_date',
+                'balance',
+                'created_at',
+                'cancelled_at',
+            ])
+            ->allowedFilters([
+                'start_date',
+                'end_date',
+                'balance',
+                'created_at',
+                AllowedFilter::scope('status', 'ofStatus'),
+            ])
+            ->get();
 
         return SubscriptionResource::collection($subscriptions);
     }
