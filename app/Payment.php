@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
@@ -16,5 +17,31 @@ class Payment extends Model
     public function owner()
     {
         return $this->hasOneThrough('App\Member', 'App\Subscription');
+    }
+
+    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Scope a query to only include payments of given method.
+     *
+     * @param string $method
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOfMethod(Builder $query, string $method)
+    {
+        return $query->where('method', $method);
+    }
+
+    /**
+     * Scope a query to only include payments of given type.
+     *
+     * @param string $type
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOfType(Builder $query, string $type)
+    {
+        return $query->where('type', $type);
     }
 }
