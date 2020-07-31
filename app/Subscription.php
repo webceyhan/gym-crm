@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 
 class Subscription extends Model
 {
@@ -53,7 +52,7 @@ class Subscription extends Model
                 return $query->whereNotNull('cancelled_at');
         }
 
-        throw new InvalidArgumentException($status);
+        return $query;
     }
 
     /**
