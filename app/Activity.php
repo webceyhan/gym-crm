@@ -44,10 +44,15 @@ class Activity extends Model
     {
         switch ($status) {
             case ActivityStatus::ACTIVE:
-                return $query->whereNull('completed_at');
+                return $query
+                    ->whereDate('created_at', '>', now()->yesterday())
+                    ->whereNull('finished_at');
 
-            case ActivityStatus::COMPLETED:
-                return $query->whereNotNull('completed_at');
+            case ActivityStatus::EXPIRED:
+                return $query->whereDate('created_at', '<', now()->yesterday());
+
+            case ActivityStatus::FINISHED:
+                return $query->whereNotNull('finished_at');
         }
 
         return $query;

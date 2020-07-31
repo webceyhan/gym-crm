@@ -11,8 +11,8 @@ $factory->define(Activity::class, function (Faker $faker, $args = []) {
     $now = $args['created_at'] ?? now();
 
     return [
-        'type' => $faker->numberBetween(1, 2),
+        'type' => $faker->numberBetween(1, 3),
         'created_at' => $now,
-        'completed_at' => $faker->optional()->dateTimeBetween($now),
+        'finished_at' => $faker->optional()->dateTimeBetween($now),
     ];
 });

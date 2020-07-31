@@ -6,6 +6,7 @@ use App\Extra\Enum;
 
 class ActivityType extends Enum
 {
-    const CHECKIN = 'checkin';
-    const HOLIDAY = 'holiday';
+    const FITNESS = 'fitness';
+    const COURSE = 'course';
+    const SPA = 'spa';
 }

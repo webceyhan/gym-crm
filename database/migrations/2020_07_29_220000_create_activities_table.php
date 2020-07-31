@@ -17,9 +17,9 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('subscription_id')->constrained();
-            $table->enum('type', ActivityType::values())->default(ActivityType::CHECKIN);
+            $table->enum('type', ActivityType::values())->default(ActivityType::FITNESS);
             $table->timestamps();
-            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
         });
     }
 
