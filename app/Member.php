@@ -33,6 +33,11 @@ class Member extends Model
             ->withPivot(['id', 'type']);
     }
 
+    public function holidays()
+    {
+        return $this->hasMany('App\Holiday');
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**

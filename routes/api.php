@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // supplement routes
+Route::get('holidays', 'HolidayController@index');
 Route::get('relatives', 'RelativeController@index');
 Route::get('attachments', 'AttachmentController@index');
 Route::get('subscriptions', 'SubscriptionController@index');
@@ -28,6 +29,7 @@ Route::get('payments', 'PaymentController@index');
 // resource routes
 Route::apiResource('plans', 'PlanController');
 Route::apiResource('members', 'MemberController');
+Route::apiResource('members.holidays', 'HolidayController')->shallow();
 Route::apiResource('members.relatives', 'RelativeController')->shallow();
 Route::apiResource('members.attachments', 'AttachmentController')->shallow();
 Route::apiResource('members.subscriptions', 'SubscriptionController')->shallow();
