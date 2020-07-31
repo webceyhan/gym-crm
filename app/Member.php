@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
@@ -30,5 +31,41 @@ class Member extends Model
         return $this->belongsToMany('App\Member', 'relatives', 'owner_id')
             ->using('App\Relative')
             ->withPivot(['id', 'type']);
+    }
+
+    // SCOPES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Scope a query to only include members of given status.
+     *
+     * @param string status
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOfStatus(Builder $query, string $status)
+    {
+        return $query->where('status', $status);
+    }
+
+    /**
+     * Scope a query to only include child members.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeChild(Builder $query): Builder
+    {
+        return $query->whereRaw("TIMESTAMPDIFF(YEAR, birth_date, NOW()) < 18");
+    }
+
+    /**
+     * Scope a query to only include adult members.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeAdult(Builder $query): Builder
+    {
+        return $query->whereRaw("TIMESTAMPDIFF(YEAR, birth_date, NOW()) >= 18");
     }
 }
