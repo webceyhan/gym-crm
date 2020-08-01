@@ -27,6 +27,16 @@ class Plan extends Model
         'installment' => 0,
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'price' => 'double',
+        'installment' => 'boolean',
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function subscriptions()

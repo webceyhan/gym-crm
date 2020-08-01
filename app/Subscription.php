@@ -24,6 +24,15 @@ class Subscription extends Model
         'cancelled_at' => null,
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'balance' => 'double',
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function plan()
