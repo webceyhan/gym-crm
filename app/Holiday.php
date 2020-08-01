@@ -23,29 +23,29 @@ class Holiday extends Model
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Scope a query to only include holidays of given status.
-     *
-     * @param string status
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOfStatus(Builder $query, string $status)
+    public function scopePending(Builder $query): Builder
     {
-        switch ($status) {
-            case HolidayStatus::ACTIVE:
-                return $query
-                    ->whereDate('start_date', '<=', now())
-                    ->whereDate('end_date', '>=', now());
-
-            case HolidayStatus::PENDING:
-                return $query->whereDate('start_date', '>', now());
-
-            case HolidayStatus::EXPIRED:
-                return $query->whereDate('end_date', '<', now());
-        }
-
-        return $query;
+        return $query->whereDate('start_date', '>', now()->today());
     }
 
+    public function scopeOngoing(Builder $query): Builder
+    {
+        return $query
+            ->whereDate('start_date', '<=', now()->today())
+            ->whereDate('end_date', '>=', now()->today());
+    }
+
+    public function scopeExpired(Builder $query): Builder
+    {
+        return $query->whereDate('end_date', '<', now()->today());
+    }
+
+    public function scopeOfStatus(Builder $query, string $status): Builder
+    {
+        try {
+            return $query->{$status}();
+        } catch (\Throwable $th) {
+            throw new \InvalidArgumentException($status);
+        }
+    }
 }

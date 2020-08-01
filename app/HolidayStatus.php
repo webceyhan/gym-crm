@@ -6,7 +6,7 @@ use App\Extra\Enum;
 
 class HolidayStatus extends Enum
 {
-    const ACTIVE = 'active';
     const PENDING = 'pending';
+    const ONGOING = 'ongoing';
     const EXPIRED = 'expired';
 }
