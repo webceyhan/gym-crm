@@ -21,6 +21,13 @@ class Relative extends Pivot
      */
     public $incrementing = true;
 
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
