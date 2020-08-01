@@ -6,6 +6,9 @@ export DIR=$(dirname $(readlink -f $0))
 # load environment
 source $DIR/../.env || exit;
 
+# set local timezone or use UTC as default
+sudo timedatectl set-timezone ${APP_TIMEZONE:-'UTC'};
+
 # update
 sudo apt-get update -y
 
