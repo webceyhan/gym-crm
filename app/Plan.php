@@ -14,6 +14,19 @@ class Plan extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'description' => null,
+        'type' => PlanType::INDEFINITE,
+        'duration' => 0,
+        'price' => 0,
+        'installment' => 0,
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function subscriptions()

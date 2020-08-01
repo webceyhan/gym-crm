@@ -14,6 +14,16 @@ class Activity extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'type' => ActivityType::FITNESS,
+        'finished_at' => null,
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function subscription()

@@ -28,6 +28,15 @@ class Relative extends Pivot
      */
     protected $guarded = [];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'type' => RelativeType::SIBLING,
+    ];
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**

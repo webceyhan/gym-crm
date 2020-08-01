@@ -14,6 +14,16 @@ class Subscription extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'balance' => 0,
+        'cancelled_at' => null,
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function plan()

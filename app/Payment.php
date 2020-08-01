@@ -14,6 +14,17 @@ class Payment extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'amount' => 0,
+        'method' => PaymentMethod::CASH,
+        'type' => PaymentType::CHARGE,
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function subscription()

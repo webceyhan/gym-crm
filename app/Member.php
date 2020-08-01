@@ -14,6 +14,21 @@ class Member extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'birth_palce' => null,
+        'phone' => null,
+        'email' => null,
+        'address' => null,
+        'photo' => null,
+        'notes' => null,
+        'status' => MemberStatus::OUT,
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function subscription()
