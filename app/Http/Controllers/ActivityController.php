@@ -19,7 +19,10 @@ class ActivityController extends Controller
      */
     public function index(?Subscription $subscription = null)
     {
-        $query = QueryBuilder::for($subscription->activities ?? Activity::class);
+        $query = QueryBuilder::for($subscription
+            ? $subscription->activities()->getQuery()
+            : Activity::class
+        );
 
         $activities = $query
             ->allowedSorts([

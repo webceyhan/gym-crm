@@ -18,7 +18,10 @@ class PaymentController extends Controller
      */
     public function index(?Subscription $subscription = null)
     {
-        $query = QueryBuilder::for($subscription->payments ?? Payment::class);
+        $query = QueryBuilder::for($subscription
+            ? $subscription->payments()->getQuery()
+            : Payment::class
+        );
 
         $payments = $query
             ->allowedSorts([

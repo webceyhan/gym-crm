@@ -18,7 +18,10 @@ class AttachmentController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $query = QueryBuilder::for($member->attachments ?? Attachment::class);
+        $query = QueryBuilder::for($member
+            ? $member->attachments()->getQuery()
+            : Attachment::class
+        );
 
         $attachments = $query
             ->allowedSorts([

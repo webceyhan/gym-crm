@@ -19,7 +19,10 @@ class SubscriptionController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $query = QueryBuilder::for($member->subscriptions ?? Subscription::class);
+        $query = QueryBuilder::for($member
+            ? $member->subscriptions()->getQuery()
+            : Subscription::class
+        );
 
         $subscriptions = $query
             ->allowedSorts([

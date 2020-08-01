@@ -19,7 +19,10 @@ class HolidayController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $query = QueryBuilder::for($member->holidays ?? Holiday::class);
+        $query = QueryBuilder::for($member
+            ? $member->holidays()->getQuery()
+            : Holiday::class
+        );
 
         $holidays = $query
             ->allowedSorts([

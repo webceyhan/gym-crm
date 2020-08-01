@@ -18,7 +18,10 @@ class RelativeController extends Controller
      */
     public function index(?Member $member = null)
     {
-        $query = QueryBuilder::for($member->relatives ?? Relative::class);
+        $query = QueryBuilder::for($member
+            ? $member->relatives()->getQuery()
+            : Relative::class
+        );
 
         $relatives = $query
             ->allowedSorts([
