@@ -73,7 +73,7 @@ class ActivityController extends Controller
     {
         $data = $request->all();
 
-        $activity->save($data);
+        $activity->fill($data)->save();
 
         return new ActivityResource($activity);
     }

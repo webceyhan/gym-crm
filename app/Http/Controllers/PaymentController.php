@@ -73,7 +73,7 @@ class PaymentController extends Controller
     {
         $data = $request->all();
 
-        $payment->save($data);
+        $payment->fill($data)->save();
 
         return new PaymentResource($payment);
     }

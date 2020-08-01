@@ -73,7 +73,7 @@ class HolidayController extends Controller
     {
         $data = $request->all();
 
-        $holiday->save($data);
+        $holiday->fill($data)->save();
 
         return new HolidayResource($holiday);
     }

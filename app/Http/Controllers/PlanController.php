@@ -74,7 +74,7 @@ class PlanController extends Controller
     {
         $data = $request->all();
 
-        $plan->save($data);
+        $plan->fill($data)->save();
 
         return new PlanResource($plan);
     }

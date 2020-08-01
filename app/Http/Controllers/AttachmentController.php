@@ -69,7 +69,7 @@ class AttachmentController extends Controller
     {
         $data = $request->all();
 
-        $attachment->save($data);
+        $attachment->fill($data)->save();
 
         return new AttachmentResource($attachment);
     }

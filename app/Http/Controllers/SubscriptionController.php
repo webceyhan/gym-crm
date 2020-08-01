@@ -76,7 +76,7 @@ class SubscriptionController extends Controller
     {
         $data = $request->all();
 
-        $subscription->save($data);
+        $subscription->fill($data)->save();
 
         return new SubscriptionResource($subscription);
     }

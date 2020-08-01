@@ -73,7 +73,7 @@ class MemberController extends Controller
     {
         $data = $request->all();
 
-        $member->save($data);
+        $member->fill($data)->save();
 
         return new MemberResource($member);
     }

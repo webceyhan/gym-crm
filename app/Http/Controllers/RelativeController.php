@@ -69,7 +69,7 @@ class RelativeController extends Controller
     {
         $data = $request->all();
 
-        $relative->save($data);
+        $relative->fill($data)->save();
 
         return new RelativeResource($relative);
     }
