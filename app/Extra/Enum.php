@@ -33,4 +33,15 @@ class Enum
     {
         return array_values(static::constants());
     }
+
+    /**
+     * Get true if given value exists in constant values.
+     *
+     * @param string $value
+     * @return boolean
+     */
+    public static function has(string $value): bool
+    {
+        return in_array($value, static::values());
+    }
 }
