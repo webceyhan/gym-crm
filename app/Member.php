@@ -20,7 +20,7 @@ class Member extends Model
      * @var array
      */
     protected $attributes = [
-        'birth_palce' => null,
+        'birth_place' => null,
         'phone' => null,
         'email' => null,
         'address' => null,
