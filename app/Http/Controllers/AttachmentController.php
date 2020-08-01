@@ -26,11 +26,11 @@ class AttachmentController extends Controller
         $attachments = $query
             ->allowedSorts([
                 'id',
-                'file',
+                'name',
                 'created_at',
             ])
             ->allowedFilters([
-                'file',
+                'name',
                 'created_at',
             ])
             ->get();

@@ -11,7 +11,8 @@ $factory->define(Attachment::class, function (Faker $faker, $args = []) {
     $now = $args['created_at'] ?? now();
 
     return [
-        'file' => $faker->uuid . '.jpg',
+        'name' => $faker->catchPhrase,
+        'filename' => $faker->uuid . '.jpg',
         'created_at' => $now,
     ];
 });
