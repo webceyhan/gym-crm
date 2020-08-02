@@ -13,15 +13,29 @@ class PaymentSeeder extends Seeder
      */
     public function run()
     {
-        Subscription::all()->each(function ($subscription) {
+        $config = config('seeder.member.subscription.payment');
 
-            $amount = rand(0, 2);
+        Subscription::all()->each(function ($subscription) use ($config) {
 
-            $payments = factory(Payment::class, $amount)->make([
-                'created_at' => $subscription->created_at,
-            ]);
+            $now = $subscription->created_at->clone();
+            $count = rand(0, $subscription->plan->duration);
 
-            $subscription->payments()->saveMany($payments);
+            $payments = factory(Payment::class, $count)->make();
+
+            $payments->each(function ($payment) use ($now, $subscription) {
+                $payment->subscription_id = $subscription->id;
+                $payment->created_at = $now->addMonth(1)->clone();
+                $payment->save();
+
+                // subtract from balance (inverse to zero balance)
+                $subscription->balance += $payment->amount;
+            });
+
+            // update balance
+            $subscription->save();
+
+            // todo: enable this later after fixing plan balance/fee issue
+            // $subscription->payments()->saveMany($payments);
         });
     }
 }
