@@ -15,16 +15,26 @@ class SubscriptionSeeder extends Seeder
     public function run()
     {
         $planIds = Plan::pluck('id');
+        $config = config('seeder.member.subscription');
 
-        Member::all()->each(function ($member) use ($planIds) {
+        Member::all()->each(function ($member) use ($planIds, $config) {
 
-            $amount = rand(0, 1);
+            $now = $member->created_at->clone();
 
-            factory(Subscription::class, $amount)->create([
-                'plan_id' => $planIds->random(),
+            $subscriptions = factory(Subscription::class, rand(...$config['count']))->make([
+                'plan_id' => fn() => $planIds->random(),
                 'member_id' => $member->id,
-                'created_at' => $member->created_at,
             ]);
+
+            $subscriptions->each(function ($subscription) use ($now, $config) {
+                $subscription->created_at = $now->clone();
+                $subscription->start_date = $now->addDays(rand(...$config['delay_days']))->clone();
+                $subscription->end_date = $now->addMonths($subscription->plan->duration)->clone();
+                $subscription->cancelled_at = rand(0, 100) < 10 ? $now : null;
+                $subscription->balance = -$subscription->plan->price;
+                $subscription->save();
+            });
+
         });
     }
 }

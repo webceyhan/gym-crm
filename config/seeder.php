@@ -45,7 +45,8 @@ return [
 
         // 1 or more (previous) subscriptons
         'subscription' => [
-            'count' => 2,
+            'count' => [0, 2],
+            'delay_days' => [0, 10],
 
             // check in/out for fitness, spa or other facilities
             'activity' => [

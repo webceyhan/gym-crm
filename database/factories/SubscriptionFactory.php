@@ -5,16 +5,10 @@
 use App\Subscription;
 use Faker\Generator as Faker;
 
-$factory->define(Subscription::class, function (Faker $faker, $args = []) {
-
-    // get parent date or now
-    $now = $args['created_at'] ?? now();
-
+$factory->define(Subscription::class, function (Faker $faker) {
     return [
-        'start_date' => $now,
-        'end_date' => $faker->dateTimeBetween($now),
+        'start_date' => $faker->date(),
+        'end_date' => $faker->date(),
         'balance' => $faker->randomNumber(2),
-        'created_at' => $now,
-        'cancelled_at' => $faker->optional(.2)->dateTimeBetween($now),
     ];
 });
