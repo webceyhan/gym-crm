@@ -29,6 +29,15 @@ class Member extends Model
         'status' => MemberStatus::OUT,
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'birth_date',
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function subscription()
