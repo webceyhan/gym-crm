@@ -38,40 +38,34 @@ class Activity extends Model
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Scope a query to only include activities of given type.
-     *
-     * @param string type
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOfType(Builder $query, string $type)
+    public function scopeOngoing(Builder $query): Builder
+    {
+        return $query
+            ->whereDate('created_at', now()->today())
+            ->whereNull('finished_at');
+    }
+
+    public function scopeFinished(Builder $query): Builder
+    {
+        return $query->whereNotNull('finished_at');
+    }
+
+    public function scopeExpired(Builder $query): Builder
+    {
+        return $query->whereDate('created_at', '<', now()->today());
+    }
+
+    public function scopeOfType(Builder $query, string $type): Builder
     {
         return $query->where('type', $type);
     }
 
-    /**
-     * Scope a query to only include activities of given status.
-     *
-     * @param string status
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOfStatus(Builder $query, string $status)
+    public function scopeOfStatus(Builder $query, string $status): Builder
     {
-        switch ($status) {
-            case ActivityStatus::ACTIVE:
-                return $query
-                    ->whereDate('created_at', '>', now()->yesterday())
-                    ->whereNull('finished_at');
-
-            case ActivityStatus::EXPIRED:
-                return $query->whereDate('created_at', '<', now()->yesterday());
-
-            case ActivityStatus::FINISHED:
-                return $query->whereNotNull('finished_at');
+        try {
+            return $query->{$status}();
+        } catch (\Throwable $th) {
+            throw new \InvalidArgumentException($status);
         }
-
-        return $query;
     }
 }

@@ -6,7 +6,7 @@ use App\Extra\Enum;
 
 class ActivityStatus extends Enum
 {
-    const ACTIVE = 'active';
-    const EXPIRED = 'expired';
+    const ONGOING = 'ongoing';
     const FINISHED = 'finished';
+    const EXPIRED = 'expired';
 }
