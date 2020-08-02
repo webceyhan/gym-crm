@@ -12,10 +12,11 @@ class MemberSeeder extends Seeder
      */
     public function run()
     {
-        $amount = 50;
+        $config = config('seeder.member');
+        $now = config('seeder.now')->clone();
 
-        factory(Member::class, $amount)->create([
-            'created_at' => fn() => now()->subYears(rand(0, 5)),
+        factory(Member::class, $config['count'])->create([
+            'created_at' => fn() => $now->addDays(rand(0, 7)),
         ]);
     }
 }
