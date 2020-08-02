@@ -25,7 +25,8 @@ return [
 
         // certificates, proves or signature
         'attachment' => [
-            'count' => 3,
+            'count' => [0, 3],
+            'delay_days' => [0, 7],
         ],
 
         // planned holidays incremental
