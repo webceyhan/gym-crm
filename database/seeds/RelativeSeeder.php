@@ -13,15 +13,21 @@ class RelativeSeeder extends Seeder
      */
     public function run()
     {
-        Member::inRandomOrder()->take(10)->get()->each(function ($owner) {
+        $ids = Member::pluck('id');
+        $config = config('seeder.member.relative');
 
-            $amount = rand(1,2);
+        Member::all()->each(function ($owner) use ($ids, $config) {
 
-            $relatives = factory(Relative::class, $amount)->create([
+            // starting from owner creation
+            $now = $owner->created_at->clone();
+
+            // get unique id pool to consume as reference
+            $scopedIds = $ids->except($owner->id)->shuffle();
+
+            $relatives = factory(Relative::class, rand(...$config['count']))->create([
                 'owner_id' => $owner->id,
-                // generate random member id between as one less then owner id
-                'member_id' => fn() => $owner->id > 1 ? rand(1, $owner->id) : 2,
-                'created_at' => $owner->created_at,
+                'member_id' => fn() =>  $scopedIds->pop(),
+                'created_at' => fn() => $now->addDays(rand(...$config['delay_days'])),
             ]);
 
             // create cross-reference record

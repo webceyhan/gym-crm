@@ -39,7 +39,8 @@ return [
 
         // friend, family or sibling
         'relative' => [
-            'count' => 2,
+            'count' => [0, 2],
+            'delay_days' => [1, 30],
         ],
 
         // 1 or more (previous) subscriptons
