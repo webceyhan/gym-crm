@@ -30,8 +30,10 @@ return [
 
         // planned holidays incremental
         'holiday' => [
-            'count' => 4,
-            'days' => 30,
+            'count' => [1, 3], // 1-3 times
+            'days' => [5, 30], // 5-30 days for duration
+            'delay_days' => [0, 10], // delay 0-10 days before holiday starts
+            'gap_months' => [2, 3], // 2-3 months between holidays
         ],
 
         // friend, family or sibling
