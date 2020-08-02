@@ -24,6 +24,15 @@ class Activity extends Model
         'finished_at' => null,
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'finished_at',
+    ];
+
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
     public function subscription()
