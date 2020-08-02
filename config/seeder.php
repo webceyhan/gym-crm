@@ -45,12 +45,12 @@ return [
 
         // 1 or more (previous) subscriptons
         'subscription' => [
-            'count' => [0, 2],
+            'count' => [1, 2],
             'delay_days' => [0, 10],
 
             // check in/out for fitness, spa or other facilities
             'activity' => [
-                'count' => 10,
+                'count' => [0, 10],
             ],
 
             // charge (with/out installment), refund or discount
