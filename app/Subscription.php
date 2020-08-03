@@ -35,19 +35,24 @@ class Subscription extends Model
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
-    public function plan()
-    {
-        return $this->belongsTo('App\Plan');
-    }
-
     public function owner()
     {
         return $this->belongsTo('App\Member');
     }
 
+    public function plan()
+    {
+        return $this->belongsTo('App\Plan');
+    }
+
     public function activities()
     {
         return $this->hasMany('App\Activity');
+    }
+
+    public function currentActivity()
+    {
+        return $this->hasOne('App\Activity')->latest('id');
     }
 
     public function payments()
