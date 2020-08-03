@@ -54,6 +54,11 @@ class Plan extends Model
         return $this->hasManyThrough('App\Payment', 'App\Subscription');
     }
 
+    public function activities()
+    {
+        return $this->hasManyThrough('App\Activity', 'App\Subscription');
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**

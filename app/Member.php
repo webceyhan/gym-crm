@@ -70,6 +70,16 @@ class Member extends Model
         return $this->hasOne('App\Subscription')->latest('id');
     }
 
+    public function activities()
+    {
+        return $this->hasManyThrough('App\Activity', 'App\Subscription');
+    }
+
+    public function payments()
+    {
+        return $this->hasManyThrough('App\Payment', 'App\Subscription');
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
