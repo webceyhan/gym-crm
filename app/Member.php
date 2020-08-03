@@ -73,6 +73,28 @@ class Member extends Model
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * Scope a query to only include male members.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeMale(Builder $query): Builder
+    {
+        return $query->where('gender', MemberGender::MALE);
+    }
+
+    /**
+     * Scope a query to only include female members.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeFemale(Builder $query): Builder
+    {
+        return $query->where('gender', MemberGender::FEMALE);
+    }
+
+    /**
      * Scope a query to only include adult members.
      *
      * @param Builder $query
