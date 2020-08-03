@@ -26,7 +26,7 @@ class Member extends Model
         'address' => null,
         'photo' => null,
         'notes' => null,
-        'status' => MemberStatus::OUT,
+        'status' => MemberStatus::OUTSIDE,
     ];
 
     /**
@@ -72,15 +72,14 @@ class Member extends Model
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Scope a query to only include members of given status.
+     * Scope a query to only include adult members.
      *
-     * @param string status
      * @param Builder $query
      * @return Builder
      */
-    public function scopeOfStatus(Builder $query, string $status)
+    public function scopeAdult(Builder $query): Builder
     {
-        return $query->where('status', $status);
+        return $query->whereRaw("TIMESTAMPDIFF(YEAR, birth_date, NOW()) >= 18");
     }
 
     /**
@@ -95,13 +94,35 @@ class Member extends Model
     }
 
     /**
-     * Scope a query to only include adult members.
+     * Scope a query to only include members inside the club.
      *
      * @param Builder $query
      * @return Builder
      */
-    public function scopeAdult(Builder $query): Builder
+    public function scopeInside(Builder $query): Builder
     {
-        return $query->whereRaw("TIMESTAMPDIFF(YEAR, birth_date, NOW()) >= 18");
+        return $query->where('status', MemberStatus::INSIDE);
+    }
+
+    /**
+     * Scope a query to only include members outside the club.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOutside(Builder $query): Builder
+    {
+        return $query->where('status', MemberStatus::OUTSIDE);
+    }
+
+    /**
+     * Scope a query to only include members away (on holiday).
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeAway(Builder $query): Builder
+    {
+        return $query->where('status', MemberStatus::AWAY);
     }
 }

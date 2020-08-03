@@ -6,7 +6,7 @@ use App\Extra\Enum;
 
 class MemberStatus extends Enum
 {
-    const IN = 'in';
-    const OUT = 'out';
+    const INSIDE = 'inside';
+    const OUTSIDE = 'outside';
     const AWAY = 'away';
 }

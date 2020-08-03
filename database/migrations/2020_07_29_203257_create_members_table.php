@@ -25,7 +25,7 @@ class CreateMembersTable extends Migration
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('status', MemberStatus::values())->default(MemberStatus::OUT);
+            $table->enum('status', MemberStatus::values())->default(MemberStatus::OUTSIDE);
             $table->timestamps();
         });
     }
