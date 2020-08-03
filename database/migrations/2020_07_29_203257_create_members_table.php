@@ -1,5 +1,6 @@
 <?php
 
+use App\MemberGender;
 use App\MemberStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +19,7 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('ssn')->unique();
+            $table->enum('gender', MemberGender::values())->default(MemberGender::MALE);
             $table->date('birth_date');
             $table->string('birth_place')->nullable();
             $table->string('phone')->nullable();

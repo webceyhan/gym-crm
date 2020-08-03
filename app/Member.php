@@ -20,6 +20,7 @@ class Member extends Model
      * @var array
      */
     protected $attributes = [
+        'gender' => MemberGender::MALE,
         'birth_place' => null,
         'phone' => null,
         'email' => null,

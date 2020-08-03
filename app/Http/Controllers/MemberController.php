@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MemberResource;
 use App\Member;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class MemberController extends Controller
@@ -22,12 +23,14 @@ class MemberController extends Controller
             ->allowedSorts([
                 'id',
                 'name',
+                'gender',
                 'birth_date',
                 'status',
                 'created_at',
             ])
             ->allowedFilters([
                 'name',
+                AllowedFilter::exact('gender'),
                 'birth_date',
                 'phone',
                 'email',
