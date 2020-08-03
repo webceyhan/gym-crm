@@ -39,14 +39,14 @@ class Plan extends Model
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
-    public function subscriptions()
-    {
-        return $this->hasMany('App\Subscription');
-    }
-
     public function members()
     {
         return $this->hasManyThrough('App\Member', 'App\Subscription');
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany('App\Subscription');
     }
 
     public function payments()
