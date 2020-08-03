@@ -35,7 +35,7 @@ class MemberController extends Controller
                 'phone',
                 'email',
                 'address',
-                'status',
+                AllowedFilter::exact('status'),
                 'created_at',
             ])
             ->get();
