@@ -97,25 +97,18 @@ class Member extends Model
     }
 
     /**
-     * Scope a query to only include adult members.
+     * Scope a query to only include [not-]adult members.
      *
+     * @param boolean $state
      * @param Builder $query
      * @return Builder
      */
-    public function scopeAdult(Builder $query): Builder
+    public function scopeAdult(Builder $query, $state = true): Builder
     {
-        return $query->whereRaw("TIMESTAMPDIFF(YEAR, birth_date, NOW()) >= 18");
-    }
+        $ago = now()->subYears(18);
+        $operator = !!$state ? '<' : '>=';
 
-    /**
-     * Scope a query to only include child members.
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeChild(Builder $query): Builder
-    {
-        return $query->whereRaw("TIMESTAMPDIFF(YEAR, birth_date, NOW()) < 18");
+        return $query->whereDate('birth_date', $operator, $ago);
     }
 
     /**
