@@ -29,16 +29,6 @@ class RelativeSeeder extends Seeder
                 'member_id' => fn() =>  $scopedIds->pop(),
                 'created_at' => fn() => $now->addDays(rand(...$config['delay_days'])),
             ]);
-
-            // create cross-reference record
-            $relatives->each(function ($relative) {
-                Relative::create([
-                    'owner_id' => $relative->member_id,
-                    'member_id' => $relative->owner_id,
-                    'type' => $relative->type,
-                    'created_at' => $relative->created_at,
-                ]);
-            });
         });
     }
 
