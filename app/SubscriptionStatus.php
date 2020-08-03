@@ -9,4 +9,6 @@ class SubscriptionStatus extends Enum
     const ACTIVE = 'active';
     const EXPIRED = 'expired';
     const CANCELLED = 'cancelled';
+    const OUTSTANDING = 'outstanding';
+    const OVERDUE = 'overdue';
 }
