@@ -28,6 +28,7 @@ class Member extends Model
         'photo' => null,
         'notes' => null,
         'status' => MemberStatus::OUTSIDE,
+        'verified_at' => null,
     ];
 
     /**
@@ -37,6 +38,7 @@ class Member extends Model
      */
     protected $dates = [
         'birth_date',
+        'verified_at',
     ];
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
@@ -147,5 +149,17 @@ class Member extends Model
     public function scopeAway(Builder $query): Builder
     {
         return $query->where('status', MemberStatus::AWAY);
+    }
+
+    /**
+     * Scope a query to only include [not-]verified members.
+     *
+     * @param boolean $state
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeVerified(Builder $query, $state = true): Builder
+    {
+        return $query->whereNull('verified_at', 'and', !!$state);
     }
 }

@@ -29,6 +29,7 @@ class CreateMembersTable extends Migration
             $table->text('notes')->nullable();
             $table->enum('status', MemberStatus::values())->default(MemberStatus::OUTSIDE);
             $table->timestamps();
+            $table->timestamp('verified_at')->nullable();
         });
     }
 

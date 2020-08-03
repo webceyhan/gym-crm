@@ -37,6 +37,7 @@ class MemberController extends Controller
                 'address',
                 AllowedFilter::exact('status'),
                 'created_at',
+                'verified_at'
             ])
             ->get();
 

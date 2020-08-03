@@ -18,5 +18,6 @@ $factory->define(Member::class, function (Faker $faker) {
         'photo' => $faker->optional(.8)->passthrough("{$faker->uuid}.jpg"),
         'notes' => $faker->optional(.2)->realText,
         'status' => $faker->numberBetween(1, 3),
+        'verified_at' => $faker->optional()->dateTime(),
     ];
 });
