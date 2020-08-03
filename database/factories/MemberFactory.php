@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Member::class, function (Faker $faker) {
     return [
         'name' => "$faker->firstName $faker->lastName",
-        'nin' => $faker->isbn13,
+        'ssn' => $faker->isbn13,
         'birth_date' => $faker->date,
         'birth_place' => $faker->optional(.7)->city,
         'phone' => $faker->optional(.8)->e164PhoneNumber,
