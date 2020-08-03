@@ -43,18 +43,6 @@ class Member extends Model
 
     // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
 
-    public function subscription()
-    {
-        return $this->subscriptions()
-            ->latest('id')
-            ->first();
-    }
-
-    public function subscriptions()
-    {
-        return $this->hasMany('App\Subscription');
-    }
-
     public function attachments()
     {
         return $this->hasMany('App\Attachment');
@@ -70,6 +58,16 @@ class Member extends Model
     public function holidays()
     {
         return $this->hasMany('App\Holiday');
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany('App\Subscription');
+    }
+
+    public function currentSubscription()
+    {
+        return $this->hasOne('App\Subscription')->latest('id');
     }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
