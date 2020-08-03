@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Traits\Relation\BelongsToSubscription;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
+    use BelongsToSubscription;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -32,18 +35,6 @@ class Activity extends Model
     protected $dates = [
         'finished_at',
     ];
-
-    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    public function owner()
-    {
-        return $this->hasOneThrough('App\Member', 'App\Subscription');
-    }
-
-    public function subscription()
-    {
-        return $this->belongsTo('App\Subscription');
-    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

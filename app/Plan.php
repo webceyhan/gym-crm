@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Traits\Relation\HasSubscriptions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
 {
+    use HasSubscriptions;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -36,28 +39,6 @@ class Plan extends Model
         'price' => 'double',
         'installment' => 'boolean',
     ];
-
-    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    public function members()
-    {
-        return $this->hasManyThrough('App\Member', 'App\Subscription');
-    }
-
-    public function subscriptions()
-    {
-        return $this->hasMany('App\Subscription');
-    }
-
-    public function payments()
-    {
-        return $this->hasManyThrough('App\Payment', 'App\Subscription');
-    }
-
-    public function activities()
-    {
-        return $this->hasManyThrough('App\Activity', 'App\Subscription');
-    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

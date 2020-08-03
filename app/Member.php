@@ -2,11 +2,17 @@
 
 namespace App;
 
+use App\Traits\Relation\HasAttachments;
+use App\Traits\Relation\HasHolidays;
+use App\Traits\Relation\HasRelatives;
+use App\Traits\Relation\HasSubscriptions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
+    use HasSubscriptions, HasRelatives, HasHolidays, HasAttachments;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -40,45 +46,6 @@ class Member extends Model
         'birth_date',
         'verified_at',
     ];
-
-    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    public function attachments()
-    {
-        return $this->hasMany('App\Attachment');
-    }
-
-    public function relatives()
-    {
-        return $this->belongsToMany('App\Member', 'relatives', 'owner_id')
-            ->using('App\Relative')
-            ->withPivot(['id', 'type']);
-    }
-
-    public function holidays()
-    {
-        return $this->hasMany('App\Holiday');
-    }
-
-    public function subscriptions()
-    {
-        return $this->hasMany('App\Subscription');
-    }
-
-    public function currentSubscription()
-    {
-        return $this->hasOne('App\Subscription')->latest('id');
-    }
-
-    public function activities()
-    {
-        return $this->hasManyThrough('App\Activity', 'App\Subscription');
-    }
-
-    public function payments()
-    {
-        return $this->hasManyThrough('App\Payment', 'App\Subscription');
-    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

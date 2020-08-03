@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Traits\Relation\BelongsToMember;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Holiday extends Model
 {
+    use BelongsToMember;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -21,15 +24,8 @@ class Holiday extends Model
      */
     protected $dates = [
         'start_date',
-        'end_date'
+        'end_date',
     ];
-
-    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    public function owner()
-    {
-        return $this->belongsTo('App\Member');
-    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

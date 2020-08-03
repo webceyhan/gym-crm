@@ -2,11 +2,17 @@
 
 namespace App;
 
+use App\Traits\Relation\BelongsToMember;
+use App\Traits\Relation\BelongsToPlan;
+use App\Traits\Relation\HasActivities;
+use App\Traits\Relation\HasPayments;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
+    use BelongsToMember, BelongsToPlan, HasActivities, HasPayments;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -32,33 +38,6 @@ class Subscription extends Model
     protected $casts = [
         'balance' => 'double',
     ];
-
-    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    public function owner()
-    {
-        return $this->belongsTo('App\Member');
-    }
-
-    public function plan()
-    {
-        return $this->belongsTo('App\Plan');
-    }
-
-    public function activities()
-    {
-        return $this->hasMany('App\Activity');
-    }
-
-    public function currentActivity()
-    {
-        return $this->hasOne('App\Activity')->latest('id');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany('App\Payment');
-    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 

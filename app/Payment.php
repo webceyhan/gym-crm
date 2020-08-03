@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Traits\Relation\BelongsToSubscription;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
+    use BelongsToSubscription;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -33,18 +36,6 @@ class Payment extends Model
     protected $casts = [
         'amount' => 'double',
     ];
-
-    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
-
-    public function owner()
-    {
-        return $this->hasOneThrough('App\Member', 'App\Subscription');
-    }
-
-    public function subscription()
-    {
-        return $this->belongsTo('App\Subscription');
-    }
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
