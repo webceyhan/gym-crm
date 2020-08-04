@@ -25,7 +25,7 @@ class PlanController extends Controller
                 'type',
                 'duration',
                 'price',
-                'installment',
+                'monthly_fee',
                 'created_at',
             ])
             ->allowedFilters([
@@ -33,7 +33,7 @@ class PlanController extends Controller
                 'type',
                 'duration',
                 'price',
-                'installment',
+                'monthly_fee',
                 'created_at',
             ])
             ->get();

@@ -27,8 +27,8 @@ class Plan extends Model
         'type' => PlanType::INDEFINITE,
         'duration' => 0,
         'price' => 0,
+        'monthly_fee' => 0,
         'extra_fee' => 0,
-        'installment' => 0,
     ];
 
     /**
@@ -38,10 +38,25 @@ class Plan extends Model
      */
     protected $casts = [
         'price' => 'double',
-        'installment' => 'boolean',
+        'monthly_fee' => 'double',
+        'extra_fee' => 'double',
     ];
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Scope a query to only include [not-]prepaid plans.
+     *
+     * @param boolean $state
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopePrepaid(Builder $query, $state = true)
+    {
+        $operator = !!$state ? '=' : '!=';
+
+        return $query->where('monthly_fee', $operator, 0);
+    }
 
     /**
      * Scope a query to only include plans of given type.
@@ -54,27 +69,4 @@ class Plan extends Model
     {
         return $query->where('type', $type);
     }
-
-    /**
-     * Scope a query to only include prepaid plans.
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePrepaid(Builder $query)
-    {
-        return $query->where('installment', false);
-    }
-
-    /**
-     * Scope a query to only include installment plans.
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeInstallment(Builder $query)
-    {
-        return $query->where('installment', true);
-    }
-
 }
