@@ -1,6 +1,5 @@
 <?php
 
-use App\PlanType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +17,6 @@ class CreatePlansTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->enum('type', PlanType::values())->default(PlanType::INDEFINITE);
             $table->integer('duration')->default(0);
             $table->decimal('price')->default(0);
             $table->decimal('monthly_fee')->default(0);

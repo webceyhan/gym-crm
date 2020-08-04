@@ -1,7 +1,6 @@
 <?php
 
 use App\Plan;
-use App\PlanType;
 use Illuminate\Database\Seeder;
 
 class PlanSeeder extends Seeder
@@ -28,11 +27,10 @@ class PlanSeeder extends Seeder
         return [
             [
                 'name' => 'Cash 1 year',
+                'duration' => 12,
                 'price' => 895,
                 'monthly_fee' => 0,
                 'extra_fee' => 100,
-                'duration' => 12,
-                'type' => PlanType::MONTHLY,
                 'description' => implode('\n', [
                     'ALL IN membership',
                     'You receive an extra reduction of €100',
@@ -42,12 +40,10 @@ class PlanSeeder extends Seeder
             ],
             [
                 'name' => '1 year Domiciliation',
+                'duration' => 12,
                 'price' => 900,
                 'monthly_fee' => 75,
                 'extra_fee' => 100,
-                'duration' => 12,
-                'type' => PlanType::MONTHLY,
-
                 'description' => implode('\n', [
                     'ALL IN membership',
                     'You receive an extra reduction of €100',
@@ -58,11 +54,10 @@ class PlanSeeder extends Seeder
             ],
             [
                 'name' => 'Discover us 3 months',
+                'duration' => 3,
                 'price' => 265,
                 'monthly_fee' => 0,
                 'extra_fee' => 100,
-                'duration' => 3,
-                'type' => PlanType::MONTHLY,
                 'description' => implode('\n', [
                     'ALL IN membership',
                     'You receive an extra reduction of €25',
@@ -72,11 +67,10 @@ class PlanSeeder extends Seeder
             ],
             [
                 'name' => 'Student 1 year',
+                'duration' => 12,
                 'price' => 495,
                 'monthly_fee' => 0,
                 'extra_fee' => 40,
-                'duration' => 12,
-                'type' => PlanType::MONTHLY,
                 'description' => implode('\n', [
                     'You\'re younger than 24y',
                     'All-in membership for students',

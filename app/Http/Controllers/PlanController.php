@@ -22,7 +22,6 @@ class PlanController extends Controller
             ->allowedSorts([
                 'id',
                 'name',
-                'type',
                 'duration',
                 'price',
                 'monthly_fee',
@@ -30,7 +29,6 @@ class PlanController extends Controller
             ])
             ->allowedFilters([
                 'name',
-                'type',
                 'duration',
                 'price',
                 'monthly_fee',

@@ -24,7 +24,6 @@ class Plan extends Model
      */
     protected $attributes = [
         'description' => null,
-        'type' => PlanType::INDEFINITE,
         'duration' => 0,
         'price' => 0,
         'monthly_fee' => 0,
@@ -56,17 +55,5 @@ class Plan extends Model
         $operator = !!$state ? '=' : '!=';
 
         return $query->where('monthly_fee', $operator, 0);
-    }
-
-    /**
-     * Scope a query to only include plans of given type.
-     *
-     * @param string $type
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOfType(Builder $query, string $type)
-    {
-        return $query->where('type', $type);
     }
 }
