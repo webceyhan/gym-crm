@@ -13,19 +13,24 @@ class ActivitySeeder extends Seeder
      */
     public function run()
     {
-        $config = config('seeder.member.subscription.activity');
+        Subscription::all()->each(function ($subscription) {
 
-        Subscription::all()->each(function ($subscription) use ($config) {
+            // 1-5 activity per subscription
+            $amount = rand(1, 5);
 
-            $now = $subscription->created_at->clone();
+            // start from subscription's start-date
+            $now = $subscription->start_date->clone();
 
-            $activities = factory(Activity::class, rand(...$config['count']))->make();
+            // make activities
+            $activities = factory(Activity::class, $amount)->make();
 
-            $activities->each(function($activity) use($now){
-                $activity->created_at = $now->addDays(rand(0, 7))->clone();
-                $activity->finished_at = $now->addHours(rand(1,3))->clone();
+            // customize activities
+            $activities->each(function ($activity) use ($now) {
+                $activity->created_at = $now->addDays(rand(0, 5))->clone();
+                $activity->finished_at = $now->addHours(rand(1, 3))->clone();
             });
 
+            // save activities
             $subscription->activities()->saveMany($activities);
         });
     }
