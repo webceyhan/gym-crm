@@ -31,7 +31,7 @@ class PlanSeeder extends Seeder
                 'price' => 895,
                 'extra_fee' => 100,
                 'is_prepaid' => true,
-                'description' => implode('\n', [
+                'description' => implode("\n", [
                     'ALL IN membership',
                     'You receive an extra reduction of €100',
                     'Pay the entire year at once',
@@ -44,7 +44,7 @@ class PlanSeeder extends Seeder
                 'price' => 900,
                 'extra_fee' => 100,
                 'is_prepaid' => false,
-                'description' => implode('\n', [
+                'description' => implode("\n", [
                     'ALL IN membership',
                     'You receive an extra reduction of €100',
                     'After 12 months you can cancel monthly',
@@ -58,7 +58,7 @@ class PlanSeeder extends Seeder
                 'price' => 265,
                 'extra_fee' => 100,
                 'is_prepaid' => true,
-                'description' => implode('\n', [
+                'description' => implode("\n", [
                     'ALL IN membership',
                     'You receive an extra reduction of €25',
                     'Pay 3 months in advance',
@@ -71,7 +71,7 @@ class PlanSeeder extends Seeder
                 'price' => 495,
                 'extra_fee' => 40,
                 'is_prepaid' => true,
-                'description' => implode('\n', [
+                'description' => implode("\n", [
                     'You\'re younger than 24y',
                     'All-in membership for students',
                     'Pay the entire year at once',
