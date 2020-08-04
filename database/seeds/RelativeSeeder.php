@@ -13,22 +13,28 @@ class RelativeSeeder extends Seeder
      */
     public function run()
     {
-        $ids = Member::pluck('id');
-        $config = config('seeder.member.relative');
+        // get available member ids
+        $memberIds = Member::pluck('id')->flip();
 
-        Member::all()->each(function ($owner) use ($ids, $config) {
+        Member::all()->each(function ($member) use ($memberIds) {
 
-            // starting from owner creation
-            $now = $owner->created_at->clone();
+            // 0-2 relatives per member
+            $amount = rand(0, 2);
 
-            // get unique id pool to consume as reference
-            $scopedIds = $ids->except($owner->id)->shuffle();
+            // start from member's creation
+            $now = $member->created_at->clone();
 
-            $relatives = factory(Relative::class, rand(...$config['count']))->create([
-                'owner_id' => $owner->id,
-                'member_id' => fn() =>  $scopedIds->pop(),
-                'created_at' => fn() => $now->addDays(rand(...$config['delay_days'])),
+            // get unique related member ids to assign
+            $relatedMemberIds = $memberIds->except([$member->id])->keys()->shuffle();
+
+            // make relatives
+            $relatives = factory(Relative::class, $amount)->make([
+                'member_id' => fn() => $relatedMemberIds->pop(),
+                'created_at' => fn() => $now->addDays(rand(1, 30)),
             ]);
+
+            // save relatives
+            $member->relatives()->saveMany($relatives);
         });
     }
 
