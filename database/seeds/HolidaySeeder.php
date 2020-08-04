@@ -13,21 +13,30 @@ class HolidaySeeder extends Seeder
      */
     public function run()
     {
-        $config = config('seeder.member.holiday');
+        Member::all()->each(function ($member) {
 
-        Member::all()->shuffle()->each(function ($member) use ($config) {
+            // 0-4 holiday per member
+            $amount = rand(0, 4);
 
-            // starting from member creation
+            // start from member's creation
             $now = $member->created_at->clone();
 
-            $holidays = factory(Holiday::class, rand(...$config['count']))->make();
+            // make holidays
+            $holidays = factory(Holiday::class, $amount)->make();
 
-            $holidays->each(function ($holiday) use ($now, $config) {
-                $holiday->created_at = $now->addMonths(rand(...$config['gap_months']))->clone();
-                $holiday->start_date = $now->addDays(rand(...$config['delay_days']))->clone();
-                $holiday->end_date = $now->addDays(rand(...$config['days']))->clone();
+            // customize holidays
+            $holidays->each(function ($holiday) use ($now) {
+                // schedule 2-3 months after previous one
+                $holiday->created_at = $now->addMonths(rand(2, 3))->clone();
+
+                // delay 0-10 days after scheduled date
+                $holiday->start_date = $now->addDays(rand(0, 10))->clone();
+
+                // count between 5-30 days to finish
+                $holiday->end_date = $now->addDays(rand(5, 30))->clone();
             });
 
+            // save holidays
             $member->holidays()->saveMany($holidays);
         });
     }
