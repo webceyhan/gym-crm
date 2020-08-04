@@ -29,6 +29,7 @@ class PlanSeeder extends Seeder
             [
                 'name' => 'Cash 1 year',
                 'price' => 895,
+                'extra_fee' => 100,
                 'duration' => 12,
                 'type' => PlanType::MONTHLY,
                 'installment' => false,
@@ -42,6 +43,7 @@ class PlanSeeder extends Seeder
             [
                 'name' => '1 year Domiciliation',
                 'price' => 75,
+                'extra_fee' => 100,
                 'duration' => 12,
                 'type' => PlanType::MONTHLY,
                 'installment' => true,
@@ -56,6 +58,7 @@ class PlanSeeder extends Seeder
             [
                 'name' => 'Discover us 3 months',
                 'price' => 265,
+                'extra_fee' => 100,
                 'duration' => 3,
                 'type' => PlanType::MONTHLY,
                 'installment' => false,
@@ -69,6 +72,7 @@ class PlanSeeder extends Seeder
             [
                 'name' => 'Student 1 year',
                 'price' => 495,
+                'extra_fee' => 40,
                 'duration' => 12,
                 'type' => PlanType::MONTHLY,
                 'installment' => false,

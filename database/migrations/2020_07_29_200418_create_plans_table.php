@@ -21,6 +21,7 @@ class CreatePlansTable extends Migration
             $table->enum('type', PlanType::values())->default(PlanType::INDEFINITE);
             $table->integer('duration')->default(0);
             $table->decimal('price', 8, 2)->default(0);
+            $table->decimal('extra_fee')->default(0);
             $table->boolean('installment')->default(false);
             $table->timestamps();
         });

@@ -27,6 +27,7 @@ class Plan extends Model
         'type' => PlanType::INDEFINITE,
         'duration' => 0,
         'price' => 0,
+        'extra_fee' => 0,
         'installment' => 0,
     ];
 
