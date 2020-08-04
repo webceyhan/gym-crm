@@ -13,32 +13,74 @@ class PlanSeeder extends Seeder
      */
     public function run()
     {
-        $config = config('seeder.plan');
-        $now = config('seeder.now')->clone();
+        // start from 2 years ago
+        $now = now()->subYears(2);
 
-        $plans = factory(Plan::class, $config['count'])->make();
-
-        $plans->each(function ($plan, $i) use ($now, $config) {
-
-            $months = $i * 3 >= 12 ? 12 : ($i * 3); // max 1 year
-            $discount = 1 - $config['discount_rate']; // multiplier
-            $tag = $config['tags'][$i] ?? $config['tags'][0]; // unique
-
-            // set defaults
-            $plan->duration = $months;
-            $plan->name = "${tag} - indefinite";
-            $plan->type = PlanType::INDEFINITE;
-            $plan->price = $config['monthly_fee'];
-            $plan->created_at = $now->addDays($i * 10);
-
-            // set specific plans
-            if ($plan->duration > 0) {
-                $plan->name = "${tag} - " . ($months < 12 ? "${months} months" : "1 year");
-                $plan->type = $months < 12 ? PlanType::MONTHLY : PlanType::YEARLY;
-                $plan->price = $config['monthly_fee'] * $discount * $months;
-            }
-
+        foreach (self::data() as $attributes) {
+            $plan = new Plan($attributes);
+            $plan->created_at = $now->addDays(rand(0, 10));
             $plan->save();
-        });
+        }
     }
+
+    private static function data()
+    {
+        return [
+            [
+                'name' => 'Cash 1 year',
+                'price' => 895,
+                'duration' => 12,
+                'type' => PlanType::MONTHLY,
+                'installment' => false,
+                'description' => implode('\n', [
+                    'ALL IN membership',
+                    'You receive an extra reduction of €100',
+                    'Pay the entire year at once',
+                    'Membership fee €100',
+                ]),
+            ],
+            [
+                'name' => '1 year Domiciliation',
+                'price' => 75,
+                'duration' => 12,
+                'type' => PlanType::MONTHLY,
+                'installment' => true,
+                'description' => implode('\n', [
+                    'ALL IN membership',
+                    'You receive an extra reduction of €100',
+                    'After 12 months you can cancel monthly',
+                    'Monthly direct debit',
+                    'Membership fee €100',
+                ]),
+            ],
+            [
+                'name' => 'Discover us 3 months',
+                'price' => 265,
+                'duration' => 3,
+                'type' => PlanType::MONTHLY,
+                'installment' => false,
+                'description' => implode('\n', [
+                    'ALL IN membership',
+                    'You receive an extra reduction of €25',
+                    'Pay 3 months in advance',
+                    'Membership fee €100',
+                ]),
+            ],
+            [
+                'name' => 'Student 1 year',
+                'price' => 495,
+                'duration' => 12,
+                'type' => PlanType::MONTHLY,
+                'installment' => false,
+                'description' => implode('\n', [
+                    'You\'re younger than 24y',
+                    'All-in membership for students',
+                    'Pay the entire year at once',
+                    'You don\'t pay the membership fee (€40)',
+                    'You are in possession of a valid student\'s card',
+                ]),
+            ],
+        ];
+    }
+
 }
