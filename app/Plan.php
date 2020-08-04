@@ -41,6 +41,16 @@ class Plan extends Model
         'is_prepaid' => 'boolean',
     ];
 
+    /**
+     * Get plan's monthly fee.
+     *
+     * @return double
+     */
+    public function getMonthlyFeeAttribute()
+    {
+        return $this->price / $this->duration;
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
