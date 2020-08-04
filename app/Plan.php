@@ -26,8 +26,8 @@ class Plan extends Model
         'description' => null,
         'duration' => 0,
         'price' => 0,
-        'monthly_fee' => 0,
         'extra_fee' => 0,
+        'is_prepaid' => true,
     ];
 
     /**
@@ -37,8 +37,8 @@ class Plan extends Model
      */
     protected $casts = [
         'price' => 'double',
-        'monthly_fee' => 'double',
         'extra_fee' => 'double',
+        'is_prepaid' => 'boolean',
     ];
 
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
@@ -52,8 +52,6 @@ class Plan extends Model
      */
     public function scopePrepaid(Builder $query, $state = true)
     {
-        $operator = !!$state ? '=' : '!=';
-
-        return $query->where('monthly_fee', $operator, 0);
+        return $query->where('is_prepaid', !!$state);
     }
 }

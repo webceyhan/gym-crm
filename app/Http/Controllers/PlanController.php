@@ -24,14 +24,14 @@ class PlanController extends Controller
                 'name',
                 'duration',
                 'price',
-                'monthly_fee',
+                'is_prepaid',
                 'created_at',
             ])
             ->allowedFilters([
                 'name',
                 'duration',
                 'price',
-                'monthly_fee',
+                'is_prepaid',
                 'created_at',
             ])
             ->get();

@@ -17,7 +17,7 @@ class PaymentSeeder extends Seeder
         Subscription::all()->each(function ($subscription) {
 
             // check if one-time plan was chosen
-            if (!$subscription->plan->monthly_fee) {
+            if (!$subscription->plan->is_prepaid) {
 
                 // create only one payment
                 factory(Payment::class)->create([
@@ -37,13 +37,16 @@ class PaymentSeeder extends Seeder
             // start from subscription's creation
             $now = $subscription->created_at->clone();
 
+            // get the monthly subscription fee
+            $fee = $subscription->plan->price / $subscription->plan->duration;
+
             // make payments
             $payments = factory(Payment::class, $amount)->make();
 
             // customize payments
-            $payments->each(function ($payment) use ($now, $subscription) {
+            $payments->each(function ($payment) use ($now, $fee) {
+                $payment->amount = $fee;
                 $payment->type = PaymentType::CHARGE;
-                $payment->amount = $subscription->plan->monthly_fee;
                 $payment->created_at = $now->addMonth(1)->clone();
             });
 
@@ -51,9 +54,8 @@ class PaymentSeeder extends Seeder
             $subscription->payments()->saveMany($payments);
 
             // update balance
-            $subscription->update([
-                'balance' => $subscription->plan->monthly_fee * $amount,
-            ]);
+            $subscription->balance += ($fee * $amount);
+            $subscription->save();
 
         });
     }

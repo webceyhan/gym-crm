@@ -11,7 +11,7 @@ $factory->define(Plan::class, function (Faker $faker) {
         'description' => $faker->realText(),
         'duration' => $faker->numberBetween(0, 24),
         'price' => $faker->randomNumber(2),
-        'monthly_fee' => $faker->randomNumber(2),
+        'is_prepaid' => $faker->boolean(.8),
         'extra_fee' => $faker->randomNumber(2),
     ];
 });

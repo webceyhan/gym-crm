@@ -19,8 +19,8 @@ class CreatePlansTable extends Migration
             $table->text('description')->nullable();
             $table->integer('duration')->default(0);
             $table->decimal('price')->default(0);
-            $table->decimal('monthly_fee')->default(0);
             $table->decimal('extra_fee')->default(0);
+            $table->boolean('is_prepaid')->default(true);
             $table->timestamps();
         });
     }
