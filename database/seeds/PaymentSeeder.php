@@ -1,6 +1,7 @@
 <?php
 
 use App\Payment;
+use App\PaymentType;
 use App\Subscription;
 use Illuminate\Database\Seeder;
 
@@ -13,29 +14,47 @@ class PaymentSeeder extends Seeder
      */
     public function run()
     {
-        $config = config('seeder.member.subscription.payment');
+        Subscription::all()->each(function ($subscription) {
 
-        Subscription::all()->each(function ($subscription) use ($config) {
+            // check if one-time plan was chosen
+            if (!$subscription->plan->monthly_fee) {
 
+                // create only one payment
+                factory(Payment::class)->create([
+                    'subscription_id' => $subscription->id,
+                    'amount' => abs($subscription->balance),
+                    'type' => PaymentType::CHARGE,
+                    'created_at' => $subscription->created_at,
+                ]);
+
+                // clear outstanding balance
+                return $subscription->update(['balance' => 0]);
+            }
+
+            // 1-n payment per subscription
+            $amount = rand(0, $subscription->plan->duration);
+
+            // start from subscription's creation
             $now = $subscription->created_at->clone();
-            $count = rand(0, $subscription->plan->duration);
 
-            $payments = factory(Payment::class, $count)->make();
+            // make payments
+            $payments = factory(Payment::class, $amount)->make();
 
+            // customize payments
             $payments->each(function ($payment) use ($now, $subscription) {
-                $payment->subscription_id = $subscription->id;
+                $payment->type = PaymentType::CHARGE;
+                $payment->amount = $subscription->plan->monthly_fee;
                 $payment->created_at = $now->addMonth(1)->clone();
-                $payment->save();
-
-                // subtract from balance (inverse to zero balance)
-                $subscription->balance += $payment->amount;
             });
 
-            // update balance
-            $subscription->save();
+            // save payments
+            $subscription->payments()->saveMany($payments);
 
-            // todo: enable this later after fixing plan balance/fee issue
-            // $subscription->payments()->saveMany($payments);
+            // update balance
+            $subscription->update([
+                'balance' => $subscription->plan->monthly_fee * $amount,
+            ]);
+
         });
     }
 }
