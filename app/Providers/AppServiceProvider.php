@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Observers\PaymentObserver;
 use App\Observers\RelativeObserver;
+use App\Payment;
 use App\Relative;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // add model observers
         Relative::observe(RelativeObserver::class);
+        Payment::observe(PaymentObserver::class);
     }
 }

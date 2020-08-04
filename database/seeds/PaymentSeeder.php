@@ -16,47 +16,63 @@ class PaymentSeeder extends Seeder
     {
         Subscription::all()->each(function ($subscription) {
 
-            // check if one-time plan was chosen
-            if (!$subscription->plan->is_prepaid) {
-
-                // create only one payment
-                factory(Payment::class)->create([
-                    'subscription_id' => $subscription->id,
-                    'amount' => abs($subscription->balance),
-                    'type' => PaymentType::CHARGE,
-                    'created_at' => $subscription->created_at,
-                ]);
-
-                // clear outstanding balance
-                return $subscription->update(['balance' => 0]);
-            }
-
-            // 1-n payment per subscription
-            $amount = rand(0, $subscription->plan->duration);
+            // get chosen plan
+            $plan = $subscription->plan;
 
             // start from subscription's creation
             $now = $subscription->created_at->clone();
 
-            // get the monthly subscription fee
-            $fee = $subscription->plan->price / $subscription->plan->duration;
+            // pay extra-fee if needed
+            if ($plan->extra_fee) {
+                $subscription->payments()->create([
+                    'amount' => $plan->extra_fee,
+                    'created_at' => $now->clone(),
+                ]);
+            }
+
+            // add %10 discount if yearly plan
+            if ($plan->duration >= 12 ) {
+                $subscription->payments()->create([
+                    'type' => PaymentType::DISCOUNT,
+                    'amount' => $plan->price * .1,
+                    'created_at' => $now->clone(),
+                ]);
+            }
+
+            // pay one-time fee if needed
+            if ($plan->is_prepaid) {
+                // refresh current balance after above operations
+                // todo: use better logic than observers!
+                $subscription->refresh();
+
+                $subscription->payments()->create([
+                    'amount' => abs($subscription->balance),
+                    'created_at' => $now->clone(),
+                ]);
+
+                return; // done
+            }
+
+            // 1-n payments per subscription
+            $amount = rand(1, $plan->duration);
 
             // make payments
-            $payments = factory(Payment::class, $amount)->make();
+            $payments = factory(Payment::class, $amount)->make([
+                'type' => PaymentType::CHARGE,
+                'amount' => $plan->monthly_fee,
+                'created_at' => fn() => $now->addMonth(1)->clone(),
+            ]);
 
-            // customize payments
-            $payments->each(function ($payment) use ($now, $fee) {
-                $payment->amount = $fee;
-                $payment->type = PaymentType::CHARGE;
-                $payment->created_at = $now->addMonth(1)->clone();
-            });
+            // make optional refund
+            if($amount > 1 && !rand(0, 2)){
+                $payments->last()->fill([
+                    'type' => PaymentType::REFUND,
+                    'amount' => -$plan->monthly_fee
+                ]);
+            }
 
             // save payments
             $subscription->payments()->saveMany($payments);
-
-            // update balance
-            $subscription->balance += ($fee * $amount);
-            $subscription->save();
-
         });
     }
 }
