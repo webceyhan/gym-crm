@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('subscription_id')->constrained();
-            $table->decimal('amount', 8, 2)->default(0);
+            $table->decimal('amount')->default(0);
             $table->enum('method', PaymentMethod::values())->default(PaymentMethod::CASH);
             $table->enum('type', PaymentType::values())->default(PaymentType::CHARGE);
             $table->timestamps();

@@ -19,7 +19,7 @@ class CreateSubscriptionsTable extends Migration
             $table->foreignId('member_id')->constrained();
             $table->date('start_date');
             $table->date('end_date');
-            $table->decimal('balance', 8, 2)->default(0);
+            $table->decimal('balance')->default(0);
             $table->timestamps();
             $table->timestamp('cancelled_at')->nullable();
         });
