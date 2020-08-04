@@ -13,18 +13,36 @@ class AttachmentSeeder extends Seeder
      */
     public function run()
     {
-        $config = config('seeder.member.attachment');
+        Member::all()->each(function ($member) {
 
-        Member::all()->shuffle()->each(function ($member) use ($config) {
+            // possible attachment names
+            $names = collect(self::data());
 
-            // starting from member creation
+            // 0-3 per attachments member
+            $amount = rand(0, $names->count());
+
+            // start from member's creation
             $now = $member->created_at->clone();
 
-            $attachments = factory(Attachment::class, rand(...$config['count']))->make([
-                'created_at' => fn() => $now->addDays(rand(...$config['delay_days'])),
+            // make attachments
+            $attachments = factory(Attachment::class, $amount)->make([
+                'name' => fn() => $names->shift(),
+                'created_at' => fn() => $now->addDays(rand(0, 10)),
             ]);
 
+            // save attachments
             $member->attachments()->saveMany($attachments);
         });
+    }
+
+    private static function data()
+    {
+        return [
+            'terms & conditions',
+            'id verification',
+            'age verification',
+            'address verification',
+            'health status certificate',
+        ];
     }
 }
