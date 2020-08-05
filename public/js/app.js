@@ -1989,12 +1989,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["data"],
-  data: function data() {
-    return {
-      plan: this.data || {}
-    };
+  props: {
+    plan: {
+      type: Object,
+      "default": {}
+    }
   }
 });
 
@@ -2009,21 +2010,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2059,66 +2045,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    plans: {
+      type: Array,
+      "default": []
+    }
+  },
   data: function data() {
     return {
-      plans: []
+      selected: null
     };
   },
   methods: {
-    fetch: function fetch() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var url, _yield$axios$get, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                url = "/api/plans";
-                _context.next = 3;
-                return axios.get(url);
-
-              case 3:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
-                _this.plans = data.data;
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    save: function save(plan) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var url, _yield$axios$put, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                url = "/api/plans/".concat(plan.id);
-                _context2.next = 3;
-                return axios.put(url, plan);
-
-              case 3:
-                _yield$axios$put = _context2.sent;
-                data = _yield$axios$put.data;
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
+    onClick: function onClick(plan) {
+      this.selected = plan;
+      this.$emit("select", plan);
     }
-  },
-  mounted: function mounted() {
-    this.fetch();
   },
   filters: {
     currency: function currency(value) {
@@ -2208,6 +2150,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2226,8 +2186,119 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log("Component mounted.");
+  data: function data() {
+    return {
+      plans: [],
+      selected: null
+    };
+  },
+  created: function created() {
+    this.fetch();
+  },
+  methods: {
+    fetch: function fetch() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var url, _yield$axios$get, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                url = "/api/plans";
+                _context.next = 3;
+                return axios.get(url);
+
+              case 3:
+                _yield$axios$get = _context.sent;
+                data = _yield$axios$get.data;
+                _this.plans = data.data;
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    onSave: function onSave(plan) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _plan$id;
+
+        var url, _ref, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                url = "/api/plans/".concat((_plan$id = plan.id) !== null && _plan$id !== void 0 ? _plan$id : "");
+
+                if (!plan.id) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.next = 4;
+                return axios.put(url, plan);
+
+              case 4:
+                _context2.t0 = _context2.sent;
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.next = 9;
+                return axios.post(url, plan);
+
+              case 9:
+                _context2.t0 = _context2.sent;
+
+              case 10:
+                _ref = _context2.t0;
+                data = _ref.data;
+                // add to list if newly created
+                if (!plan.id) _this2.plans.push(data.data);
+                _this2.selected = null;
+
+              case 14:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    onDelete: function onDelete(plan) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var url, index;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                url = "/api/plans/".concat(plan.id);
+                index = _this3.plans.indexOf(plan);
+                _context3.next = 4;
+                return axios["delete"](url);
+
+              case 4:
+                _this3.plans.splice(index, 1);
+
+                _this3.selected = null;
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
   }
 });
 
@@ -39219,221 +39290,234 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "name", required: "" } }, [_vm._v("name")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.plan.name,
-            expression: "plan.name"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "name", type: "text", required: "" },
-        domProps: { value: _vm.plan.name },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.plan, "name", $event.target.value)
-          }
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.$emit("save", _vm.plan)
         }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "form-group col-7" }, [
-        _c("label", { attrs: { for: "price", required: "" } }, [
-          _vm._v("price")
-        ]),
+      }
+    },
+    [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "name", required: "" } }, [_vm._v("name")]),
         _vm._v(" "),
-        _c("div", { staticClass: "input-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.plan.price,
-                expression: "plan.price"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              id: "price",
-              type: "number",
-              min: "0",
-              placeholder: "0.00",
-              required: ""
-            },
-            domProps: { value: _vm.plan.price },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.plan, "price", $event.target.value)
-              }
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.plan.name,
+              expression: "plan.name"
             }
-          }),
-          _vm._v(" "),
-          _vm._m(0)
-        ])
+          ],
+          staticClass: "form-control",
+          attrs: { id: "name", type: "text", required: "" },
+          domProps: { value: _vm.plan.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.plan, "name", $event.target.value)
+            }
+          }
+        })
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "form-group col d-flex align-items-center justify-content-end pt-4"
-        },
-        [
-          _c("div", { staticClass: "custom-control custom-switch" }, [
+      _c("div", { staticClass: "form-row" }, [
+        _c("div", { staticClass: "form-group col-7" }, [
+          _c("label", { attrs: { for: "price", required: "" } }, [
+            _vm._v("price")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group" }, [
             _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.plan.is_prepaid,
-                  expression: "plan.is_prepaid"
+                  value: _vm.plan.price,
+                  expression: "plan.price"
                 }
               ],
-              staticClass: "custom-control-input",
-              attrs: { id: "is_prepaid", type: "checkbox" },
-              domProps: {
-                checked: Array.isArray(_vm.plan.is_prepaid)
-                  ? _vm._i(_vm.plan.is_prepaid, null) > -1
-                  : _vm.plan.is_prepaid
+              staticClass: "form-control",
+              attrs: {
+                id: "price",
+                type: "number",
+                min: "0",
+                placeholder: "0.00",
+                required: ""
               },
+              domProps: { value: _vm.plan.price },
               on: {
-                change: function($event) {
-                  var $$a = _vm.plan.is_prepaid,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 &&
-                        _vm.$set(_vm.plan, "is_prepaid", $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        _vm.$set(
-                          _vm.plan,
-                          "is_prepaid",
-                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                        )
-                    }
-                  } else {
-                    _vm.$set(_vm.plan, "is_prepaid", $$c)
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
+                  _vm.$set(_vm.plan, "price", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "is_prepaid" }
-              },
-              [_vm._v("prepaid")]
-            )
+            _vm._m(0)
           ])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "form-group col-7" }, [
-        _c("label", { attrs: { for: "extra_fee" } }, [_vm._v("extra fee")]),
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "input-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.plan.extra_fee,
-                expression: "plan.extra_fee"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { id: "extra_fee", type: "number", placeholder: "0.00" },
-            domProps: { value: _vm.plan.extra_fee },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.plan, "extra_fee", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm._m(1)
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
+        _c(
+          "div",
           {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.plan.description,
-            expression: "plan.description"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "description", rows: "5" },
-        domProps: { value: _vm.plan.description },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+            staticClass:
+              "form-group col d-flex align-items-center justify-content-end pt-4"
+          },
+          [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.plan.is_prepaid,
+                    expression: "plan.is_prepaid"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { id: "is_prepaid", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.plan.is_prepaid)
+                    ? _vm._i(_vm.plan.is_prepaid, null) > -1
+                    : _vm.plan.is_prepaid
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.plan.is_prepaid,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.plan, "is_prepaid", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.plan,
+                            "is_prepaid",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.plan, "is_prepaid", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "is_prepaid" }
+                },
+                [_vm._v("prepaid")]
+              )
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-row" }, [
+        _c("div", { staticClass: "form-group col-7" }, [
+          _c("label", { attrs: { for: "extra_fee" } }, [_vm._v("extra fee")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.plan.extra_fee,
+                  expression: "plan.extra_fee"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "extra_fee", type: "number", placeholder: "0.00" },
+              domProps: { value: _vm.plan.extra_fee },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.plan, "extra_fee", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.plan.description,
+              expression: "plan.description"
             }
-            _vm.$set(_vm.plan, "description", $event.target.value)
+          ],
+          staticClass: "form-control",
+          attrs: { id: "description", rows: "5" },
+          domProps: { value: _vm.plan.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.plan, "description", $event.target.value)
+            }
           }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary",
-        on: {
-          click: function($event) {
-            return _vm.$emit("save", _vm.plan)
+        })
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("save")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              return _vm.$emit("cancel")
+            }
           }
-        }
-      },
-      [_vm._v("save")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-secondary",
-        on: {
-          click: function($event) {
-            return _vm.$emit("cancel")
+        },
+        [_vm._v("cancel")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger float-right",
+          on: {
+            click: function($event) {
+              return _vm.$emit("delete", _vm.plan)
+            }
           }
-        }
-      },
-      [_vm._v("cancel")]
-    )
-  ])
+        },
+        [_vm._v("delete")]
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -39483,7 +39567,14 @@ var render = function() {
         {
           key: plan.id,
           staticClass: "list-group-item list-group-item-action",
-          attrs: { href: "#" }
+          class: { active: plan === _vm.selected },
+          attrs: { href: "#" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onClick(plan)
+            }
+          }
         },
         [
           _c("div", { staticClass: "d-flex w-100 justify-content-between" }, [
@@ -39657,9 +39748,62 @@ var render = function() {
     _c("br"),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-6" }, [_c("plan-list")], 1),
+      _c(
+        "div",
+        { staticClass: "col-6" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.selected = {}
+                }
+              }
+            },
+            [_vm._v("create new plan")]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("plan-list", {
+            attrs: { plans: _vm.plans },
+            on: {
+              select: function($event) {
+                _vm.selected = $event
+              }
+            }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "col" }, [_c("plan-form")], 1)
+      _vm.selected
+        ? _c(
+            "div",
+            { staticClass: "col" },
+            [
+              _c("plan-form", {
+                attrs: { plan: _vm.selected },
+                on: {
+                  save: function($event) {
+                    return _vm.onSave($event)
+                  },
+                  cancel: function($event) {
+                    _vm.selected = null
+                  },
+                  delete: function($event) {
+                    return _vm.onDelete($event)
+                  }
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e()
     ])
   ])
 }

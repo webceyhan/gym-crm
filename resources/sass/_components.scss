@@ -9,3 +9,7 @@ label {
 label[required]::after {
     @extend .required;
 }
+
+.list-group-item.active {
+    background-color: theme-color("dark");
+}

@@ -9,7 +9,14 @@
 
 <template>
   <div class="list-group">
-    <a v-for="plan in plans" :key="plan.id" href="#" class="list-group-item list-group-item-action">
+    <a
+      v-for="plan in plans"
+      :key="plan.id"
+      href="#"
+      class="list-group-item list-group-item-action"
+      :class="{active: plan === selected}"
+      @click.prevent="onClick(plan)"
+    >
       <div class="d-flex w-100 justify-content-between">
         <div>
           <h5>{{plan.name}}</h5>
@@ -23,43 +30,23 @@
       </div>
     </a>
   </div>
-
-  <!-- <div class="row row-cols-1 row-cols-md-3">
-    <div class="col mb-4" v-for="plan in plans" :key="plan.id">
-      <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{plan.name}}</h5>
-          <pre class="card-text" style="white-space:break-spaces">{{plan.description}}</pre>
-          <textarea class="form-control"  rows="3" v-model="plan.description"></textarea>
-          <button class="btn btn-primary" @click="save(plan)">save</button>
-        </div>
-      </div>
-    </div>
-  </div>-->
 </template>
 
 <script>
 export default {
+  props: {
+    plans: { type: Array, default: [] },
+  },
   data() {
     return {
-      plans: [],
+      selected: null,
     };
   },
   methods: {
-    async fetch() {
-      const url = "/api/plans";
-      const { data } = await axios.get(url);
-
-      this.plans = data.data;
+    onClick(plan) {
+      this.selected = plan;
+      this.$emit("select", plan);
     },
-    async save(plan) {
-      const url = `/api/plans/${plan.id}`;
-      const { data } = await axios.put(url, plan);
-    },
-  },
-  mounted() {
-    this.fetch();
   },
   filters: {
     currency(value) {

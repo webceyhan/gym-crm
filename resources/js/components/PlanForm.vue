@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="$emit('save', plan)">
     <div class="form-group">
       <label for="name" required>name</label>
       <input id="name" type="text" class="form-control" v-model="plan.name" required />
@@ -62,18 +62,16 @@
 
     <hr />
 
-    <button class="btn btn-primary" @click="$emit('save', plan)">save</button>
+    <button class="btn btn-primary">save</button>
     <button class="btn btn-secondary" @click="$emit('cancel')">cancel</button>
+    <button class="btn btn-danger float-right" @click="$emit('delete', plan)">delete</button>
   </form>
 </template>
 
 <script>
 export default {
-  props: ["data"],
-  data() {
-    return {
-      plan: this.data || {},
-    };
-  },
+  props: {
+    plan: { type: Object, default: {} },
+  }
 };
 </script>
