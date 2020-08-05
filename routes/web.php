@@ -21,3 +21,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// fix: when browser refreshes with vue route
+// which doesn't exist on server side
+// we'll redirect everything back to home
+Route::get('/{any}', 'HomeController@index')->where('any', '.*');
