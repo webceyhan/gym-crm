@@ -413,12 +413,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       members: [],
       selected: null,
-      resource: this.createResource("/members")
+      resource: this.createResource("/members"),
+      tabs: ["profile", "attachments", "relatives", "holidays", "subscriptions"]
     };
   },
   created: function created() {
@@ -1870,27 +1895,83 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm.selected
-        ? _c(
-            "div",
-            { staticClass: "col" },
-            [
-              _c("member-form", {
-                attrs: { member: _vm.selected },
-                on: {
-                  save: function($event) {
-                    return _vm.onSave($event)
+        ? _c("div", { staticClass: "col" }, [
+            _c(
+              "nav",
+              { staticClass: "nav nav-tabs" },
+              _vm._l(_vm.tabs, function(tab, index) {
+                return _c(
+                  "a",
+                  {
+                    key: tab,
+                    staticClass: "nav-item nav-link",
+                    class: { active: !index },
+                    attrs: { href: "#" + tab, "data-toggle": "tab" }
                   },
-                  cancel: function($event) {
-                    _vm.selected = null
-                  },
-                  delete: function($event) {
-                    return _vm.onDelete($event)
-                  }
-                }
-              })
-            ],
-            1
-          )
+                  [_vm._v(_vm._s(tab))]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade active show",
+                  attrs: { id: "profile" }
+                },
+                [
+                  _c("member-form", {
+                    attrs: { member: _vm.selected },
+                    on: {
+                      save: function($event) {
+                        return _vm.onSave($event)
+                      },
+                      cancel: function($event) {
+                        _vm.selected = null
+                      },
+                      delete: function($event) {
+                        return _vm.onDelete($event)
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "attachments" } },
+                [_vm._v("attachments")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "relatives" } },
+                [_vm._v("relatives")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "holidays" } },
+                [_vm._v("holidays")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { id: "subscriptions" }
+                },
+                [_vm._v("subscriptions")]
+              )
+            ])
+          ])
         : _vm._e()
     ])
   ])

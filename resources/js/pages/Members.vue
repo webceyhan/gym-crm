@@ -16,12 +16,36 @@
         </div>
       </div>
       <div class="col" v-if="selected">
-        <member-form
-          :member="selected"
-          @save="onSave($event)"
-          @cancel="selected = null"
-          @delete="onDelete($event)"
-        ></member-form>
+        <!-- tabs -->
+        <nav class="nav nav-tabs">
+          <a
+            v-for="(tab, index) in tabs"
+            :key="tab"
+            :href="`#${tab}`"
+            data-toggle="tab"
+            class="nav-item nav-link"
+            :class="{active: !index}"
+          >{{tab}}</a>
+        </nav>
+
+        <br />
+        <br />
+
+        <!-- tab content -->
+        <div class="tab-content">
+          <div class="tab-pane fade active show" id="profile">
+            <member-form
+              :member="selected"
+              @save="onSave($event)"
+              @cancel="selected = null"
+              @delete="onDelete($event)"
+            ></member-form>
+          </div>
+          <div class="tab-pane fade" id="attachments">attachments</div>
+          <div class="tab-pane fade" id="relatives">relatives</div>
+          <div class="tab-pane fade" id="holidays">holidays</div>
+          <div class="tab-pane fade" id="subscriptions">subscriptions</div>
+        </div>
       </div>
     </div>
   </section>
@@ -34,6 +58,13 @@ export default {
       members: [],
       selected: null,
       resource: this.createResource("/members"),
+      tabs: [
+        "profile",
+        "attachments",
+        "relatives",
+        "holidays",
+        "subscriptions",
+      ],
     };
   },
   created() {
