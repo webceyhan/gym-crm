@@ -273,8 +273,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       plans: [],
-      selected: null
+      selected: null,
+      resource: this.createResource("/plans")
     };
+  },
+  computed: {// resource: function () {
+    //   return this.createResource("/plans");
+    // },
   },
   created: function created() {
     this.fetch();
@@ -284,22 +289,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var url, _yield$axios$get, data;
-
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                url = "/api/plans";
-                _context.next = 3;
-                return axios.get(url);
+                _context.next = 2;
+                return _this.resource.list();
+
+              case 2:
+                _this.plans = _context.sent;
 
               case 3:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
-                _this.plans = data.data;
-
-              case 6:
               case "end":
                 return _context.stop();
             }
@@ -307,48 +307,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    onSave: function onSave(plan) {
+    onSave: function onSave(data) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _plan$id;
-
-        var url, _ref, data;
-
+        var plan;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                url = "/api/plans/".concat((_plan$id = plan.id) !== null && _plan$id !== void 0 ? _plan$id : "");
+                _context2.next = 2;
+                return _this2.resource.save(data);
 
-                if (!plan.id) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _context2.next = 4;
-                return axios.put(url, plan);
-
-              case 4:
-                _context2.t0 = _context2.sent;
-                _context2.next = 10;
-                break;
-
-              case 7:
-                _context2.next = 9;
-                return axios.post(url, plan);
-
-              case 9:
-                _context2.t0 = _context2.sent;
-
-              case 10:
-                _ref = _context2.t0;
-                data = _ref.data;
+              case 2:
+                plan = _context2.sent;
                 // add to list if newly created
-                if (!plan.id) _this2.plans.push(data.data);
+                if (!data.id) _this2.plans.push(plan);
                 _this2.selected = null;
 
-              case 14:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -360,22 +337,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var url, index;
+        var index;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                url = "/api/plans/".concat(plan.id);
-                index = _this3.plans.indexOf(plan);
-                _context3.next = 4;
-                return axios["delete"](url);
+                _context3.next = 2;
+                return _this3.resource["delete"](plan.id);
 
-              case 4:
+              case 2:
+                index = _this3.plans.indexOf(plan); // remove from list
+
                 _this3.plans.splice(index, 1);
 
                 _this3.selected = null;
 
-              case 6:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -1203,7 +1180,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c("h1", { staticClass: "display-4" }, [_vm._v("plans page")]),
+    _c("h1", { staticClass: "display-4" }, [_vm._v("plans")]),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
@@ -1324,12 +1301,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filters */ "./resources/js/filters.js");
-/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_filters__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _pages_App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/App */ "./resources/js/pages/App.vue");
-/* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Home */ "./resources/js/pages/Home.vue");
-/* harmony import */ var _pages_Members__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Members */ "./resources/js/pages/Members.vue");
-/* harmony import */ var _pages_Plans__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Plans */ "./resources/js/pages/Plans.vue");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filters */ "./resources/js/filters.js");
+/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_filters__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _pages_App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/App */ "./resources/js/pages/App.vue");
+/* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Home */ "./resources/js/pages/Home.vue");
+/* harmony import */ var _pages_Members__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Members */ "./resources/js/pages/Members.vue");
+/* harmony import */ var _pages_Plans__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/Plans */ "./resources/js/pages/Plans.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -1339,10 +1317,12 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
+
  // add modules
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(_filters__WEBPACK_IMPORTED_MODULE_2___default.a); // import pages
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(_helpers__WEBPACK_IMPORTED_MODULE_2__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(_filters__WEBPACK_IMPORTED_MODULE_3___default.a); // import pages
 
 
 
@@ -1354,15 +1334,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: "/home",
     name: "home",
-    component: _pages_Home__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _pages_Home__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: "/members",
     name: "members",
-    component: _pages_Members__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _pages_Members__WEBPACK_IMPORTED_MODULE_6__["default"]
   }, {
     path: "/plans",
     name: "plans",
-    component: _pages_Plans__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _pages_Plans__WEBPACK_IMPORTED_MODULE_7__["default"]
   }]
 });
 /**
@@ -1389,7 +1369,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
   router: router,
   components: {
-    AppPage: _pages_App__WEBPACK_IMPORTED_MODULE_3__["default"]
+    AppPage: _pages_App__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
@@ -1618,6 +1598,27 @@ module.exports = {
     }
   }
 };
+
+/***/ }),
+
+/***/ "./resources/js/helpers.js":
+/*!*********************************!*\
+  !*** ./resources/js/helpers.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _resource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource */ "./resources/js/resource.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    createResource: function createResource(url) {
+      return new _resource__WEBPACK_IMPORTED_MODULE_0__["default"](url);
+    }
+  }
+});
 
 /***/ }),
 
@@ -1892,6 +1893,198 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Plans_vue_vue_type_template_id_20425db1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Plans_vue_vue_type_template_id_20425db1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/resource.js":
+/*!**********************************!*\
+  !*** ./resources/js/resource.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Resource; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Resource = /*#__PURE__*/function () {
+  function Resource(path) {
+    var _this = this;
+
+    var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
+    _classCallCheck(this, Resource);
+
+    this.path = path;
+    this.shallowPath = "".concat(parent).concat(path); // create axios instance
+
+    this.client = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
+      baseURL: "/api"
+    }); // intercept requests
+
+    this.client.interceptors.request.use(function (config) {
+      _this.loading = true; // turn on loading
+
+      return config; // return config
+    }); // intercept responses
+
+    this.client.interceptors.response.use(function (response) {
+      _this.loading = false; // turn off loading
+
+      response.data = response.data.data; // unwrap data
+
+      return response; // return response
+    });
+  }
+
+  _createClass(Resource, [{
+    key: "list",
+    value: function () {
+      var _list = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                url = this.shallowPath;
+                _context.next = 3;
+                return this.client.get(url);
+
+              case 3:
+                return _context.abrupt("return", _context.sent.data);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function list() {
+        return _list.apply(this, arguments);
+      }
+
+      return list;
+    }()
+  }, {
+    key: "get",
+    value: function () {
+      var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                url = "".concat(this.path, "/").concat(id);
+                _context2.next = 3;
+                return this.client.get(url);
+
+              case 3:
+                return _context2.abrupt("return", _context2.sent.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function get(_x) {
+        return _get.apply(this, arguments);
+      }
+
+      return get;
+    }()
+  }, {
+    key: "save",
+    value: function () {
+      var _save = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(data) {
+        var method, url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                method = data.id ? "put" : "post";
+                url = data.id ? "".concat(this.path, "/").concat(data.id) : this.shallowPath;
+                _context3.next = 4;
+                return this.client.request({
+                  url: url,
+                  method: method,
+                  data: data
+                });
+
+              case 4:
+                return _context3.abrupt("return", _context3.sent.data);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function save(_x2) {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }()
+  }, {
+    key: "delete",
+    value: function () {
+      var _delete2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+        var url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                url = "".concat(this.path, "/").concat(id);
+                _context4.next = 3;
+                return this.client["delete"](url);
+
+              case 3:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function _delete(_x3) {
+        return _delete2.apply(this, arguments);
+      }
+
+      return _delete;
+    }()
+  }]);
+
+  return Resource;
+}();
 
 
 

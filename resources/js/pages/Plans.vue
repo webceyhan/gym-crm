@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="display-4">plans page</h1>
+    <h1 class="display-4">plans</h1>
 
     <br />
 
@@ -31,6 +31,7 @@ export default {
     return {
       plans: [],
       selected: null,
+      resource : this.createResource("/plans")
     };
   },
   created() {
@@ -38,29 +39,21 @@ export default {
   },
   methods: {
     async fetch() {
-      const url = `/api/plans`;
-      const { data } = await axios.get(url);
-
-      this.plans = data.data;
+      this.plans = await this.resource.list();
     },
-    async onSave(plan) {
-      const url = `/api/plans/${plan.id ?? ""}`;
-      const { data } = plan.id
-        ? await axios.put(url, plan)
-        : await axios.post(url, plan);
+    async onSave(data) {
+      const plan = await this.resource.save(data);
 
       // add to list if newly created
-      if (!plan.id) this.plans.push(data.data);
-
+      if (!data.id) this.plans.push(plan);
       this.selected = null;
     },
 
     async onDelete(plan) {
-      const url = `/api/plans/${plan.id}`;
+      await this.resource.delete(plan.id);
       const index = this.plans.indexOf(plan);
 
-      await axios.delete(url);
-
+      // remove from list
       this.plans.splice(index, 1);
       this.selected = null;
     },
