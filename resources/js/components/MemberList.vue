@@ -12,7 +12,7 @@
         <h5 class="mb-1">{{member.name}}</h5>
         <span class="badge" :class="statusClass(member.status)">{{member.status}}</span>
       </div>
-      <small class="text-muted">created on {{member.created_at | date}}</small>
+      <small class="text-muted">created on {{member.created_at | timestamp}}</small>
     </a>
   </div>
 </template>
