@@ -1,5 +1,11 @@
 <template>
-  <p>plans page</p>
+    <section>
+        <h1 class="display-4">plans page</h1>
+
+        <br>
+
+        <plan-list></plan-list>
+    </section>
 </template>
 
 <script>
