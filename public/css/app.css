@@ -10905,3 +10905,20 @@ a.text-dark:focus {
   }
 }
 
+.text-title:first-letter,
+label:first-letter,
+button:first-letter {
+  text-transform: capitalize;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.required::after,
+label[required]::after {
+  content: "*";
+  color: #e3342f;
+  padding: 0 0.3rem;
+}
+

@@ -1,0 +1,13 @@
+.text-title:first-letter {
+    text-transform: capitalize;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.required::after {
+    content: "*";
+    color: $red;
+    padding: 0 0.3rem;
+}

@@ -1,0 +1,11 @@
+button {
+    @extend .text-title;
+}
+
+label {
+    @extend .text-title;
+}
+
+label[required]::after {
+    @extend .required;
+}
