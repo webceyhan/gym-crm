@@ -21,7 +21,7 @@
         <div>
           <h5>{{plan.name}}</h5>
           <!-- <p class="mb-1">{{plan.description}}</p> -->
-          <small class="text-muted">{{plan.created_at}}</small>
+          <small class="text-muted">created on {{plan.created_at | date}}</small>
         </div>
         <div class="text-right text-nowrap">
           <h5>{{plan.price}} €</h5>
@@ -46,11 +46,6 @@ export default {
     onClick(plan) {
       this.selected = plan;
       this.$emit("select", plan);
-    },
-  },
-  filters: {
-    currency(value) {
-      return +value.toFixed(2) + " €";
     },
   },
 };

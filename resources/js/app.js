@@ -8,9 +8,11 @@ require("./bootstrap");
 
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Filters from './filters';
 
 // add modules
 Vue.use(VueRouter);
+Vue.mixin(Filters);
 
 // import pages
 import AppPage from "./pages/App";
