@@ -6,7 +6,7 @@ module.exports = {
             return moment();
         },
         date(value) {
-            return moment(value).format("L");
+            return moment(value).format("DD/MM/YYYY");
         },
         timestamp(value) {
             return moment(value).format("LLL");
