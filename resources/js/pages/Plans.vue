@@ -1,11 +1,18 @@
 <template>
-    <section>
-        <h1 class="display-4">plans page</h1>
+  <section>
+    <h1 class="display-4">plans page</h1>
 
-        <br>
+    <br />
 
+    <div class="row">
+      <div class="col-6">
         <plan-list></plan-list>
-    </section>
+      </div>
+      <div class="col">
+          <plan-form></plan-form>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
