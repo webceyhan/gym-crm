@@ -38,7 +38,7 @@ class Subscription extends Model
     protected $dates = [
         'start_date',
         'end_date',
-        'cancelled_at'
+        'cancelled_at',
     ];
 
     /**
@@ -47,6 +47,8 @@ class Subscription extends Model
      * @var array
      */
     protected $casts = [
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
         'balance' => 'double',
     ];
 

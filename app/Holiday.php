@@ -27,6 +27,16 @@ class Holiday extends Model
         'end_date',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
+    ];
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     public function scopePending(Builder $query): Builder

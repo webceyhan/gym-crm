@@ -47,6 +47,15 @@ class Member extends Model
         'verified_at',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'birth_date' => 'date:Y-m-d',
+    ];
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**
