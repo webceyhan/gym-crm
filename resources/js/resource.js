@@ -33,9 +33,19 @@ export default class Resource {
     }
 
     async save(data) {
-        const method = data.id ? "put" : "post";
-        const url = data.id ? `${this.path}/${data.id}` : this.shallowPath;
-        return (await this.client.request({ url, method, data })).data;
+        const config = {
+            method: data.id ? "put" : "post",
+            url: data.id ? `${this.path}/${data.id}` : this.shallowPath,
+            data
+        };
+
+        // workaround: PUT doesn't work with file uploads
+        if (data.id && data instanceof FormData) {
+            config.method = "post";
+            data.append('_method', "put");
+        }
+
+        return (await this.client.request(config)).data;
     }
 
     async delete(id) {
