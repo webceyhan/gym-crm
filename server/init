@@ -13,7 +13,7 @@ sudo timedatectl set-timezone ${APP_TIMEZONE:-'UTC'};
 sudo apt-get update -y
 
 # install php
-sudo apt-get install -y php-fpm php-mysql
+sudo apt-get install -y php-fpm php-mysql php-mbstring php-xml
 sudo cp -f $DIR/php.ini /etc/php/*/fpm/conf.d/.
 
 # install composer
