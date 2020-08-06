@@ -70,7 +70,25 @@ class AttachmentController extends Controller
      */
     public function update(Request $request, Attachment $attachment)
     {
-        $data = $request->all();
+        $data = $request->only(['name']);
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $directory = public_path('uploads/attachments');
+
+            // move file to uploads folder
+            $file->move($directory, $filename);
+
+            // override existing filename
+            $data['filename'] = $filename;
+
+            try {
+                // remove previous file if exists
+                unlink("{$directory}/{$attachment->filename}");
+            } catch (\Throwable $th) {}
+
+        }
 
         $attachment->fill($data)->save();
 
