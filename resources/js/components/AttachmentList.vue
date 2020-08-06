@@ -35,6 +35,7 @@ export default {
   watch: {
     member() {
       this.fetch();
+      this.selected = {};
     },
   },
   created() {
@@ -47,12 +48,12 @@ export default {
     async fetch() {
       this.items = await this.resource.list();
     },
-    async onSave(data) {
-      const item = await this.resource.save(data);
+    async onSave(value) {
+      const item = await this.resource.save(value);
 
       // update / create?
-      if (data.id) {
-        const index = this.items.findIndex((item) => item.id === data.id);
+      if (value.id) {
+        const index = this.items.findIndex((item) => item.id === value.id);
         this.items[index] = item;
       } else {
         this.items.push(item);
