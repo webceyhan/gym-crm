@@ -26,15 +26,14 @@
           type="button"
           class="btn btn-outline-primary"
           :disabled="!valid"
-          @click="$emit('save', item)"
+          @click="onSave()"
         >save</button>
       </div>
     </div>
 
     <small class="d-block text-muted mt-n2" v-if="valid">
-      <mark>{{days}}</mark> days
-      from <mark>{{item.start_date|date}}</mark>
-      until <mark>{{item.end_date|date}}</mark>
+      <span>{{days}} days</span>,
+      <span>from {{item.start_date|date}} until {{item.end_date|date}}</span>
     </small>
   </form>
 </template>
@@ -42,7 +41,16 @@
 <script>
 export default {
   props: {
-    item: { type: Object, default: {} },
+    value: { type: Object, default: {} },
+  },
+  data() {
+    return {
+      item: {
+        id: null,
+        start_date: null,
+        end_date: null,
+      },
+    };
   },
   computed: {
     valid: function () {
@@ -50,6 +58,23 @@ export default {
     },
     days: function () {
       return moment(this.item.end_date).diff(this.item.start_date, "days");
+    },
+  },
+  watch: {
+    value() {
+      // copy value to item
+      this.setItem(this.value);
+    },
+  },
+  methods: {
+    setItem(item) {
+      for (let key in this.item) {
+        this.item[key] = (item || {})[key];
+      }
+    },
+    onSave() {
+      this.$emit("save", { ...this.item });
+      this.setItem({}); // reset
     },
   },
 };

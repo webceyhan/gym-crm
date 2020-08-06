@@ -1,8 +1,8 @@
 <template>
   <section>
-    <holiday-form :item="selected" @save="onSave($event)"></holiday-form>
+    <holiday-form :value="selected" @save="onSave($event)"></holiday-form>
 
-    <br>
+    <br />
 
     <div class="list-group">
       <holiday-list-item
@@ -36,6 +36,7 @@ export default {
   watch: {
     member() {
       this.fetch();
+      this.selected = {};
     },
   },
   created() {
@@ -48,10 +49,17 @@ export default {
     async fetch() {
       this.items = await this.resource.list();
     },
-    async onSave(item) {
-      const data = await this.resource.save(item);
+    async onSave(value) {
+      const item = await this.resource.save(value);
 
-      item.id || this.items.push(data);
+      // update / create?
+      if (value.id) {
+        const index = this.items.findIndex((item) => item.id === value.id);
+        this.items[index] = item;
+      } else {
+        this.items.push(item);
+      }
+
       this.selected = {}; // clear
     },
     async onDelete(item) {
