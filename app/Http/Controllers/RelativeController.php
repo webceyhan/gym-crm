@@ -23,6 +23,9 @@ class RelativeController extends Controller
             : Relative::class
         );
 
+        // preload relation
+        $query->with('member:id,name');
+
         $relatives = $query
             ->allowedSorts([
                 'id',

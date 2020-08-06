@@ -37,6 +37,18 @@ class Relative extends Pivot
         'type' => RelativeType::SIBLING,
     ];
 
+    // RELATIONS ///////////////////////////////////////////////////////////////////////////////////
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Member', 'owner_id');
+    }
+
+    public function member()
+    {
+        return $this->belongsTo('App\Member', 'member_id');
+    }
+
     // SCOPES //////////////////////////////////////////////////////////////////////////////////////
 
     /**

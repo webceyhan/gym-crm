@@ -14,6 +14,15 @@ class RelativeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'owner_id' => $this->owner_id,
+            'member_id' => $this->member_id,
+            'name' => $this->member->name,
+            'type' => $this->type,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+
+        ];
     }
 }
