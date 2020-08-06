@@ -41,9 +41,13 @@
               @delete="onDelete($event)"
             ></member-form>
           </div>
-          <div class="tab-pane fade" id="attachments">attachments</div>
+          <div class="tab-pane fade" id="attachments">
+              <attachment-list :member="selected"></attachment-list>
+          </div>
           <div class="tab-pane fade" id="relatives">relatives</div>
-          <div class="tab-pane fade" id="holidays">holidays</div>
+          <div class="tab-pane fade" id="holidays">
+              <holiday-list :member="selected"></holiday-list>
+          </div>
           <div class="tab-pane fade" id="subscriptions">subscriptions</div>
         </div>
       </div>

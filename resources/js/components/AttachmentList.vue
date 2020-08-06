@@ -1,6 +1,6 @@
 <template>
   <section>
-    <attachment-form :item="selected" @save="onSave($event)"></attachment-form>
+    <attachment-form :value="selected" @save="onSave($event)"></attachment-form>
 
     <br />
     <div class="list-group">
@@ -47,10 +47,17 @@ export default {
     async fetch() {
       this.items = await this.resource.list();
     },
-    async onSave(item) {
-      const data = await this.resource.save(item);
+    async onSave(data) {
+      const item = await this.resource.save(data);
 
-      item.id || this.items.push(data);
+      // update / create?
+      if (data.id) {
+        const index = this.items.findIndex((item) => item.id === data.id);
+        this.items[index] = item;
+      } else {
+        this.items.push(item);
+      }
+
       this.selected = {}; // clear
     },
     async onDelete(item) {

@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form enctype="multipart/form-data">
     <!-- name -->
     <div class="form-group">
       <label for="name" required>name</label>
@@ -10,10 +10,14 @@
       <!-- file -->
       <div class="form-group col">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="filename" required />
-          <label class="custom-file-label" for="filename">
-              {{item.filename || 'choose a file'}}
-            </label>
+          <input
+            type="file"
+            id="filename"
+            class="custom-file-input"
+            @change="onFileSelect($event)"
+            required
+          />
+          <label class="custom-file-label" for="filename">{{item.filename || 'choose a file'}}</label>
         </div>
       </div>
       <!-- buttons -->
@@ -22,7 +26,7 @@
           type="button"
           class="btn btn-outline-primary"
           :disabled="!valid"
-          @click="$emit('save', item)"
+          @click="onSave()"
         >save</button>
       </div>
     </div>
@@ -32,11 +36,50 @@
 <script>
 export default {
   props: {
-    item: { type: Object, default: {} },
+    value: { type: Object, default: {} },
+  },
+  data() {
+    return {
+      item: {
+        id: null,
+        name: null,
+        filename: null,
+      },
+    };
   },
   computed: {
     valid: function () {
       return this.item.name && this.item.filename;
+    },
+  },
+  watch: {
+    value() {
+      // copy value to item
+      this.setItem(this.value);
+    },
+  },
+  methods: {
+    setItem(item) {
+      for (let key in this.item) {
+        this.item[key] = (item || {})[key];
+      }
+    },
+    onFileSelect(event) {
+      const [file] = event.target.files;
+      this.item.filename = file.name;
+      this.item.file = file;
+    },
+    onSave() {
+      // create form data
+      const data = new FormData();
+
+      // add id, file, name
+      data.id = this.item.id;
+      data.append("file", this.item.file);
+      data.append("name", this.item.name);
+
+      this.$emit("save", data);
+      this.setItem({}); // reset
     },
   },
 };
