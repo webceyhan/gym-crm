@@ -24,7 +24,11 @@ class SubscriptionController extends Controller
             : Subscription::class
         );
 
+        // preload relation
+        $query->with('plan');
+
         $subscriptions = $query
+            ->defaultSort('-id')
             ->allowedSorts([
                 'id',
                 'start_date',
