@@ -19,6 +19,7 @@ class PlanController extends Controller
         $query = QueryBuilder::for(Plan::class);
 
         $plans = $query
+            ->allowedFields(['id', 'name', 'price'])
             ->allowedSorts([
                 'id',
                 'name',
