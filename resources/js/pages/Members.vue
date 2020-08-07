@@ -19,12 +19,11 @@
         <!-- tabs -->
         <nav class="nav nav-tabs">
           <a
-            v-for="(tab, index) in tabs"
+            v-for="(tab) in tabs"
             :key="tab"
-            :href="`#${tab}`"
-            data-toggle="tab"
-            class="nav-item nav-link"
-            :class="{active: !index}"
+            class="nav-item nav-link pointer"
+            :class="{active: tab === activeTab}"
+            @click="activeTab = tab"
           >{{tab}}</a>
         </nav>
 
@@ -33,7 +32,7 @@
 
         <!-- tab content -->
         <div class="tab-content">
-          <div class="tab-pane fade active show" id="profile">
+          <div class="tab-pane fade active show" v-if="activeTab === 'profile'">
             <member-form
               :member="selected"
               @save="onSave($event)"
@@ -41,16 +40,18 @@
               @delete="onDelete($event)"
             ></member-form>
           </div>
-          <div class="tab-pane fade" id="attachments">
-              <attachment-list :member="selected"></attachment-list>
+          <div class="tab-pane fade active show" v-if="activeTab === 'attachments'">
+            <attachment-list :member="selected"></attachment-list>
           </div>
-          <div class="tab-pane fade" id="relatives">
-              <relative-list :member="selected"></relative-list>
+          <div class="tab-pane fade active show" v-if="activeTab === 'relatives'">
+            <relative-list :member="selected"></relative-list>
           </div>
-          <div class="tab-pane fade" id="holidays">
-              <holiday-list :member="selected"></holiday-list>
+          <div class="tab-pane fade active show" v-if="activeTab === 'holidays'">
+            <holiday-list :member="selected"></holiday-list>
           </div>
-          <div class="tab-pane fade" id="subscriptions">subscriptions</div>
+          <div class="tab-pane fade active show" v-if="activeTab === 'subscriptions'">
+            <subscription-list :member="selected"></subscription-list>
+          </div>
         </div>
       </div>
     </div>
@@ -71,6 +72,7 @@ export default {
         "holidays",
         "subscriptions",
       ],
+      activeTab: "profile",
     };
   },
   created() {
