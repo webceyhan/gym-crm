@@ -12,7 +12,7 @@ module.exports = {
             return moment(value).format("LLL");
         },
         currency(value) {
-            return +value.toFixed(2) + " €";
+            return "€" + value.toFixed(2);
         }
     }
 };
