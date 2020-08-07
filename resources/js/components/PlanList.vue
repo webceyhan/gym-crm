@@ -1,10 +1,10 @@
 <template>
-  <div class="list-group">
+  <div class="list-group list-group-flush shadow">
     <plan-list-item
       v-for="plan in plans"
       :key="plan.id"
       :plan="plan"
-      :class="{active: plan === selected}"
+      :class="classOf(plan)"
       @select="onSelect($event)"
     />
   </div>
@@ -21,6 +21,9 @@ export default {
     };
   },
   methods: {
+    classOf(plan) {
+      return { active: plan === this.selected };
+    },
     onSelect(plan) {
       this.selected = plan;
       this.$emit("select", plan);

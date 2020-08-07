@@ -896,6 +896,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    classOf: function classOf(plan) {
+      return {
+        active: plan === this.selected
+      };
+    },
     onSelect: function onSelect(plan) {
       this.selected = plan;
       this.$emit("select", plan);
@@ -3375,11 +3380,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "list-group" },
+    { staticClass: "list-group list-group-flush shadow" },
     _vm._l(_vm.plans, function(plan) {
       return _c("plan-list-item", {
         key: plan.id,
-        class: { active: plan === _vm.selected },
+        class: _vm.classOf(plan),
         attrs: { plan: plan },
         on: {
           select: function($event) {
