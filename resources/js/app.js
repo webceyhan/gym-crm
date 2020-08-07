@@ -10,13 +10,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import VueTypeaheadBootstrap from "vue-typeahead-bootstrap";
 
-// import mixins
 import Helpers from "./helpers";
 import Filters from "./filters";
-
-// import app page & routes
-import AppPage from "./pages/App";
-import routes from "./routes";
+import ROUTES from "./routes";
 
 // add modules
 Vue.use(VueRouter);
@@ -56,11 +52,10 @@ files.keys().map(key =>
 // define router
 const router = new VueRouter({
     mode: "history",
-    routes
+    routes: ROUTES
 });
 
 const app = new Vue({
     el: "#app",
-    router: router,
-    components: { AppPage }
+    router
 });
