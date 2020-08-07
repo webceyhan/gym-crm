@@ -5,7 +5,7 @@
     <br />
 
     <div class="row">
-      <div class="col-6">
+      <div class="col-5">
         <button class="btn btn-primary" @click="selected = {}">create new plan</button>
 
         <br />
@@ -31,7 +31,7 @@ export default {
     return {
       plans: [],
       selected: null,
-      resource : this.createResource("/plans")
+      resource: this.createResource("/plans"),
     };
   },
   created() {

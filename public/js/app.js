@@ -4130,7 +4130,7 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-6" },
+        { staticClass: "col-5" },
         [
           _c(
             "button",
