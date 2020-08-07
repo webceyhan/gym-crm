@@ -772,6 +772,64 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PlanCard.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PlanCard.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    plan: {
+      type: Object,
+      "default": {}
+    }
+  },
+  computed: {
+    descriptionLines: function descriptionLines() {
+      return this.plan.description.split("\n");
+    },
+    duration: function duration() {
+      return moment.duration(this.plan.duration, "months").humanize();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PlanForm.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PlanForm.vue?vue&type=script&lang=js& ***!
@@ -1765,6 +1823,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -3095,6 +3154,93 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PlanCard.vue?vue&type=template&id=de098278&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PlanCard.vue?vue&type=template&id=de098278& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "card-body card-img-top position-relative overflow-hidden px-5",
+        staticStyle: { height: "150px" }
+      },
+      [
+        _c("div", { staticClass: "skewed bg-grey" }),
+        _vm._v(" "),
+        _c("h2", { staticClass: "text-light m-0 position-relative" }, [
+          _vm._v(_vm._s(_vm.plan.name))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body mt-n4 px-5" }, [
+      _c("h2", { staticClass: "card-title" }, [
+        _vm._v(
+          "\n      " + _vm._s(_vm._f("currency")(_vm.plan.price)) + "\n      "
+        ),
+        _c("span", { staticClass: "h5 text-muted" }, [
+          _vm._v("/ " + _vm._s(_vm.duration))
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "d-flex align-items-center justify-content-between" },
+        [
+          _c("h5", { staticClass: "text-info" }, [
+            _vm._v(
+              _vm._s(_vm._f("currency")(_vm.plan.price / _vm.plan.duration)) +
+                " / month"
+            )
+          ]),
+          _vm._v(" "),
+          _c("h5", { staticClass: "text-muted" }, [
+            _vm._v(_vm._s(_vm.plan.is_prepaid ? "prepaid" : "installment"))
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "card-text lead ml-n3" },
+        _vm._l(_vm.descriptionLines, function(line) {
+          return _c("li", { key: line, staticClass: "py-1" }, [
+            _vm._v(_vm._s(line))
+          ])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("small", { staticClass: "text-muted" }, [
+        _vm._v("created on " + _vm._s(_vm._f("timestamp")(_vm.plan.created_at)))
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PlanForm.vue?vue&type=template&id=a4965310&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PlanForm.vue?vue&type=template&id=a4965310& ***!
@@ -4164,23 +4310,8 @@ var render = function() {
       _vm.selected
         ? _c(
             "div",
-            { staticClass: "col" },
-            [
-              _c("plan-form", {
-                attrs: { plan: _vm.selected },
-                on: {
-                  save: function($event) {
-                    return _vm.onSave($event)
-                  },
-                  cancel: function($event) {
-                    _vm.selected = null
-                  },
-                  delete: function($event) {
-                    return _vm.onDelete($event)
-                  }
-                }
-              })
-            ],
+            { staticClass: "col offset-1" },
+            [_c("plan-card", { attrs: { plan: _vm.selected } })],
             1
           )
         : _vm._e()
@@ -4211,6 +4342,7 @@ var map = {
 	"./components/MemberForm.vue": "./resources/js/components/MemberForm.vue",
 	"./components/MemberList.vue": "./resources/js/components/MemberList.vue",
 	"./components/NavbarLinks.vue": "./resources/js/components/NavbarLinks.vue",
+	"./components/PlanCard.vue": "./resources/js/components/PlanCard.vue",
 	"./components/PlanForm.vue": "./resources/js/components/PlanForm.vue",
 	"./components/PlanList.vue": "./resources/js/components/PlanList.vue",
 	"./components/PlanListItem.vue": "./resources/js/components/PlanListItem.vue",
@@ -4982,6 +5114,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PlanCard.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/PlanCard.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PlanCard_vue_vue_type_template_id_de098278___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlanCard.vue?vue&type=template&id=de098278& */ "./resources/js/components/PlanCard.vue?vue&type=template&id=de098278&");
+/* harmony import */ var _PlanCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlanCard.vue?vue&type=script&lang=js& */ "./resources/js/components/PlanCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PlanCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PlanCard_vue_vue_type_template_id_de098278___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PlanCard_vue_vue_type_template_id_de098278___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PlanCard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PlanCard.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/PlanCard.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PlanCard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PlanCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PlanCard.vue?vue&type=template&id=de098278&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/PlanCard.vue?vue&type=template&id=de098278& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanCard_vue_vue_type_template_id_de098278___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PlanCard.vue?vue&type=template&id=de098278& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PlanCard.vue?vue&type=template&id=de098278&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanCard_vue_vue_type_template_id_de098278___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanCard_vue_vue_type_template_id_de098278___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/PlanForm.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/PlanForm.vue ***!
@@ -5624,7 +5825,7 @@ module.exports = {
       return moment(value).format("LLL");
     },
     currency: function currency(value) {
-      return +value.toFixed(2) + " €";
+      return "€" + value.toFixed(2);
     }
   }
 };

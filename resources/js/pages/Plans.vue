@@ -13,13 +13,14 @@
 
         <plan-list :plans="plans" @select="selected = $event"></plan-list>
       </div>
-      <div class="col" v-if="selected">
-        <plan-form
+      <div class="col offset-1" v-if="selected">
+          <plan-card :plan="selected" />
+        <!-- <plan-form
           :plan="selected"
           @save="onSave($event)"
           @cancel="selected = null"
           @delete="onDelete($event)"
-        ></plan-form>
+        ></plan-form> -->
       </div>
     </div>
   </section>
