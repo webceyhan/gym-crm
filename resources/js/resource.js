@@ -22,9 +22,9 @@ export default class Resource {
         });
     }
 
-    async list() {
+    async list(params = {}) {
         const url = this.shallowPath;
-        return (await this.client.get(url)).data;
+        return (await this.client.get(url, { params })).data;
     }
 
     async get(id) {
@@ -42,7 +42,7 @@ export default class Resource {
         // workaround: PUT doesn't work with file uploads
         if (data.id && data instanceof FormData) {
             config.method = "post";
-            data.append('_method', "put");
+            data.append("_method", "put");
         }
 
         return (await this.client.request(config)).data;
