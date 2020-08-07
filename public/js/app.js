@@ -4294,9 +4294,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./filters */ "./resources/js/filters.js");
 /* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_filters__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _pages_App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/App */ "./resources/js/pages/App.vue");
-/* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Home */ "./resources/js/pages/Home.vue");
-/* harmony import */ var _pages_Members__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/Members */ "./resources/js/pages/Members.vue");
-/* harmony import */ var _pages_Plans__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/Plans */ "./resources/js/pages/Plans.vue");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -4309,9 +4307,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  // import mixins
 
 
- // import pages
-
-
+ // import app page & routes
 
 
  // add modules
@@ -4344,19 +4340,7 @@ files.keys().map(function (key) {
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
-  routes: [{
-    path: "/home",
-    name: "home",
-    component: _pages_Home__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }, {
-    path: "/members",
-    name: "members",
-    component: _pages_Members__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }, {
-    path: "/plans",
-    name: "plans",
-    component: _pages_Plans__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }]
+  routes: _routes__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
@@ -6060,6 +6044,38 @@ var Resource = /*#__PURE__*/function () {
 }();
 
 
+
+/***/ }),
+
+/***/ "./resources/js/routes.js":
+/*!********************************!*\
+  !*** ./resources/js/routes.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pages/Home */ "./resources/js/pages/Home.vue");
+/* harmony import */ var _pages_Members__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/Members */ "./resources/js/pages/Members.vue");
+/* harmony import */ var _pages_Plans__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Plans */ "./resources/js/pages/Plans.vue");
+// import pages
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  path: "/home",
+  name: "home",
+  component: _pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
+}, {
+  path: "/members",
+  name: "members",
+  component: _pages_Members__WEBPACK_IMPORTED_MODULE_1__["default"]
+}, {
+  path: "/plans",
+  name: "plans",
+  component: _pages_Plans__WEBPACK_IMPORTED_MODULE_2__["default"]
+}]);
 
 /***/ }),
 

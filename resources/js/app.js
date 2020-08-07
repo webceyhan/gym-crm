@@ -14,11 +14,9 @@ import VueTypeaheadBootstrap from "vue-typeahead-bootstrap";
 import Helpers from "./helpers";
 import Filters from "./filters";
 
-// import pages
+// import app page & routes
 import AppPage from "./pages/App";
-import HomePage from "./pages/Home";
-import MembersPage from "./pages/Members";
-import PlansPage from "./pages/Plans";
+import routes from "./routes";
 
 // add modules
 Vue.use(VueRouter);
@@ -58,11 +56,7 @@ files.keys().map(key =>
 // define router
 const router = new VueRouter({
     mode: "history",
-    routes: [
-        { path: "/home", name: "home", component: HomePage },
-        { path: "/members", name: "members", component: MembersPage },
-        { path: "/plans", name: "plans", component: PlansPage }
-    ]
+    routes
 });
 
 const app = new Vue({
