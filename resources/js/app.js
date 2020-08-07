@@ -8,13 +8,11 @@ require("./bootstrap");
 
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Helpers from './helpers';
-import Filters from './filters';
+import VueTypeaheadBootstrap from "vue-typeahead-bootstrap";
 
-// add modules
-Vue.use(VueRouter);
-Vue.mixin(Helpers);
-Vue.mixin(Filters);
+// import mixins
+import Helpers from "./helpers";
+import Filters from "./filters";
 
 // import pages
 import AppPage from "./pages/App";
@@ -22,15 +20,13 @@ import HomePage from "./pages/Home";
 import MembersPage from "./pages/Members";
 import PlansPage from "./pages/Plans";
 
-// define router
-const router = new VueRouter({
-    mode: "history",
-    routes: [
-        { path: "/home", name: "home", component: HomePage },
-        { path: "/members", name: "members", component: MembersPage },
-        { path: "/plans", name: "plans", component: PlansPage }
-    ]
-});
+// add modules
+Vue.use(VueRouter);
+Vue.mixin(Helpers);
+Vue.mixin(Filters);
+
+// add components
+Vue.component("typeahead-input", VueTypeaheadBootstrap);
 
 /**
  * The following block of code may be used to automatically register your
@@ -58,6 +54,16 @@ files.keys().map(key =>
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+// define router
+const router = new VueRouter({
+    mode: "history",
+    routes: [
+        { path: "/home", name: "home", component: HomePage },
+        { path: "/members", name: "members", component: MembersPage },
+        { path: "/plans", name: "plans", component: PlansPage }
+    ]
+});
 
 const app = new Vue({
     el: "#app",
