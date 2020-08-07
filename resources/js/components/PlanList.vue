@@ -1,12 +1,3 @@
-<style>
-/* .list-group-item p {
-  overflow: hidden;
-  height: 20px;
-  line-height: 20px;
-  white-space: break-spaces;
-} */
-</style>
-
 <template>
   <div class="list-group">
     <plan-list-item
