@@ -20,6 +20,7 @@ class MemberController extends Controller
         $query = QueryBuilder::for(Member::class);
 
         $members = $query
+            ->allowedFields(['id', 'name'])
             ->allowedSorts([
                 'id',
                 'name',
@@ -37,7 +38,7 @@ class MemberController extends Controller
                 'address',
                 AllowedFilter::exact('status'),
                 'created_at',
-                'verified_at'
+                'verified_at',
             ])
             ->get();
 
