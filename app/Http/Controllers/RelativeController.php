@@ -50,7 +50,7 @@ class RelativeController extends Controller
      */
     public function store(Request $request, Member $member)
     {
-        return $this->update($request, $member->relatives()->newPivot());
+        return $this->update($request, $member->relatives()->make());
     }
 
     /**
@@ -73,7 +73,7 @@ class RelativeController extends Controller
      */
     public function update(Request $request, Relative $relative)
     {
-        $data = $request->all();
+        $data = $request->only(['member_id', 'type']);
 
         $relative->fill($data)->save();
 
