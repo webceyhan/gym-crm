@@ -9,26 +9,13 @@
 
 <template>
   <div class="list-group">
-    <a
+    <plan-list-item
       v-for="plan in plans"
       :key="plan.id"
-      href="#"
-      class="list-group-item list-group-item-action"
+      :plan="plan"
       :class="{active: plan === selected}"
-      @click.prevent="onClick(plan)"
-    >
-      <div class="d-flex w-100 justify-content-between">
-        <div>
-          <h5>{{plan.name}}</h5>
-          <!-- <p class="mb-1">{{plan.description}}</p> -->
-          <small class="text-muted">created on {{plan.created_at | timestamp}}</small>
-        </div>
-        <div class="text-right text-nowrap">
-          <h5>{{plan.price}} €</h5>
-          <small class="text-muted">{{ plan.price / plan.duration | currency}} / month</small>
-        </div>
-      </div>
-    </a>
+      @select="onSelect($event)"
+    />
   </div>
 </template>
 
@@ -43,7 +30,7 @@ export default {
     };
   },
   methods: {
-    onClick(plan) {
+    onSelect(plan) {
       this.selected = plan;
       this.$emit("select", plan);
     },
