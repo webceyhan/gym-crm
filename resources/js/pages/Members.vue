@@ -44,7 +44,9 @@
           <div class="tab-pane fade" id="attachments">
               <attachment-list :member="selected"></attachment-list>
           </div>
-          <div class="tab-pane fade" id="relatives">relatives</div>
+          <div class="tab-pane fade" id="relatives">
+              <relative-list :member="selected"></relative-list>
+          </div>
           <div class="tab-pane fade" id="holidays">
               <holiday-list :member="selected"></holiday-list>
           </div>
