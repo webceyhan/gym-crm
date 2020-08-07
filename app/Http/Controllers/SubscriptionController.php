@@ -58,7 +58,20 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request, Member $member)
     {
-        return $this->update($request, $member->subscriptions()->make());
+        $subscription = $member->subscriptions()->make([
+            'plan_id' => $request->plan_id,
+        ]);
+
+        if (!$request->start_date) {
+            $subscription->start_date = now();
+        }
+
+        if (!$request->end_date) {
+            $months = $subscription->plan->duration;
+            $subscription->end_date = now()->addMonths($months);
+        }
+
+        return $this->update($request, $subscription);
     }
 
     /**
@@ -81,7 +94,14 @@ class SubscriptionController extends Controller
      */
     public function update(Request $request, Subscription $subscription)
     {
-        $data = $request->all();
+        $data = $request->only([
+            'id',
+            'plan_id',
+            'start_date',
+            'end_date',
+            'balance',
+            'cancelled_at',
+        ]);
 
         $subscription->fill($data)->save();
 
