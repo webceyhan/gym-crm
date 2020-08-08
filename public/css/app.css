@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.1 (https://getbootstrap.com/)
@@ -8304,7 +8304,8 @@ button.bg-dark:focus {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
 
-.shadow {
+.shadow,
+.card-action:hover {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -10919,7 +10920,8 @@ button:first-letter {
   text-transform: capitalize;
 }
 
-.pointer {
+.pointer,
+.card-action {
   cursor: pointer;
 }
 
