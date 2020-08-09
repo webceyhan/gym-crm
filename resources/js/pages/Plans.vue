@@ -46,8 +46,13 @@
           @delete="onDelete($event)"
         />
       </div>
-      <div class="col offset-md-1" v-if="selected">
-        <plan-card class="shadow" :plan="selected" />
+      <div class="col offset-md-1">
+        <plan-card v-if="selected" class="shadow" :plan="selected" />
+        <div v-else class="card bg-transparent flex-fill my-5">
+          <div class="card-body text-center p-5">
+            <p class="card-text">Select a plan from the left menu to see the details!</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
