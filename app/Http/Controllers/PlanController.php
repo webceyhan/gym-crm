@@ -35,6 +35,10 @@ class PlanController extends Controller
                 'is_prepaid',
                 'created_at',
             ])
+            ->allowedIncludes([
+                'subscriptions',
+                'members',
+            ])
             ->get();
 
         return PlanResource::collection($plans);

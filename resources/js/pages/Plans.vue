@@ -1,13 +1,6 @@
 <template>
   <section>
-    <nav>
-      <ol class="breadcrumb bg-transparent px-1">
-        <li class="breadcrumb-item">
-          <router-link to="/">home</router-link>
-        </li>
-        <li class="breadcrumb-item active">plans</li>
-      </ol>
-    </nav>
+    <breadcrumb :items="[{label:'plans'}]" />
 
     <h1 class="display-4">plans</h1>
 

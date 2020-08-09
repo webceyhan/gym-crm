@@ -1,5 +1,7 @@
 <template>
   <section>
+    <breadcrumb :items="[{label:'members'}]" />
+
     <h1 class="display-4">members</h1>
 
     <br />

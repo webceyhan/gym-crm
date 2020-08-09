@@ -1,16 +1,11 @@
 <template>
   <section v-if="plan">
-    <nav>
-      <ol class="breadcrumb bg-transparent px-1">
-        <li class="breadcrumb-item">
-          <router-link to="/plans">plans</router-link>
-        </li>
-        <li class="breadcrumb-item active">
-          <span v-if="plan.id">{{plan.name}}</span>
-          <span v-else>new plan</span>
-        </li>
-      </ol>
-    </nav>
+    <breadcrumb
+      :items="[
+        {label:'plans', link: '/plans'},
+        {label: plan.name || 'new plan'}
+        ]"
+    />
 
     <div class="row">
       <div class="col-md-5">
