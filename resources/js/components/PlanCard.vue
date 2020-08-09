@@ -14,7 +14,7 @@
     <div class="card-body">
       <div class="card-title d-flex align-items-center mb-3">
         <h3 class="m-0">{{plan.price | currency}}</h3>
-        <h5 class="text-muted px-2 m-0">{{duration}}</h5>
+        <h5 class="text-muted px-2 m-0">/ {{plan.duration | humanize}}</h5>
       </div>
 
       <h5 class="card-subtitle d-flex align-items-center justify-content-between">
@@ -37,11 +37,6 @@
 export default {
   props: {
     plan: { type: Object, default: {} },
-  },
-  computed: {
-    duration: function () {
-      return moment.duration(this.plan.duration, "months").humanize();
-    },
   },
 };
 </script>

@@ -25,6 +25,9 @@ module.exports = {
                     return dt.format("llll");
             }
         },
+        humanize(value, interval = "months") {
+            return moment.duration(value, interval).humanize();
+        },
         currency(value) {
             return "€" + (+value).toFixed(2);
         }
