@@ -2042,6 +2042,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4661,9 +4673,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c("h1", { staticClass: "display-4" }, [_vm._v("plans")]),
+    _c("nav", [
+      _c("ol", { staticClass: "breadcrumb bg-transparent px-1" }, [
+        _c(
+          "li",
+          { staticClass: "breadcrumb-item" },
+          [_c("router-link", { attrs: { to: "/" } }, [_vm._v("home")])],
+          1
+        ),
+        _vm._v(" "),
+        _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("plans")])
+      ])
+    ]),
     _vm._v(" "),
-    _c("br"),
+    _c("h1", { staticClass: "display-4" }, [_vm._v("plans")]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
@@ -4780,19 +4803,27 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.selected
-        ? _c(
-            "div",
-            { staticClass: "col offset-md-1" },
-            [
-              _c("plan-card", {
+      _c(
+        "div",
+        { staticClass: "col offset-md-1" },
+        [
+          _vm.selected
+            ? _c("plan-card", {
                 staticClass: "shadow",
                 attrs: { plan: _vm.selected }
               })
-            ],
-            1
-          )
-        : _vm._e()
+            : _c("div", { staticClass: "card bg-transparent flex-fill my-5" }, [
+                _c("div", { staticClass: "card-body text-center p-5" }, [
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v(
+                      "Select a plan from the left menu to see the details!"
+                    )
+                  ])
+                ])
+              ])
+        ],
+        1
+      )
     ])
   ])
 }
