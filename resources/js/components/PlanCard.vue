@@ -1,23 +1,47 @@
 <template>
-  <div class="card">
-    <div class="card-body card-img-top position-relative overflow-hidden px-5" style="height:150px">
-      <div class="skewed bg-grey"></div>
-      <h2 class="text-light m-0 position-relative">{{plan.name}}</h2>
+  <div class="card card-responsive" @click="$emit('click')">
+    <!-- header -->
+    <div class="card-header border-0 bg-grey pt-4">
+      <div class="d-flex justify-content-between">
+        <!-- name -->
+        <h5 class="text-light text-capitalize m-0">{{plan.name}}</h5>
+
+        <!-- actions -->
+        <div class="dropdown mr-n2">
+          <button class="btn btn-link text-light p-0" type="button" data-toggle="dropdown">
+            <i class="fas fa-fw fa-ellipsis-v"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="#">Edit</a>
+            <a class="dropdown-item" href="#">Browse members</a>
+            <a class="dropdown-item" href="#">Browse subscriptions</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Delete</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="card-body mt-n4 px-5">
-      <h2 class="card-title">
-        {{plan.price | currency}}
-        <span class="h5 text-muted">/ {{duration}}</span>
-      </h2>
+    <!-- custom header bottom -->
+    <div class="position-relative overflow-hidden mb-n4" style="height:4rem">
+      <div class="skewed bg-grey"></div>
+    </div>
 
-      <div class="d-flex align-items-center justify-content-between">
-        <h5 class="text-info">{{ plan.price / plan.duration | currency}} / month</h5>
-        <h5 class="text-muted">{{ plan.is_prepaid ? 'prepaid' : 'installment' }}</h5>
+    <!-- body -->
+    <div class="card-body">
+      <div class="card-title d-flex align-items-center mb-3">
+        <h3 class="m-0">{{plan.price | currency}}</h3>
+        <h5 class="text-muted px-2 m-0">{{duration}}</h5>
       </div>
 
+      <h5 class="card-subtitle d-flex align-items-center justify-content-between">
+        <span class="text-info">{{ plan.price / plan.duration | currency}} / month</span>
+        <span class="text-muted">{{ plan.is_prepaid ? 'prepaid' : 'installment' }}</span>
+      </h5>
+
       <hr />
-      <ul class="card-text lead ml-n3">
+
+      <ul class="card-text ml-n3">
         <li class="py-1" v-for="line in descriptionLines" :key="line">{{line}}</li>
       </ul>
 
