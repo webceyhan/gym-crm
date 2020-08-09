@@ -62,7 +62,7 @@
 
     <div class="btn-toolbar">
       <button class="btn btn-primary mr-2">save</button>
-      <button class="btn btn-danger" @click="$emit('delete', plan)">delete</button>
+      <button v-if="plan.id" class="btn btn-danger" @click="$emit('delete', plan)">delete</button>
     </div>
   </form>
 </template>
