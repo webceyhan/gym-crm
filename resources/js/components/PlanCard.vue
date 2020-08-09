@@ -24,9 +24,7 @@
 
       <hr />
 
-      <ul class="card-text ml-n3">
-        <li class="py-1" v-for="line in descriptionLines" :key="line">{{line}}</li>
-      </ul>
+      <p class="card-text text-prewrap">{{plan.description}}</p>
 
       <br />
 
@@ -41,9 +39,6 @@ export default {
     plan: { type: Object, default: {} },
   },
   computed: {
-    descriptionLines: function () {
-      return this.plan.description.split("\n");
-    },
     duration: function () {
       return moment.duration(this.plan.duration, "months").humanize();
     },
