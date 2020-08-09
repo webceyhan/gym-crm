@@ -7,6 +7,25 @@
 
     <div class="form-row">
       <div class="form-group col-7">
+        <label for="duration" required>duration</label>
+
+        <input
+          id="duration"
+          type="range"
+          min="1"
+          max="12"
+          class="custom-range"
+          v-model="plan.duration"
+          required
+        />
+      </div>
+      <div class="col d-flex align-items-center">
+          <span class="text-muted px-2">{{plan.duration | humanize}}</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-7">
         <label for="price" required>price</label>
         <div class="input-group">
           <input
