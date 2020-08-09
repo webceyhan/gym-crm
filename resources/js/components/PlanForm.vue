@@ -57,21 +57,20 @@
 
     <div class="form-group">
       <label for="description">description</label>
-      <textarea id="description" class="form-control" rows="5" v-model="plan.description"></textarea>
+      <textarea id="description" class="form-control" rows="10" v-model="plan.description"></textarea>
     </div>
 
-    <hr />
-
-    <button class="btn btn-primary">save</button>
-    <button class="btn btn-secondary" @click="$emit('cancel')">cancel</button>
-    <button class="btn btn-danger float-right" @click="$emit('delete', plan)">delete</button>
+    <div class="btn-toolbar">
+      <button class="btn btn-primary mr-2">save</button>
+      <button class="btn btn-danger" @click="$emit('delete', plan)">delete</button>
+    </div>
   </form>
 </template>
 
 <script>
 export default {
   props: {
-    plan: { type: Object, default: {} },
-  }
+    plan: { type: Object },
+  },
 };
 </script>
