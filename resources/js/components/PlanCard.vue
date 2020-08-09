@@ -2,24 +2,7 @@
   <div class="card card-responsive" @click="$emit('click')">
     <!-- header -->
     <div class="card-header border-0 bg-grey pt-4">
-      <div class="d-flex justify-content-between">
-        <!-- name -->
-        <h5 class="text-light text-capitalize m-0">{{plan.name}}</h5>
-
-        <!-- actions -->
-        <div class="dropdown mr-n2">
-          <button class="btn btn-link text-light p-0" type="button" data-toggle="dropdown">
-            <i class="fas fa-fw fa-ellipsis-v"></i>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">Edit</a>
-            <a class="dropdown-item" href="#">Browse members</a>
-            <a class="dropdown-item" href="#">Browse subscriptions</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Delete</a>
-          </div>
-        </div>
-      </div>
+      <h5 class="text-light text-capitalize m-0">{{plan.name}}</h5>
     </div>
 
     <!-- custom header bottom -->
