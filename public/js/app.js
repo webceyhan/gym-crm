@@ -7051,6 +7051,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ([{
+  path: "/",
+  redirect: "/home"
+}, {
   path: "/home",
   name: "home",
   component: _pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"]

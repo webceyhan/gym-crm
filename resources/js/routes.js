@@ -5,6 +5,7 @@ import PlansPage from "./pages/Plans";
 import PlanPage from "./pages/Plan";
 
 export default [
+    { path: "/", redirect: "/home" },
     { path: "/home", name: "home", component: HomePage },
     { path: "/members", name: "members", component: MembersPage },
     { path: "/plans", name: "plans", component: PlansPage },
