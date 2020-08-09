@@ -9946,7 +9946,9 @@ button.bg-dark:focus {
     padding-left: 1.5rem !important;
   }
 
-  .p-lg-5 {
+  .p-lg-5,
+  .card-responsive .card-header,
+  .card-responsive .card-body {
     padding: 3rem !important;
   }
 
@@ -10912,6 +10914,7 @@ a.text-dark:focus {
 
 .text-prewrap {
   white-space: pre-wrap;
+  line-height: 2rem;
 }
 
 .text-title:first-letter,
@@ -10938,7 +10941,7 @@ label[required]::after {
   bottom: 0;
   right: 0;
   left: 0;
-  width: 100%;
+  width: 102%;
   height: 100%;
   transform: skewY(6deg);
   transform-origin: bottom right;
@@ -10946,5 +10949,23 @@ label[required]::after {
 
 .list-group-item.active {
   background-color: #343a40;
+}
+
+.list-group-item-action:not(:hover) .dropdown > button {
+  visibility: hidden;
+}
+
+@media (min-width: 992px) {
+  .card-responsive .card-body {
+    font-size: 1rem;
+  }
+
+  .card-responsive h3 {
+    font-size: 1.8rem;
+  }
+
+  .card-responsive h5 {
+    font-size: 1.35rem;
+  }
 }
 

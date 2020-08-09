@@ -5,22 +5,49 @@
     <br />
 
     <div class="row">
-      <div class="col-5">
-        <button class="btn btn-primary" @click="selected = {}">create new plan</button>
+      <div class="col-md-6">
+        <nav class="d-flex">
+          <div class="flex-grow-1 mr-2">
+            <input class="form-control" type="search" placeholder="search" v-model="search" />
+          </div>
+
+          <div class="flex-fill">
+            <div class="btn-toolbar">
+              <div class="btn-group mr-auto" role="group">
+                <button
+                  type="button"
+                  class="btn btn-light border-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                >
+                  <span class="text-muted">sort:</span>
+                  {{sort}}
+                </button>
+                <div class="dropdown-menu">
+                  <button
+                    v-for="opt in sortOptions"
+                    :key="opt"
+                    @click="sort = opt"
+                    class="dropdown-item"
+                  >{{opt}}</button>
+                </div>
+              </div>
+
+              <router-link class="btn btn-primary text-capitalize" to="/plans/new">create plan</router-link>
+            </div>
+          </div>
+        </nav>
 
         <br />
-        <br />
 
-        <plan-list :plans="plans" @select="selected = $event"></plan-list>
-      </div>
-      <div class="col offset-1" v-if="selected">
-          <plan-card :plan="selected" />
-        <!-- <plan-form
-          :plan="selected"
-          @save="onSave($event)"
-          @cancel="selected = null"
+        <plan-list
+          :plans="filteredPlans"
+          :selected="selected"
+          @select="selected = $event"
           @delete="onDelete($event)"
-        ></plan-form> -->
+        />
+      </div>
+      <div class="col offset-md-1" v-if="selected">
+        <plan-card class="shadow" :plan="selected" />
       </div>
     </div>
   </section>
@@ -33,21 +60,32 @@ export default {
       plans: [],
       selected: null,
       resource: this.createResource("/plans"),
+      search: "",
+      sort: "recent",
+      sortOptions: ["recent", "oldest"],
     };
   },
+  computed: {
+    filteredPlans() {
+      const filterer = (p) => p.name.match(new RegExp(this.search, "i"));
+
+      // default : recent
+      let sorter = (a, b) => (a.id > b.id ? -1 : 1);
+
+      if (this.sort === "oldest") {
+        sorter = (a, b) => (a.id > b.id ? 1 : -1);
+      }
+
+      return this.plans.filter(filterer).sort(sorter);
+    },
+  },
+
   created() {
     this.fetch();
   },
   methods: {
     async fetch() {
       this.plans = await this.resource.list();
-    },
-    async onSave(data) {
-      const plan = await this.resource.save(data);
-
-      // add to list if newly created
-      if (!data.id) this.plans.push(plan);
-      this.selected = null;
     },
 
     async onDelete(plan) {

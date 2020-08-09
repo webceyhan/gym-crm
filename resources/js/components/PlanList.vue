@@ -5,7 +5,8 @@
       :key="plan.id"
       :plan="plan"
       :class="classOf(plan)"
-      @select="onSelect($event)"
+      @select="$emit('select', plan)"
+      @delete="$emit('delete', plan)"
     />
   </div>
 </template>
@@ -13,20 +14,12 @@
 <script>
 export default {
   props: {
+    selected: null,
     plans: { type: Array, default: [] },
-  },
-  data() {
-    return {
-      selected: null,
-    };
   },
   methods: {
     classOf(plan) {
       return { active: plan === this.selected };
-    },
-    onSelect(plan) {
-      this.selected = plan;
-      this.$emit("select", plan);
     },
   },
 };
