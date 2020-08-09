@@ -5,11 +5,25 @@ module.exports = {
         now() {
             return moment();
         },
-        date(value) {
-            return moment(value).format("DD/MM/YYYY");
+        date(value, format = "short") {
+            const dt = moment(value);
+
+            switch (format) {
+                case "long":
+                    return dt.format("LL");
+                default:
+                    return dt.format("DD/MM/YYYY");
+            }
         },
-        timestamp(value) {
-            return moment(value).format("LLL");
+        timestamp(value, format = "short") {
+            const dt = moment(value);
+
+            switch (format) {
+                case "long":
+                    return dt.format("LLLL");
+                default:
+                    return dt.format("llll");
+            }
         },
         currency(value) {
             return "€" + (+value).toFixed(2);
