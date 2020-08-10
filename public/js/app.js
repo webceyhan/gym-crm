@@ -8409,51 +8409,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 // initial state
 var state = {
-  all: {},
-  ids: [],
+  keys: [],
+  entries: {},
   selectedId: null
 }; // getters
 
 var getters = {
-  list: function list(state, getters) {
-    return state.ids.map(function (id) {
-      return getters.find(id);
-    });
-  },
-  find: function find(state) {
-    return function (id) {
-      return state.all[id] ? _objectSpread({}, state.all[id]) : null;
+  get: function get(state) {
+    return function (key) {
+      return state.entries[key] ? _objectSpread({}, state.entries[key]) : null;
     };
   },
+  list: function list(state, getters) {
+    return state.keys.map(function (id) {
+      return getters.get(id);
+    });
+  },
+  size: function size(state) {
+    state.keys.length;
+  },
   selected: function selected(state, getters) {
-    return getters.find(state.selectedId);
+    return getters.get(state.selectedId);
   }
 }; // mutations
 
 var mutations = {
   set: function set(state, item) {
-    state.all = _objectSpread(_objectSpread({}, state.all), {}, _defineProperty({}, item.id, item));
+    state.entries = _objectSpread(_objectSpread({}, state.entries), {}, _defineProperty({}, item.id, item));
 
-    if (!state.ids.includes(item.id)) {
-      state.ids.push(item.id);
+    if (!state.keys.includes(item.id)) {
+      state.keys.push(item.id);
     }
   },
   remove: function remove(state, _ref) {
     var id = _ref.id;
 
-    var all = _objectSpread({}, state.all);
+    var entries = _objectSpread({}, state.entries);
 
-    var index = state.ids.findIndex(function (_id) {
+    var index = state.keys.findIndex(function (_id) {
       return _id == id;
     });
-    delete all[id];
-    state.all = all;
-    state.ids.splice(index, 1);
+    delete entries[id];
+    state.entries = entries;
+    state.keys.splice(index, 1);
   },
   clear: function clear(state) {
     state.selectedId = null;
-    state.ids = [];
-    state.all = {};
+    state.keys = [];
+    state.entries = {};
   },
   select: function select(state, _ref2) {
     var id = _ref2.id;
@@ -8595,7 +8598,7 @@ var actions = {
             case 0:
               commit = _ref5.commit, state = _ref5.state;
 
-              if (state.all[id]) {
+              if (state.entries[id]) {
                 _context4.next = 6;
                 break;
               }
@@ -8779,7 +8782,7 @@ var actions = {
               commit = _ref5.commit, state = _ref5.state;
               id = _ref6.id;
 
-              if (state.all[id]) {
+              if (state.entries[id]) {
                 _context4.next = 7;
                 break;
               }

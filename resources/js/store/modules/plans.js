@@ -39,7 +39,7 @@ const actions = {
     },
     async select({ commit, state }, { id }) {
         // load if not exists yet
-        if (!state.all[id]) {
+        if (!state.entries[id]) {
             const plan = await planRes.get(id);
             commit("set", plan); // first add
         }

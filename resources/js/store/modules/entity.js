@@ -1,44 +1,47 @@
 // initial state
 const state = {
-    all: {},
-    ids: [],
+    keys: [],
+    entries: {},
     selectedId: null
 };
 
 // getters
 const getters = {
-    list: (state, getters) => {
-        return state.ids.map(id => getters.find(id));
+    get: state => key => {
+        return state.entries[key] ? { ...state.entries[key] } : null;
     },
-    find: state => id => {
-        return state.all[id] ? { ...state.all[id] } : null;
+    list: (state, getters) => {
+        return state.keys.map(id => getters.get(id));
+    },
+    size: state => {
+        state.keys.length;
     },
     selected: (state, getters) => {
-        return getters.find(state.selectedId);
+        return getters.get(state.selectedId);
     }
 };
 
 // mutations
 const mutations = {
     set: (state, item) => {
-        state.all = { ...state.all, [item.id]: item };
+        state.entries = { ...state.entries, [item.id]: item };
 
-        if (!state.ids.includes(item.id)) {
-            state.ids.push(item.id);
+        if (!state.keys.includes(item.id)) {
+            state.keys.push(item.id);
         }
     },
     remove: (state, { id }) => {
-        const all = { ...state.all };
-        const index = state.ids.findIndex(_id => _id == id);
+        const entries = { ...state.entries };
+        const index = state.keys.findIndex(_id => _id == id);
 
-        delete all[id];
-        state.all = all;
-        state.ids.splice(index, 1);
+        delete entries[id];
+        state.entries = entries;
+        state.keys.splice(index, 1);
     },
     clear: state => {
         state.selectedId = null;
-        state.ids = [];
-        state.all = {};
+        state.keys = [];
+        state.entries = {};
     },
     select: (state, { id }) => {
         state.selectedId = id;

@@ -37,7 +37,7 @@ const actions = {
     },
     async select({ commit, state }, id) {
         // load if not exists yet
-        if (!state.all[id]) {
+        if (!state.entries[id]) {
             const member = await memberRes.get(id);
             commit("set", member); // first add
         }
