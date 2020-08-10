@@ -2156,44 +2156,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      search: "",
-      sort: "recent",
-      sortOptions: ["recent", "oldest"],
-      resource: this.createResource("/members")
+      sortOptions: {
+        id: "recent",
+        "-id": "oldest"
+      },
+      query: {
+        sort: null,
+        filter: {
+          name: null
+        }
+      }
     };
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+  watch: {
+    query: {
+      deep: true,
+      handler: _.debounce(function (q) {
+        this.load(q);
+      }, 100)
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     members: "members/list",
     selected: "members/selected"
-  })), {}, {
-    filteredMembers: function filteredMembers() {
-      var _this = this;
-
-      var filterer = function filterer(m) {
-        return m.name.match(new RegExp(_this.search, "i"));
-      }; // default : recent
-
-
-      var sorter = function sorter(a, b) {
-        return a.id > b.id ? -1 : 1;
-      };
-
-      if (this.sort === "oldest") {
-        sorter = function sorter(a, b) {
-          return a.id > b.id ? 1 : -1;
-        };
-      }
-
-      return this.members.filter(filterer).sort(sorter);
-    }
-  }),
+  })),
   methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])({
     onSelect: "members/select"
   })), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    load: "members/load",
     onCheck: "members/check",
     onDelete: "members/delete"
   })), {}, {
@@ -2202,7 +2201,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   created: function created() {
-    this.$store.dispatch("members/load");
+    this.load();
   }
 });
 
@@ -5446,19 +5445,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.search,
-                    expression: "search"
+                    value: _vm.query.filter.name,
+                    expression: "query.filter.name"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "search", placeholder: "search" },
-                domProps: { value: _vm.search },
+                domProps: { value: _vm.query.filter.name },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.search = $event.target.value
+                    _vm.$set(_vm.query.filter, "name", $event.target.value)
                   }
                 }
               })
@@ -5489,7 +5488,7 @@ var render = function() {
                           ]),
                           _vm._v(
                             "\n                " +
-                              _vm._s(_vm.sort) +
+                              _vm._s(_vm.sortOptions[_vm.query.sort]) +
                               "\n              "
                           )
                         ]
@@ -5498,19 +5497,19 @@ var render = function() {
                       _c(
                         "div",
                         { staticClass: "dropdown-menu" },
-                        _vm._l(_vm.sortOptions, function(opt) {
+                        _vm._l(_vm.sortOptions, function(label, key) {
                           return _c(
                             "button",
                             {
-                              key: opt,
+                              key: key,
                               staticClass: "dropdown-item",
                               on: {
                                 click: function($event) {
-                                  _vm.sort = opt
+                                  _vm.query.sort = key
                                 }
                               }
                             },
-                            [_vm._v(_vm._s(opt))]
+                            [_vm._v(_vm._s(label))]
                           )
                         }),
                         0
@@ -5542,7 +5541,7 @@ var render = function() {
             },
             [
               _c("member-list", {
-                attrs: { members: _vm.filteredMembers, selected: _vm.selected },
+                attrs: { members: _vm.members, selected: _vm.selected },
                 on: {
                   select: function($event) {
                     return _vm.onSelect($event)
@@ -8161,6 +8160,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -8172,6 +8173,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -8210,6 +8212,7 @@ var Resource = /*#__PURE__*/function () {
     value: function () {
       var _list = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var params,
+            paramsSerializer,
             url,
             _args = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -8217,16 +8220,24 @@ var Resource = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 params = _args.length > 0 && _args[0] !== undefined ? _args[0] : {};
+
+                paramsSerializer = function paramsSerializer(params) {
+                  return qs__WEBPACK_IMPORTED_MODULE_2___default.a.stringify(params, {
+                    arrayFormat: "brackets"
+                  });
+                };
+
                 url = this.shallowPath;
-                _context.next = 4;
+                _context.next = 5;
                 return this.client.get(url, {
-                  params: params
+                  params: params,
+                  paramsSerializer: paramsSerializer
                 });
 
-              case 4:
+              case 5:
                 return _context.abrupt("return", _context.sent.data);
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -8496,6 +8507,11 @@ var mutations = {
     state.all = all;
     state.ids.splice(index, 1);
   },
+  clear: function clear(state) {
+    state.selectedId = null;
+    state.ids = [];
+    state.all = {};
+  },
   select: function select(state, _ref2) {
     var id = _ref2.id;
     state.selectedId = id;
@@ -8503,7 +8519,7 @@ var mutations = {
 }; // actions
 
 var actions = {
-  load: function load(_ref3) {
+  load: function load(_ref3, query) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, members;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -8511,16 +8527,17 @@ var actions = {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref3.commit;
-              _context.next = 3;
-              return memberRes.list();
+              commit("clear");
+              _context.next = 4;
+              return memberRes.list(query);
 
-            case 3:
+            case 4:
               members = _context.sent;
               members.forEach(function (member) {
                 return commit("set", member);
               });
 
-            case 5:
+            case 6:
             case "end":
               return _context.stop();
           }

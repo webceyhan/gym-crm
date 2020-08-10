@@ -10,7 +10,12 @@
       <div class="col-md-6">
         <nav class="d-flex">
           <div class="flex-grow-1 mr-2">
-            <input class="form-control" type="search" placeholder="search" v-model="search" />
+            <input
+              class="form-control"
+              type="search"
+              placeholder="search"
+              v-model="query.filter.name"
+            />
           </div>
 
           <div class="flex-fill">
@@ -22,15 +27,15 @@
                   data-toggle="dropdown"
                 >
                   <span class="text-muted">sort:</span>
-                  {{sort}}
+                  {{sortOptions[query.sort]}}
                 </button>
                 <div class="dropdown-menu">
                   <button
-                    v-for="opt in sortOptions"
-                    :key="opt"
-                    @click="sort = opt"
+                    v-for="(label, key) in sortOptions"
+                    :key="key"
+                    @click="query.sort = key"
                     class="dropdown-item"
-                  >{{opt}}</button>
+                  >{{label}}</button>
                 </div>
               </div>
 
@@ -43,7 +48,7 @@
 
         <div class="overflow-auto shadow" style="max-height: 50vh">
           <member-list
-            :members="filteredMembers"
+            :members="members"
             :selected="selected"
             @select="onSelect($event)"
             @check="onCheck($event)"
@@ -76,30 +81,30 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      search: "",
-      sort: "recent",
-      sortOptions: ["recent", "oldest"],
-      resource: this.createResource("/members"),
+      sortOptions: {
+        id: "recent",
+        "-id": "oldest",
+      },
+      query: {
+        sort: null,
+        filter: {
+          name: null,
+        },
+      },
     };
+  },
+
+  watch: {
+    query: {
+      deep: true,
+      handler: _.debounce(function(q){ this.load(q)}, 100),
+    },
   },
   computed: {
     ...mapGetters({
       members: "members/list",
       selected: "members/selected",
     }),
-
-    filteredMembers() {
-      const filterer = (m) => m.name.match(new RegExp(this.search, "i"));
-
-      // default : recent
-      let sorter = (a, b) => (a.id > b.id ? -1 : 1);
-
-      if (this.sort === "oldest") {
-        sorter = (a, b) => (a.id > b.id ? 1 : -1);
-      }
-
-      return this.members.filter(filterer).sort(sorter);
-    },
   },
   methods: {
     ...mapMutations({
@@ -107,6 +112,7 @@ export default {
     }),
 
     ...mapActions({
+      load: "members/load",
       onCheck: "members/check",
       onDelete: "members/delete",
     }),
@@ -116,7 +122,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("members/load");
+    this.load();
   },
 };
 </script>
