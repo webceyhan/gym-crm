@@ -10,6 +10,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import VueTypeaheadBootstrap from "vue-typeahead-bootstrap";
 
+import store from "./store";
 import Helpers from "./helpers";
 import Filters from "./filters";
 import ROUTES from "./routes";
@@ -57,5 +58,6 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: "#app",
-    router
+    router,
+    store
 });
