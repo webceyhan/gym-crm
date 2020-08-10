@@ -10661,7 +10661,8 @@ button.bg-dark:focus {
   text-transform: uppercase !important;
 }
 
-.text-capitalize {
+.text-capitalize,
+dl dt {
   text-transform: capitalize !important;
 }
 
@@ -10720,7 +10721,8 @@ a.text-success:focus {
   color: #27864f !important;
 }
 
-.text-info {
+.text-info,
+dl dt {
   color: #6cb2eb !important;
 }
 
@@ -10935,16 +10937,24 @@ label[required]::after {
   padding: 0 0.3rem;
 }
 
-.skewed {
+.skew-up,
+.skew-down {
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  width: 102%;
-  height: 100%;
-  transform: skewY(6deg);
+  width: 101%;
+  height: 101%;
   transform-origin: bottom right;
+}
+
+.skew-up {
+  transform: skewY(-5deg);
+}
+
+.skew-down {
+  transform: skewY(5deg);
 }
 
 .list-group-item.active {
