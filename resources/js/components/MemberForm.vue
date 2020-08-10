@@ -71,11 +71,8 @@
       <textarea id="notes" class="form-control" rows="5" v-model="member.notes"></textarea>
     </div>
 
-    <hr />
-
     <button class="btn btn-primary">save</button>
-    <button class="btn btn-secondary" @click="$emit('cancel')">cancel</button>
-    <button class="btn btn-danger float-right" @click="$emit('delete', member)">delete</button>
+    <button v-if="member.id" class="btn btn-danger" @click="$emit('delete')">delete</button>
   </form>
 </template>
 
