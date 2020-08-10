@@ -802,7 +802,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     member: {
@@ -3897,22 +3896,7 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("save")]),
-      _vm._v(" "),
-      _vm.member.id
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-danger",
-              on: {
-                click: function($event) {
-                  return _vm.$emit("delete")
-                }
-              }
-            },
-            [_vm._v("delete")]
-          )
-        : _vm._e()
+      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("save")])
     ]
   )
 }

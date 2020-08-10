@@ -72,7 +72,6 @@
     </div>
 
     <button class="btn btn-primary">save</button>
-    <button v-if="member.id" class="btn btn-danger" @click="$emit('delete')">delete</button>
   </form>
 </template>
 
