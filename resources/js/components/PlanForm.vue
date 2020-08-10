@@ -20,7 +20,7 @@
         />
       </div>
       <div class="col d-flex align-items-center">
-          <span class="text-muted px-2">{{plan.duration | humanize}}</span>
+        <span class="text-muted px-2">{{plan.duration | humanize}}</span>
       </div>
     </div>
 
@@ -81,7 +81,6 @@
 
     <div class="btn-toolbar">
       <button class="btn btn-primary mr-2">save</button>
-      <button v-if="plan.id" class="btn btn-danger" @click="$emit('delete', plan)">delete</button>
     </div>
   </form>
 </template>

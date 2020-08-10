@@ -1146,7 +1146,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     plan: {
@@ -4580,24 +4579,7 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-toolbar" }, [
-        _c("button", { staticClass: "btn btn-primary mr-2" }, [_vm._v("save")]),
-        _vm._v(" "),
-        _vm.plan.id
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-danger",
-                on: {
-                  click: function($event) {
-                    return _vm.$emit("delete", _vm.plan)
-                  }
-                }
-              },
-              [_vm._v("delete")]
-            )
-          : _vm._e()
-      ])
+      _vm._m(2)
     ]
   )
 }
@@ -4616,6 +4598,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-append" }, [
       _c("div", { staticClass: "input-group-text" }, [_vm._v("€")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-toolbar" }, [
+      _c("button", { staticClass: "btn btn-primary mr-2" }, [_vm._v("save")])
     ])
   }
 ]
