@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Qs from "qs";
 
 export default class Resource {
     constructor(path, parent = "") {
@@ -23,8 +24,12 @@ export default class Resource {
     }
 
     async list(params = {}) {
+        const paramsSerializer = params => {
+            return Qs.stringify(params, { arrayFormat: "brackets" });
+        };
+
         const url = this.shallowPath;
-        return (await this.client.get(url, { params })).data;
+        return (await this.client.get(url, { params, paramsSerializer })).data;
     }
 
     async get(id) {
