@@ -11,6 +11,17 @@ label[required]::after {
     @extend .required;
 }
 
+// LISTS ///////////////////////////////////////////////////////////////////////////////////////////
+dl {
+    dt {
+        // description title
+        @extend .text-info, .text-capitalize;
+    }
+    dd {
+        // description data
+    }
+}
+
 // LIST GROUP //////////////////////////////////////////////////////////////////////////////////////
 .list-group-item.active {
     background-color: theme-color("dark");

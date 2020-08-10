@@ -21,14 +21,20 @@
     padding: 0 0.3rem;
 }
 
-.skewed {
+.skew-up,
+.skew-down {
     position: absolute;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
-    width: 102%;
-    height: 100%;
-    transform: skewY(6deg);
+    width: 101%;
+    height: 101%;
     transform-origin: bottom right;
+}
+.skew-up {
+    transform: skewY(-5deg);
+}
+.skew-down {
+    transform: skewY(5deg);
 }

@@ -5,9 +5,9 @@
       <h5 class="text-light text-capitalize m-0">{{plan.name}}</h5>
     </div>
 
-    <!-- custom header bottom -->
-    <div class="position-relative overflow-hidden mb-n4" style="height:4rem">
-      <div class="skewed bg-grey"></div>
+    <!-- custom header-bottom -->
+    <div class="position-relative overflow-hidden mb-n4" style="height:3rem">
+      <div class="bg-grey skew-down"></div>
     </div>
 
     <!-- body -->
