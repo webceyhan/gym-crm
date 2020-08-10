@@ -21,6 +21,25 @@
             :class="{active: tab === activeTab}"
             @click="activeTab = tab"
           >{{tab}}</a>
+          <li class="nav-item dropdown ml-auto">
+            <a class="nav-link pointer" data-toggle="dropdown">
+              <i class="fas fa-fw fa-ellipsis-v"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button
+                v-if="member.status=='outside'"
+                class="dropdown-item"
+                @click="onSave({id:member.id, status:'inside'})"
+              >check in</button>
+              <button
+                v-if="member.status=='inside'"
+                class="dropdown-item"
+                @click="onSave({id:member.id, status:'outside'})"
+              >check out</button>
+              <div v-if="member.status!='away'" class="dropdown-divider"></div>
+              <button class="dropdown-item" @click="onDelete()">Delete</button>
+            </div>
+          </li>
         </nav>
 
         <br />
@@ -28,7 +47,7 @@
         <!-- tab content -->
         <div class="tab-content">
           <div class="tab-pane fade active show" v-if="activeTab === 'profile'">
-            <member-form :member="member" @save="onSave($event)" @delete="onDelete($event)" />
+            <member-form :member="member" @save="onSave($event)" />
           </div>
           <div class="tab-pane fade active show" v-if="activeTab === 'attachments'">
             <attachment-list :member="member" />
@@ -80,8 +99,8 @@ export default {
     async onSave(data) {
       this.member = await this.resource.save(data);
     },
-    async onDelete(member) {
-      this.resource.delete(member.id);
+    async onDelete() {
+      this.resource.delete(this.member.id);
       this.$router.push({ path: "/members" });
     },
   },

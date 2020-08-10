@@ -1957,6 +1957,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2024,7 +2043,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    onDelete: function onDelete(member) {
+    onDelete: function onDelete() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -2032,7 +2051,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.resource["delete"](member.id);
+                _this3.resource["delete"](_this3.member.id);
 
                 _this3.$router.push({
                   path: "/members"
@@ -5291,23 +5310,88 @@ var render = function() {
               _c(
                 "nav",
                 { staticClass: "nav nav-tabs" },
-                _vm._l(_vm.tabs, function(tab) {
-                  return _c(
-                    "a",
-                    {
-                      key: tab,
-                      staticClass: "nav-item nav-link pointer",
-                      class: { active: tab === _vm.activeTab },
-                      on: {
-                        click: function($event) {
-                          _vm.activeTab = tab
+                [
+                  _vm._l(_vm.tabs, function(tab) {
+                    return _c(
+                      "a",
+                      {
+                        key: tab,
+                        staticClass: "nav-item nav-link pointer",
+                        class: { active: tab === _vm.activeTab },
+                        on: {
+                          click: function($event) {
+                            _vm.activeTab = tab
+                          }
                         }
-                      }
-                    },
-                    [_vm._v(_vm._s(tab))]
-                  )
-                }),
-                0
+                      },
+                      [_vm._v(_vm._s(tab))]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item dropdown ml-auto" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "dropdown-menu dropdown-menu-right" },
+                      [
+                        _vm.member.status == "outside"
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "dropdown-item",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.onSave({
+                                      id: _vm.member.id,
+                                      status: "inside"
+                                    })
+                                  }
+                                }
+                              },
+                              [_vm._v("check in")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.member.status == "inside"
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "dropdown-item",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.onSave({
+                                      id: _vm.member.id,
+                                      status: "outside"
+                                    })
+                                  }
+                                }
+                              },
+                              [_vm._v("check out")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.member.status != "away"
+                          ? _c("div", { staticClass: "dropdown-divider" })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "dropdown-item",
+                            on: {
+                              click: function($event) {
+                                return _vm.onDelete()
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ]
+                    )
+                  ])
+                ],
+                2
               ),
               _vm._v(" "),
               _c("br"),
@@ -5323,9 +5407,6 @@ var render = function() {
                           on: {
                             save: function($event) {
                               return _vm.onSave($event)
-                            },
-                            delete: function($event) {
-                              return _vm.onDelete($event)
                             }
                           }
                         })
@@ -5383,7 +5464,18 @@ var render = function() {
       )
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "nav-link pointer", attrs: { "data-toggle": "dropdown" } },
+      [_c("i", { staticClass: "fas fa-fw fa-ellipsis-v" })]
+    )
+  }
+]
 render._withStripped = true
 
 
