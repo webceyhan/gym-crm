@@ -53,7 +53,13 @@
       </div>
 
       <div class="col offset-md-1">
-        <member-card v-if="selected" :member="selected" />
+        <member-card
+          v-if="selected"
+          :member="selected"
+          class="shadow-sm card-action"
+          @click="onBrowse(selected)"
+        />
+
         <div v-else class="card bg-transparent flex-fill my-5">
           <div class="card-body text-center p-5">
             <p class="card-text">Select a member from the left menu to see the details!</p>
@@ -112,6 +118,9 @@ export default {
       // remove from list
       this.members.splice(index, 1);
       this.selected = null;
+    },
+    onBrowse(selected) {
+      this.$router.push(`/members/${selected.id}`);
     },
   },
 };

@@ -2134,6 +2134,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2253,6 +2259,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
+    },
+    onBrowse: function onBrowse(selected) {
+      this.$router.push("/members/".concat(selected.id));
     }
   }
 });
@@ -5525,7 +5534,15 @@ var render = function() {
           { staticClass: "col offset-md-1" },
           [
             _vm.selected
-              ? _c("member-card", { attrs: { member: _vm.selected } })
+              ? _c("member-card", {
+                  staticClass: "shadow-sm card-action",
+                  attrs: { member: _vm.selected },
+                  on: {
+                    click: function($event) {
+                      return _vm.onBrowse(_vm.selected)
+                    }
+                  }
+                })
               : _c(
                   "div",
                   { staticClass: "card bg-transparent flex-fill my-5" },
