@@ -2477,6 +2477,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2562,6 +2567,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    onBrowse: function onBrowse(selected) {
+      this.$router.push("/plans/".concat(selected.id));
     }
   }
 });
@@ -5786,8 +5794,13 @@ var render = function() {
           [
             _vm.selected
               ? _c("plan-card", {
-                  staticClass: "shadow",
-                  attrs: { plan: _vm.selected }
+                  staticClass: "shadow-sm card-action",
+                  attrs: { plan: _vm.selected },
+                  on: {
+                    click: function($event) {
+                      return _vm.onBrowse(_vm.selected)
+                    }
+                  }
                 })
               : _c(
                   "div",
