@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -65,29 +67,29 @@ export default {
         duration: 12,
         is_prepaid: true,
       },
-      resource: this.createResource("/plans"),
       tabs: ["general", "statistics"],
       activeTab: "general",
     };
   },
-  created() {
-    this.fetch();
-  },
-  methods: {
-    async fetch() {
-      const { id } = this.$route.params;
 
-      if (id !== "new") {
-        this.plan = await this.resource.get(id);
-      }
-    },
-    async onSave(data) {
-      this.plan = await this.resource.save(data);
-    },
+  methods: {
+    ...mapActions({
+      load: "plans/select",
+      onSave: "plans/save",
+    }),
     async onDelete() {
-      this.resource.delete(this.plan.id);
+      this.$store.dispatch("plans/delete", this.plan);
       this.$router.push({ path: "/plans" });
     },
+  },
+
+  async created() {
+    const { params } = this.$route;
+
+    if (params.id != "new") {
+      await this.$store.dispatch("plans/select", params);
+      this.plan = this.$store.getters["plans/selected"];
+    }
   },
 };
 </script>

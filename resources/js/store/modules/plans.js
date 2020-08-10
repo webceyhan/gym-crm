@@ -66,15 +66,15 @@ const actions = {
         await planRes.delete(id);
         commit("remove", { id });
     },
-    async select({ commit, state }, id) {
+    async select({ commit, state }, { id }) {
         // load if not exists yet
         if (!state.all[id]) {
             const plan = await planRes.get(id);
             commit("set", plan); // first add
         }
 
-        commit("select", plan);
-    },
+        commit("select", { id });
+    }
 };
 
 export default {
