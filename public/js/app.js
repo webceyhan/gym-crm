@@ -8415,6 +8415,9 @@ var state = {
 }; // getters
 
 var getters = {
+  size: function size(state) {
+    state.keys.length;
+  },
   get: function get(state) {
     return function (key) {
       return state.entries[key] ? _objectSpread({}, state.entries[key]) : null;
@@ -8424,9 +8427,6 @@ var getters = {
     return state.keys.map(function (id) {
       return getters.get(id);
     });
-  },
-  size: function size(state) {
-    state.keys.length;
   },
   selected: function selected(state, getters) {
     return getters.get(state.selectedId);
@@ -8441,7 +8441,7 @@ var mutations = {
       state.keys.push(item.id);
     }
   },
-  remove: function remove(state, _ref) {
+  "delete": function _delete(state, _ref) {
     var id = _ref.id;
 
     var entries = _objectSpread({}, state.entries);
@@ -8454,9 +8454,9 @@ var mutations = {
     state.keys.splice(index, 1);
   },
   clear: function clear(state) {
-    state.selectedId = null;
     state.keys = [];
     state.entries = {};
+    state.selectedId = null;
   },
   select: function select(state, _ref2) {
     var id = _ref2.id;
@@ -8576,7 +8576,7 @@ var actions = {
               return memberRes["delete"](id);
 
             case 4:
-              commit("remove", {
+              commit("delete", {
                 id: id
               });
 
@@ -8759,7 +8759,7 @@ var actions = {
               return planRes["delete"](id);
 
             case 4:
-              commit("remove", {
+              commit("delete", {
                 id: id
               });
               commit("select", {});

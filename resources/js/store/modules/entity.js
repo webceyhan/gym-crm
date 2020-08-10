@@ -7,14 +7,14 @@ const state = {
 
 // getters
 const getters = {
+    size: state => {
+        state.keys.length;
+    },
     get: state => key => {
         return state.entries[key] ? { ...state.entries[key] } : null;
     },
     list: (state, getters) => {
         return state.keys.map(id => getters.get(id));
-    },
-    size: state => {
-        state.keys.length;
     },
     selected: (state, getters) => {
         return getters.get(state.selectedId);
@@ -30,7 +30,7 @@ const mutations = {
             state.keys.push(item.id);
         }
     },
-    remove: (state, { id }) => {
+    delete: (state, { id }) => {
         const entries = { ...state.entries };
         const index = state.keys.findIndex(_id => _id == id);
 
@@ -39,9 +39,9 @@ const mutations = {
         state.keys.splice(index, 1);
     },
     clear: state => {
-        state.selectedId = null;
         state.keys = [];
         state.entries = {};
+        state.selectedId = null;
     },
     select: (state, { id }) => {
         state.selectedId = id;

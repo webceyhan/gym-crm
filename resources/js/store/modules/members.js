@@ -33,7 +33,7 @@ const actions = {
     },
     async delete({ commit }, { id }) {
         await memberRes.delete(id);
-        commit("remove", { id });
+        commit("delete", { id });
     },
     async select({ commit, state }, id) {
         // load if not exists yet

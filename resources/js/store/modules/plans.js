@@ -34,7 +34,7 @@ const actions = {
     },
     async delete({ commit }, { id }) {
         await planRes.delete(id);
-        commit("remove", { id });
+        commit("delete", { id });
         commit("select", {});
     },
     async select({ commit, state }, { id }) {
