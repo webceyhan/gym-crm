@@ -25,6 +25,9 @@ module.exports = {
                     return dt.format("llll");
             }
         },
+        diff(value, interval = "years") {
+            return moment().diff(moment(value), "years");
+        },
         humanize(value, interval = "months") {
             return moment.duration(value, interval).humanize();
         },
