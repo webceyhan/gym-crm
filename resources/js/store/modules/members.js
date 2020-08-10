@@ -40,6 +40,11 @@ const mutations = {
         state.all = all;
         state.ids.splice(index, 1);
     },
+    clear: state => {
+        state.selectedId = null;
+        state.ids = [];
+        state.all = {};
+    },
     select: (state, { id }) => {
         state.selectedId = id;
     }
@@ -47,8 +52,10 @@ const mutations = {
 
 // actions
 const actions = {
-    async load({ commit }) {
-        const members = await memberRes.list();
+    async load({ commit }, query) {
+        commit("clear");
+
+        const members = await memberRes.list(query);
         members.forEach(member => commit("set", member));
     },
     async save({ commit }, data) {
