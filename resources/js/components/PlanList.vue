@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     classOf(plan) {
-      return { active: plan === this.selected };
+      return { active: plan.id === (this.selected || {}).id };
     },
   },
 };
