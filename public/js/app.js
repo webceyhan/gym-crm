@@ -847,7 +847,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     classOf: function classOf(member) {
       return {
-        active: member === this.selected
+        active: member.id === (this.selected || {}).id
       };
     }
   }
@@ -2077,13 +2077,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
 //
@@ -2157,18 +2156,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      members: [],
-      selected: null,
       search: "",
       sort: "recent",
       sortOptions: ["recent", "oldest"],
       resource: this.createResource("/members")
     };
   },
-  computed: {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    members: "members/list",
+    selected: "members/selected"
+  })), {}, {
     filteredMembers: function filteredMembers() {
       var _this = this;
 
@@ -2189,97 +2190,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return this.members.filter(filterer).sort(sorter);
     }
-  },
-  created: function created() {
-    this.fetch();
-  },
-  methods: {
-    fetch: function fetch() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return _this2.resource.list();
-
-              case 2:
-                _this2.members = _context.sent;
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    onCheck: function onCheck(_ref) {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var id, status, member, index;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                id = _ref.id, status = _ref.status;
-                _context2.next = 3;
-                return _this3.resource.save({
-                  id: id,
-                  status: status
-                });
-
-              case 3:
-                member = _context2.sent;
-                index = _this3.members.findIndex(function (m) {
-                  return m.id === id;
-                });
-
-                _this3.members.splice(index, 1, member);
-
-                _this3.selected = member;
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    onDelete: function onDelete(plan) {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var index;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return _this4.resource["delete"](plan.id);
-
-              case 2:
-                index = _this4.members.indexOf(plan); // remove from list
-
-                _this4.members.splice(index, 1);
-
-                _this4.selected = null;
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
+  }),
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])({
+    onSelect: "members/select"
+  })), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    onCheck: "members/check",
+    onDelete: "members/delete"
+  })), {}, {
     onBrowse: function onBrowse(selected) {
       this.$router.push("/members/".concat(selected.id));
     }
+  }),
+  created: function created() {
+    this.$store.dispatch("members/load");
   }
 });
 
@@ -3973,12 +3896,7 @@ var render = function() {
             return _vm.$emit("select", member)
           },
           check: function($event) {
-            return _vm.$emit(
-              "check",
-              Object.assign({}, member, {
-                status: $event ? "inside" : "outside"
-              })
-            )
+            return _vm.$emit("check", Object.assign({}, member, { on: $event }))
           },
           delete: function($event) {
             return _vm.$emit("delete", member)
@@ -5627,7 +5545,7 @@ var render = function() {
                 attrs: { members: _vm.filteredMembers, selected: _vm.selected },
                 on: {
                   select: function($event) {
-                    _vm.selected = $event
+                    return _vm.onSelect($event)
                   },
                   check: function($event) {
                     return _vm.onCheck($event)
@@ -6100,10 +6018,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var vue_typeahead_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-typeahead-bootstrap */ "./node_modules/vue-typeahead-bootstrap/src/components/VueTypeaheadBootstrap.vue");
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./filters */ "./resources/js/filters.js");
-/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_filters__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./filters */ "./resources/js/filters.js");
+/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_filters__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6116,11 +6035,12 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
+
  // add modules
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(_helpers__WEBPACK_IMPORTED_MODULE_3__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(_filters__WEBPACK_IMPORTED_MODULE_4___default.a); // add components
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(_helpers__WEBPACK_IMPORTED_MODULE_4__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(_filters__WEBPACK_IMPORTED_MODULE_5___default.a); // add components
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("typeahead-input", vue_typeahead_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /**
@@ -6146,11 +6066,12 @@ files.keys().map(function (key) {
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
-  routes: _routes__WEBPACK_IMPORTED_MODULE_5__["default"]
+  routes: _routes__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
-  router: router
+  router: router,
+  store: _store__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 
 /***/ }),
@@ -8472,6 +8393,252 @@ __webpack_require__.r(__webpack_exports__);
   name: "plan",
   component: _pages_Plan__WEBPACK_IMPORTED_MODULE_4__["default"]
 }]);
+
+/***/ }),
+
+/***/ "./resources/js/store/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/index.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _modules_members__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/members */ "./resources/js/store/modules/members.js");
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var debug = "development" !== "production";
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  modules: {
+    members: _modules_members__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  strict: debug
+}));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/members.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/modules/members.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _resource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../resource */ "./resources/js/resource.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+ // initialize resource objects
+
+var memberRes = new _resource__WEBPACK_IMPORTED_MODULE_1__["default"]("/members"); // initial state
+
+var state = function state() {
+  return {
+    all: {},
+    ids: [],
+    selectedId: null
+  };
+}; // getters
+
+
+var getters = {
+  list: function list(state, getters) {
+    return state.ids.map(function (id) {
+      return getters.find(id);
+    });
+  },
+  find: function find(state) {
+    return function (id) {
+      return state.all[id] ? _objectSpread({}, state.all[id]) : null;
+    };
+  },
+  selected: function selected(state, getters) {
+    return getters.find(state.selectedId);
+  }
+}; // mutations
+
+var mutations = {
+  set: function set(state, item) {
+    state.all = _objectSpread(_objectSpread({}, state.all), {}, _defineProperty({}, item.id, item));
+
+    if (!state.ids.includes(item.id)) {
+      state.ids.push(item.id);
+    }
+  },
+  remove: function remove(state, _ref) {
+    var id = _ref.id;
+
+    var all = _objectSpread({}, state.all);
+
+    var index = state.ids.findIndex(function (_id) {
+      return _id == id;
+    });
+    delete all[id];
+    state.all = all;
+    state.ids.splice(index, 1);
+  },
+  select: function select(state, _ref2) {
+    var id = _ref2.id;
+    state.selectedId = id;
+  }
+}; // actions
+
+var actions = {
+  load: function load(_ref3) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var commit, members;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context.next = 3;
+              return memberRes.list();
+
+            case 3:
+              members = _context.sent;
+              members.forEach(function (member) {
+                return commit("set", member);
+              });
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  save: function save(_ref4, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var commit, member;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context2.next = 3;
+              return memberRes.save(data);
+
+            case 3:
+              member = _context2.sent;
+              commit("set", member);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  "delete": function _delete(_ref5, _ref6) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var commit, id;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref5.commit;
+              id = _ref6.id;
+              _context3.next = 4;
+              return memberRes["delete"](id);
+
+            case 4:
+              commit("remove", {
+                id: id
+              });
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  select: function select(_ref7, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var commit, state, _member;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref7.commit, state = _ref7.state;
+
+              if (state.all[id]) {
+                _context4.next = 6;
+                break;
+              }
+
+              _context4.next = 4;
+              return memberRes.get(id);
+
+            case 4:
+              _member = _context4.sent;
+              commit("set", _member); // first add
+
+            case 6:
+              commit("select", member);
+
+            case 7:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  check: function check(_ref8, _ref9) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var dispatch, id, on;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              dispatch = _ref8.dispatch;
+              id = _ref9.id, on = _ref9.on;
+              dispatch("save", {
+                id: id,
+                status: on ? "inside" : "outside"
+              });
+
+            case 3:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions,
+  namespaced: true
+});
 
 /***/ }),
 

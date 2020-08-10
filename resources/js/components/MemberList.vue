@@ -6,7 +6,7 @@
       :member="member"
       :class="classOf(member)"
       @select="$emit('select', member)"
-      @check="$emit('check', {...member, status: $event ? 'inside' : 'outside'})"
+      @check="$emit('check', {...member, on: $event})"
       @delete="$emit('delete', member)"
     />
   </div>
@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     classOf(member) {
-      return { active: member === this.selected };
+      return { active: member.id === (this.selected||{}).id };
     },
   },
 };

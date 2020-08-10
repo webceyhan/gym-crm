@@ -45,7 +45,7 @@
           <member-list
             :members="filteredMembers"
             :selected="selected"
-            @select="selected = $event"
+            @select="onSelect($event)"
             @check="onCheck($event)"
             @delete="onDelete($event)"
           />
@@ -71,11 +71,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
-      members: [],
-      selected: null,
       search: "",
       sort: "recent",
       sortOptions: ["recent", "oldest"],
@@ -83,6 +83,11 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      members: "members/list",
+      selected: "members/selected",
+    }),
+
     filteredMembers() {
       const filterer = (m) => m.name.match(new RegExp(this.search, "i"));
 
@@ -96,32 +101,22 @@ export default {
       return this.members.filter(filterer).sort(sorter);
     },
   },
-  created() {
-    this.fetch();
-  },
   methods: {
-    async fetch() {
-      this.members = await this.resource.list();
-    },
-    async onCheck({ id, status }) {
-      const member = await this.resource.save({ id, status });
-      const index = this.members.findIndex((m) => m.id === id);
+    ...mapMutations({
+      onSelect: "members/select",
+    }),
 
-      this.members.splice(index, 1, member);
-      this.selected = member;
-    },
+    ...mapActions({
+      onCheck: "members/check",
+      onDelete: "members/delete",
+    }),
 
-    async onDelete(plan) {
-      await this.resource.delete(plan.id);
-      const index = this.members.indexOf(plan);
-
-      // remove from list
-      this.members.splice(index, 1);
-      this.selected = null;
-    },
     onBrowse(selected) {
       this.$router.push(`/members/${selected.id}`);
     },
+  },
+  created() {
+    this.$store.dispatch("members/load");
   },
 };
 </script>
