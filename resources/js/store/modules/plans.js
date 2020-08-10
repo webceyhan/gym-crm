@@ -1,53 +1,22 @@
 import Resource from "../../resource";
+import entity from "./entity";
 
 // initialize resource objects
 const planRes = new Resource("/plans");
 
 // initial state
 const state = () => ({
-    all: {},
-    ids: [],
-    selectedId: null
+    ...entity.state
 });
 
 // getters
 const getters = {
-    list: (state, getters) => {
-        return state.ids.map(id => getters.find(id));
-    },
-    find: state => id => {
-        return state.all[id] ? { ...state.all[id] } : null;
-    },
-    selected: (state, getters) => {
-        return getters.find(state.selectedId);
-    }
+    ...entity.getters
 };
 
 // mutations
 const mutations = {
-    set: (state, item) => {
-        state.all = { ...state.all, [item.id]: item };
-
-        if (!state.ids.includes(item.id)) {
-            state.ids.push(item.id);
-        }
-    },
-    remove: (state, { id }) => {
-        const all = { ...state.all };
-        const index = state.ids.findIndex(_id => _id == id);
-
-        delete all[id];
-        state.all = all;
-        state.ids.splice(index, 1);
-    },
-    clear: state => {
-        state.selectedId = null;
-        state.ids = [];
-        state.all = {};
-    },
-    select: (state, { id }) => {
-        state.selectedId = id;
-    }
+    ...entity.mutations
 };
 
 // actions

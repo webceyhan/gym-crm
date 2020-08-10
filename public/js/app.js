@@ -1189,7 +1189,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     classOf: function classOf(plan) {
       return {
-        active: plan === this.selected
+        active: plan.id === (this.selected || {}).id
       };
     }
   }
@@ -8392,42 +8392,27 @@ var debug = "development" !== "production";
 
 /***/ }),
 
-/***/ "./resources/js/store/modules/members.js":
-/*!***********************************************!*\
-  !*** ./resources/js/store/modules/members.js ***!
-  \***********************************************/
+/***/ "./resources/js/store/modules/entity.js":
+/*!**********************************************!*\
+  !*** ./resources/js/store/modules/entity.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _resource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../resource */ "./resources/js/resource.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
- // initialize resource objects
-
-var memberRes = new _resource__WEBPACK_IMPORTED_MODULE_1__["default"]("/members"); // initial state
-
-var state = function state() {
-  return {
-    all: {},
-    ids: [],
-    selectedId: null
-  };
+// initial state
+var state = {
+  all: {},
+  ids: [],
+  selectedId: null
 }; // getters
-
 
 var getters = {
   list: function list(state, getters) {
@@ -8474,17 +8459,66 @@ var mutations = {
     var id = _ref2.id;
     state.selectedId = id;
   }
-}; // actions
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  namespaced: true
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/members.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/modules/members.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _resource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../resource */ "./resources/js/resource.js");
+/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entity */ "./resources/js/store/modules/entity.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+ // initialize resource objects
+
+var memberRes = new _resource__WEBPACK_IMPORTED_MODULE_1__["default"]("/members"); // initial state
+
+var state = function state() {
+  return _objectSpread({}, _entity__WEBPACK_IMPORTED_MODULE_2__["default"].state);
+}; // getters
+
+
+var getters = _objectSpread({}, _entity__WEBPACK_IMPORTED_MODULE_2__["default"].getters); // mutations
+
+
+var mutations = _objectSpread({}, _entity__WEBPACK_IMPORTED_MODULE_2__["default"].mutations); // actions
+
 
 var actions = {
-  load: function load(_ref3, query) {
+  load: function load(_ref, query) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, members;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              commit = _ref3.commit;
+              commit = _ref.commit;
               commit("clear");
               _context.next = 4;
               return memberRes.list(query);
@@ -8503,14 +8537,14 @@ var actions = {
       }, _callee);
     }))();
   },
-  save: function save(_ref4, data) {
+  save: function save(_ref2, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var commit, member;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref4.commit;
+              commit = _ref2.commit;
               _context2.next = 3;
               return memberRes.save(data);
 
@@ -8526,15 +8560,15 @@ var actions = {
       }, _callee2);
     }))();
   },
-  "delete": function _delete(_ref5, _ref6) {
+  "delete": function _delete(_ref3, _ref4) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var commit, id;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              commit = _ref5.commit;
-              id = _ref6.id;
+              commit = _ref3.commit;
+              id = _ref4.id;
               _context3.next = 4;
               return memberRes["delete"](id);
 
@@ -8551,7 +8585,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  select: function select(_ref7, id) {
+  select: function select(_ref5, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var commit, state, _member;
 
@@ -8559,7 +8593,7 @@ var actions = {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              commit = _ref7.commit, state = _ref7.state;
+              commit = _ref5.commit, state = _ref5.state;
 
               if (state.all[id]) {
                 _context4.next = 6;
@@ -8584,15 +8618,15 @@ var actions = {
       }, _callee4);
     }))();
   },
-  check: function check(_ref8, _ref9) {
+  check: function check(_ref6, _ref7) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       var dispatch, id, on;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              dispatch = _ref8.dispatch;
-              id = _ref9.id, on = _ref9.on;
+              dispatch = _ref6.dispatch;
+              id = _ref7.id, on = _ref7.on;
               dispatch("save", {
                 id: id,
                 status: on ? "inside" : "outside"
@@ -8629,6 +8663,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _resource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../resource */ "./resources/js/resource.js");
+/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entity */ "./resources/js/store/modules/entity.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -8641,75 +8676,31 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+
  // initialize resource objects
 
 var planRes = new _resource__WEBPACK_IMPORTED_MODULE_1__["default"]("/plans"); // initial state
 
 var state = function state() {
-  return {
-    all: {},
-    ids: [],
-    selectedId: null
-  };
+  return _objectSpread({}, _entity__WEBPACK_IMPORTED_MODULE_2__["default"].state);
 }; // getters
 
 
-var getters = {
-  list: function list(state, getters) {
-    return state.ids.map(function (id) {
-      return getters.find(id);
-    });
-  },
-  find: function find(state) {
-    return function (id) {
-      return state.all[id] ? _objectSpread({}, state.all[id]) : null;
-    };
-  },
-  selected: function selected(state, getters) {
-    return getters.find(state.selectedId);
-  }
-}; // mutations
+var getters = _objectSpread({}, _entity__WEBPACK_IMPORTED_MODULE_2__["default"].getters); // mutations
 
-var mutations = {
-  set: function set(state, item) {
-    state.all = _objectSpread(_objectSpread({}, state.all), {}, _defineProperty({}, item.id, item));
 
-    if (!state.ids.includes(item.id)) {
-      state.ids.push(item.id);
-    }
-  },
-  remove: function remove(state, _ref) {
-    var id = _ref.id;
+var mutations = _objectSpread({}, _entity__WEBPACK_IMPORTED_MODULE_2__["default"].mutations); // actions
 
-    var all = _objectSpread({}, state.all);
-
-    var index = state.ids.findIndex(function (_id) {
-      return _id == id;
-    });
-    delete all[id];
-    state.all = all;
-    state.ids.splice(index, 1);
-  },
-  clear: function clear(state) {
-    state.selectedId = null;
-    state.ids = [];
-    state.all = {};
-  },
-  select: function select(state, _ref2) {
-    var id = _ref2.id;
-    state.selectedId = id;
-  }
-}; // actions
 
 var actions = {
-  load: function load(_ref3, query) {
+  load: function load(_ref, query) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, plans;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              commit = _ref3.commit;
+              commit = _ref.commit;
               commit("clear");
               _context.next = 4;
               return planRes.list(query);
@@ -8728,14 +8719,14 @@ var actions = {
       }, _callee);
     }))();
   },
-  save: function save(_ref4, data) {
+  save: function save(_ref2, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var commit, plan;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref4.commit;
+              commit = _ref2.commit;
               _context2.next = 3;
               return planRes.save(data);
 
@@ -8752,15 +8743,15 @@ var actions = {
       }, _callee2);
     }))();
   },
-  "delete": function _delete(_ref5, _ref6) {
+  "delete": function _delete(_ref3, _ref4) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var commit, id;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              commit = _ref5.commit;
-              id = _ref6.id;
+              commit = _ref3.commit;
+              id = _ref4.id;
               _context3.next = 4;
               return planRes["delete"](id);
 
@@ -8778,15 +8769,15 @@ var actions = {
       }, _callee3);
     }))();
   },
-  select: function select(_ref7, _ref8) {
+  select: function select(_ref5, _ref6) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var commit, state, id, plan;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              commit = _ref7.commit, state = _ref7.state;
-              id = _ref8.id;
+              commit = _ref5.commit, state = _ref5.state;
+              id = _ref6.id;
 
               if (state.all[id]) {
                 _context4.next = 7;
