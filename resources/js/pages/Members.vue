@@ -7,52 +7,56 @@
     <br />
 
     <div class="row">
-      <div class="col-md-5">
-        <button class="btn btn-primary" @click="selected = {}">create new member</button>
+      <div class="col-md-6">
+        <nav class="d-flex">
+          <div class="flex-grow-1 mr-2">
+            <input class="form-control" type="search" placeholder="search" v-model="search" />
+          </div>
 
-        <br />
-        <br />
+          <div class="flex-fill">
+            <div class="btn-toolbar">
+              <div class="btn-group mr-auto" role="group">
+                <button
+                  type="button"
+                  class="btn btn-light border-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                >
+                  <span class="text-muted">sort:</span>
+                  {{sort}}
+                </button>
+                <div class="dropdown-menu">
+                  <button
+                    v-for="opt in sortOptions"
+                    :key="opt"
+                    @click="sort = opt"
+                    class="dropdown-item"
+                  >{{opt}}</button>
+                </div>
+              </div>
 
-        <div class="overflow-auto" style="height: 50vh">
-          <member-list :members="members" @select="selected = $event"></member-list>
-        </div>
-      </div>
-      <div class="col" v-if="selected">
-        <!-- tabs -->
-        <nav class="nav nav-tabs">
-          <a
-            v-for="(tab) in tabs"
-            :key="tab"
-            class="nav-item nav-link pointer"
-            :class="{active: tab === activeTab}"
-            @click="activeTab = tab"
-          >{{tab}}</a>
+              <router-link class="btn btn-primary text-capitalize" to="/members/new">create member</router-link>
+            </div>
+          </div>
         </nav>
 
         <br />
-        <br />
 
-        <!-- tab content -->
-        <div class="tab-content">
-          <div class="tab-pane fade active show" v-if="activeTab === 'profile'">
-            <member-form
-              :member="selected"
-              @save="onSave($event)"
-              @cancel="selected = null"
-              @delete="onDelete($event)"
-            ></member-form>
-          </div>
-          <div class="tab-pane fade active show" v-if="activeTab === 'attachments'">
-            <attachment-list :member="selected"></attachment-list>
-          </div>
-          <div class="tab-pane fade active show" v-if="activeTab === 'relatives'">
-            <relative-list :member="selected"></relative-list>
-          </div>
-          <div class="tab-pane fade active show" v-if="activeTab === 'holidays'">
-            <holiday-list :member="selected"></holiday-list>
-          </div>
-          <div class="tab-pane fade active show" v-if="activeTab === 'subscriptions'">
-            <subscription-list :member="selected"></subscription-list>
+        <div class="overflow-auto shadow" style="max-height: 50vh">
+          <member-list
+            :members="filteredMembers"
+            :selected="selected"
+            @select="selected = $event"
+            @check="onCheck($event)"
+            @delete="onDelete($event)"
+          />
+        </div>
+      </div>
+
+      <div class="col offset-md-1">
+        <member-card v-if="selected" :member="selected" />
+        <div v-else class="card bg-transparent flex-fill my-5">
+          <div class="card-body text-center p-5">
+            <p class="card-text">Select a member from the left menu to see the details!</p>
           </div>
         </div>
       </div>
@@ -66,16 +70,25 @@ export default {
     return {
       members: [],
       selected: null,
+      search: "",
+      sort: "recent",
+      sortOptions: ["recent", "oldest"],
       resource: this.createResource("/members"),
-      tabs: [
-        "profile",
-        "attachments",
-        "relatives",
-        "holidays",
-        "subscriptions",
-      ],
-      activeTab: "profile",
     };
+  },
+  computed: {
+    filteredMembers() {
+      const filterer = (m) => m.name.match(new RegExp(this.search, "i"));
+
+      // default : recent
+      let sorter = (a, b) => (a.id > b.id ? -1 : 1);
+
+      if (this.sort === "oldest") {
+        sorter = (a, b) => (a.id > b.id ? 1 : -1);
+      }
+
+      return this.members.filter(filterer).sort(sorter);
+    },
   },
   created() {
     this.fetch();
@@ -84,12 +97,12 @@ export default {
     async fetch() {
       this.members = await this.resource.list();
     },
-    async onSave(data) {
-      const plan = await this.resource.save(data);
+    async onCheck({ id, status }) {
+      const member = await this.resource.save({ id, status });
+      const index = this.members.findIndex((m) => m.id === id);
 
-      // add to list if newly created
-      if (!data.id) this.members.push(plan);
-      this.selected = null;
+      this.members.splice(index, 1, member);
+      this.selected = member;
     },
 
     async onDelete(plan) {
