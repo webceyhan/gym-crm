@@ -2323,6 +2323,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2332,7 +2369,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         duration: 12,
         is_prepaid: true
       },
-      resource: this.createResource("/plans")
+      resource: this.createResource("/plans"),
+      tabs: ["general", "statistics"],
+      activeTab: "general"
     };
   },
   created: function created() {
@@ -2391,7 +2430,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    onDelete: function onDelete(plan) {
+    onDelete: function onDelete() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -2399,7 +2438,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.resource["delete"](plan.id);
+                _this3.resource["delete"](_this3.plan.id);
 
                 _this3.$router.push({
                   path: "/plans"
@@ -5696,31 +5735,123 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col offset-1" },
-              [
-                _c("plan-form", {
-                  attrs: { plan: _vm.plan },
-                  on: {
-                    save: function($event) {
-                      return _vm.onSave($event)
-                    },
-                    delete: function($event) {
-                      return _vm.onDelete($event)
-                    }
-                  }
-                })
-              ],
-              1
-            )
+            _c("div", { staticClass: "col offset-1" }, [
+              _c(
+                "nav",
+                { staticClass: "nav nav-tabs" },
+                [
+                  _vm._l(_vm.tabs, function(tab) {
+                    return _c(
+                      "a",
+                      {
+                        key: tab,
+                        staticClass: "nav-item nav-link pointer",
+                        class: { active: tab === _vm.activeTab },
+                        on: {
+                          click: function($event) {
+                            _vm.activeTab = tab
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(tab))]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item dropdown ml-auto" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "dropdown-menu dropdown-menu-right" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: "/members?planId=" + _vm.plan.id }
+                          },
+                          [_vm._v("Browse members")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: {
+                              to: "/subscriptions?planId=" + _vm.plan.id
+                            }
+                          },
+                          [_vm._v("Browse subscriptions")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "dropdown-divider" }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "dropdown-item",
+                            on: {
+                              click: function($event) {
+                                return _vm.onDelete()
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "tab-content" }, [
+                _vm.activeTab === "general"
+                  ? _c(
+                      "div",
+                      { staticClass: "tab-pane fade active show" },
+                      [
+                        _c("plan-form", {
+                          attrs: { plan: _vm.plan },
+                          on: {
+                            save: function($event) {
+                              return _vm.onSave($event)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.activeTab === "statistics"
+                  ? _c("div", { staticClass: "tab-pane fade active show" }, [
+                      _vm._v("here comes the statistics per plan")
+                    ])
+                  : _vm._e()
+              ])
+            ])
           ])
         ],
         1
       )
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "nav-link pointer", attrs: { "data-toggle": "dropdown" } },
+      [_c("i", { staticClass: "fas fa-fw fa-ellipsis-v" })]
+    )
+  }
+]
 render._withStripped = true
 
 
