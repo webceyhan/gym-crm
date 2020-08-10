@@ -61,10 +61,12 @@ const actions = {
     async save({ commit }, data) {
         const plan = await planRes.save(data);
         commit("set", plan);
+        commit("select", plan);
     },
     async delete({ commit }, { id }) {
         await planRes.delete(id);
         commit("remove", { id });
+        commit("select", {});
     },
     async select({ commit, state }, { id }) {
         // load if not exists yet

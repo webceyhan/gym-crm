@@ -73,12 +73,12 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      load: "plans/select",
-      onSave: "plans/save",
-    }),
+    async onSave(data) {
+      await this.$store.dispatch("plans/save", data);
+      this.plan = this.$store.getters["plans/selected"];
+    },
     async onDelete() {
-      this.$store.dispatch("plans/delete", this.plan);
+      await this.$store.dispatch("plans/delete", this.plan);
       this.$router.push({ path: "/plans" });
     },
   },
