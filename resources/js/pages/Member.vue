@@ -29,15 +29,15 @@
               <button
                 v-if="member.status=='outside'"
                 class="dropdown-item"
-                @click="onSave({id:member.id, status:'inside'})"
+                @click="onCheck({...member, on: true})"
               >check in</button>
               <button
                 v-if="member.status=='inside'"
                 class="dropdown-item"
-                @click="onSave({id:member.id, status:'outside'})"
+                @click="onCheck({...member, on: false})"
               >check out</button>
               <div v-if="member.status!='away'" class="dropdown-divider"></div>
-              <button class="dropdown-item" @click="onDelete()">Delete</button>
+              <button class="dropdown-item" @click="onDelete(member)">Delete</button>
             </div>
           </li>
         </nav>
@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -85,24 +87,36 @@ export default {
       activeTab: "profile",
     };
   },
-  created() {
-    this.fetch();
+  watch: {
+    selected: {
+      deep: true,
+      handler(value) {
+        value && (this.member = value);
+      },
+    },
   },
-  methods: {
-    async fetch() {
-      const { id } = this.$route.params;
+  computed: {
+    ...mapGetters({
+      selected: "members/selected",
+    }),
+  },
 
-      if (id !== "new") {
-        this.member = await this.resource.get(id);
-      }
-    },
-    async onSave(data) {
-      this.member = await this.resource.save(data);
-    },
-    async onDelete() {
-      this.resource.delete(this.member.id);
+  methods: {
+    ...mapActions({
+      load: "members/select",
+      onCheck: "members/check",
+      onSave: "members/save",
+    }),
+    async onDelete(member) {
+      await this.$store.dispatch("members/delete", member);
       this.$router.push({ path: "/members" });
     },
+  },
+
+  async created() {
+    if (this.$route.params.id != "new") {
+      this.load(this.$route.params);
+    }
   },
 };
 </script>
