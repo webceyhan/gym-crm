@@ -48,9 +48,39 @@ const mutations = {
     }
 };
 
+// actions
+const actions = resource => ({
+    async load({ commit }, query) {
+        commit("clear");
+
+        const items = await resource.list(query);
+        items.forEach(item => commit("set", item));
+    },
+    async select({ commit, state }, { id }) {
+        // load if not exists yet
+        if (!state.entries[id]) {
+            const item = await resource.get(id);
+            commit("set", item); // first add
+        }
+
+        commit("select", { id });
+    },
+    async save({ commit }, data) {
+        const item = await resource.save(data);
+        commit("set", item);
+        commit("select", item);
+    },
+    async delete({ commit }, { id }) {
+        await resource.delete(id);
+        commit("delete", { id });
+        commit("select", {});
+    }
+});
+
 export default {
     state,
     getters,
     mutations,
+    actions,
     namespaced: true
 };

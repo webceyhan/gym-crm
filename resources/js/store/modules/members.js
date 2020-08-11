@@ -21,31 +21,11 @@ const mutations = {
 
 // actions
 const actions = {
-    async load({ commit }, query) {
-        commit("clear");
+    ...entity.actions(memberRes),
 
-        const members = await memberRes.list(query);
-        members.forEach(member => commit("set", member));
-    },
-    async save({ commit }, data) {
-        const member = await memberRes.save(data);
-        commit("set", member);
-    },
-    async delete({ commit }, { id }) {
-        await memberRes.delete(id);
-        commit("delete", { id });
-    },
-    async select({ commit, state }, id) {
-        // load if not exists yet
-        if (!state.entries[id]) {
-            const member = await memberRes.get(id);
-            commit("set", member); // first add
-        }
-
-        commit("select", member);
-    },
     async check({ dispatch }, { id, on }) {
-        dispatch("save", { id, status: on ? "inside" : "outside" });
+        const status = on ? "inside" : "outside";
+        dispatch("save", { id, status });
     }
 };
 
