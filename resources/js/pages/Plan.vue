@@ -32,7 +32,7 @@
                 :to="`/subscriptions?planId=${plan.id}`"
               >Browse subscriptions</router-link>
               <div class="dropdown-divider"></div>
-              <button class="dropdown-item" @click="onDelete()">Delete</button>
+              <button class="dropdown-item" @click="onDelete(plan)">Delete</button>
             </div>
           </li>
         </nav>
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -69,24 +71,34 @@ export default {
       activeTab: "general",
     };
   },
+  watch: {
+    selected: {
+      deep: true,
+      handler(value) {
+        value && (this.plan = value);
+      },
+    },
+  },
+  computed: {
+    ...mapGetters({
+      selected: "plans/selected",
+    }),
+  },
 
   methods: {
-    async onSave(data) {
-      await this.$store.dispatch("plans/save", data);
-      this.plan = this.$store.getters["plans/selected"];
-    },
-    async onDelete() {
-      await this.$store.dispatch("plans/delete", this.plan);
+    ...mapActions({
+      load: "plans/select",
+      onSave: "plans/save",
+    }),
+    async onDelete(plan) {
+      await this.$store.dispatch("plans/delete", plan);
       this.$router.push({ path: "/plans" });
     },
   },
 
   async created() {
-    const { params } = this.$route;
-
-    if (params.id != "new") {
-      await this.$store.dispatch("plans/select", params);
-      this.plan = this.$store.getters["plans/selected"];
+    if (this.$route.params.id != "new") {
+      this.load(this.$route.params);
     }
   },
 };
