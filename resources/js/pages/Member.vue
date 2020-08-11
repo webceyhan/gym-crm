@@ -76,7 +76,6 @@ export default {
       member: {
         gender: "male",
       },
-      resource: this.createResource("/members"),
       tabs: [
         "profile",
         "attachments",

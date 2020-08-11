@@ -1988,7 +1988,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       member: {
         gender: "male"
       },
-      resource: this.createResource("/members"),
       tabs: ["profile", "attachments", "relatives", "holidays", "subscriptions"],
       activeTab: "profile"
     };
